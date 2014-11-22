@@ -12,7 +12,7 @@ Exyht is a fully open source blogging software. This is a very light weight and 
 
 Exyht has *Read only Mode* feature & though it is mainly a JavaScript based App, it's SEO friendly & works also if Javascript is disabled.
 
-You can cusomize the Blog template's *Blog name & sub-title*, *font family*, *colors*, *add links*, *Logo* and much more quite easily.
+You can customize the Blog template's *Blog name & sub-title*, *font family*, *colors*, *add links*, *Logo* and much more quite easily.
 
 You'll also love the text editor, use *markdown*, *emoji* with *textcomplete* feature. Type your comment while browsing from one topic to another & you'll experience faster topic load Since this is a one page web App.
 
