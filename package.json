@@ -1,0 +1,22 @@
+{
+  "name": "Exyht",
+  "version": "0.1.0",
+  "author": "Hasib Mahmud",
+  "description": "A blogging software",
+  "keywords": [
+    "exyht",
+    "blog",
+    "cms"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-imagemin": "^0.9.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-ember-templates": "^0.4.23",
+    "grunt-htmlhint-plus": "0.0.6"
+  },
+  "license": "GNU GENERAL PUBLIC LICENSE Version 2, June 1991"
+}
