@@ -35,6 +35,16 @@ Installation of Exyht is very easy. Follow the below steps:
 + [MySQL](http://www.mysql.com/) 5+
 + [Apache](http://www.apache.org/) 2+
 
+Exyht's browser requirements are also high since it's mainly a Javascript based App.
+
++ Google chrome 23+
++ Mozilla Firefox 17+
++ Internet Explorer 10+
++ Safari 5+
++ Android 4.1+
++ IOS 6+
++ Windows 8+
+
 ## For Developers
 
 A `Grunt` file is already built. If you want to use build tools like `Grunt`, `Gulp`, etc. you need to install *Node npm*.
