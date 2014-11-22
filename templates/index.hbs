@@ -1,0 +1,23 @@
+
+<div class="col-sm-8 blog-main" {{bind-attr style="postBgColor"}}>
+
+<div class="blog-post">
+{{#each posts}}
+	{{#unless no_post}}
+    	<h1>{{#link-to 'post' this}}{{{title}}}{{/link-to}}</h1>
+    {{else}}
+    	<h1>{{{title}}}</h1>
+    {{/unless}}
+    <div>{{format-markdown body}}
+    <span>
+    	{{#unless no_post}}
+      		<span class="pull-right"><i class="fa fa-clock-o"></i> {{format-archive-date created}}</span>
+      		{{#link-to 'post' this}}Continue reading...{{/link-to}}
+      	{{/unless}}
+    </span>
+    </div>
+    <hr />
+{{/each}}
+</div><!-- /.blog-post -->
+
+</div><!-- /.blog-main -->

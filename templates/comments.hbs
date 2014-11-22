@@ -1,0 +1,41 @@
+{{#if commentFeature}}
+  <div class="media">
+
+        <div class="pull-left" {{bind-attr title=name}}>
+          <img class="media-object" {{bind-attr src=view.cgravatarUrl}}/>
+        </div>
+
+        <div class="media-body">
+
+         <h5 class="media-heading">
+             <strong>{{{name}}}</strong>
+             <div class="pull-right" {{bind-attr title=cdate}}>{{format-date cdate}}</div>
+             {{#if replyToComment.commentHasReply}}
+               <div class="pull-right small" style="padding-right:1%;">
+                 <i class="fa fa-share"></i>&nbsp;
+                  <img {{bind-attr src=view.rgravatarUrl}}>&nbsp;
+                  {{{replyToComment.name}}}
+               </div>
+             {{/if}}
+         </h5>
+          {{format-markdown comment}}
+        </div>
+        {{#if readOnlyMode}}
+        <div>
+          <button class="btn btn-default" type="button" disabled="disabled"><i class="fa fa-flag-o"></i></button>
+          <button class="btn btn-info" title="Reply to comment" type="button" disabled="disabled"><i class="fa fa-reply"></i> Reply</button>
+        </div>
+        {{else}}
+        <div>
+          {{#if isFlagged}}
+            <button class="btn btn-danger" title="This comment's been flagged" disabled="disabled"><i class="fa fa-flag-o"></i></button>
+          {{else}}
+            <button class="btn btn-default" {{action 'flagComment'}} title="Flag this comment"><i class="fa fa-flag-o"></i></button>
+          {{/if}}
+          <button class="btn btn-info" {{action 'replyToCommentTrue'}} title="Reply to comment"><i class="fa fa-reply"></i> Reply</button>
+        </div>
+        {{/if}}
+  </div>
+     
+  <hr />
+{{/if}}

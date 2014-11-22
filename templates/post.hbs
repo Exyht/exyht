@@ -1,0 +1,42 @@
+
+	<div class="col-sm-8 blog-main" {{bind-attr style="postBgColor"}}>
+    <div class="blog-post">
+    <h1>{{{title}}}</h1>
+     {{view.postCreated}}
+	<hr />
+
+	<div>{{format-markdown post}}</div>
+
+	  	{{#if isPrevId}}
+        	<div class="pull-left">{{#link-to 'post' prevTitleSlug previousId}}<i class="fa fa-arrow-left"></i> {{prevTitle}}{{/link-to}}</div>
+	  	{{/if}}
+
+	  	{{#if isNextId}}
+	    	<div class="pull-right">{{#link-to 'post' nextTitleSlug nextId}}{{nextTitle}} <i class="fa fa-arrow-right"></i>{{/link-to}}</div>
+	  	{{/if}}
+
+	  	<br />
+	 	{{#if commentFeature}}
+      		<div class="breadcrumb">
+	  		{{#if commentsLength}}
+        		{{model.comments.length}} {{format-comment-number model.comments.length}} &nbsp;&nbsp;
+      		{{/if}}
+        	{{view.pageViewCount}}
+      		</div>
+	  		<hr />
+
+	  		{{#each item in comments}}
+	    		{{render "comments" item}}
+	  		{{/each}}
+
+	  		{{#if readOnlyMode}}
+	    		<button class="btn btn-info pull-right" type="button" disabled="disabled"><i class="fa fa-plus-circle"></i> Add comment</button>
+	  		{{else}}
+	    		{{#if hasPost}}
+	      			<button class="btn btn-info pull-right" {{action 'addCommentTrue'}}><i class="fa fa-plus-circle"></i> Add comment</button>
+	    		{{/if}}
+	  		{{/if}}
+		{{/if}}
+    </div><!-- /.blog-post -->
+
+</div><!-- /.blog-main -->

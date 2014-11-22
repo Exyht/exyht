@@ -1,0 +1,42 @@
+
+  <div class="col-sm-3 col-sm-offset-1 blog-sidebar" {{bind-attr style="sidebarBgColor"}}>
+{{#with sidebarAuthor}}
+  <div class="row">
+    <div class="sidebar-module col-xs-6">
+      {{#unless image}}
+        <img {{bind-attr src=hashedEmail}} alt='person image'/>
+      {{else}}
+        <img {{bind-attr src=image}} alt='person image' height="170px" width="170px"/>
+      {{/unless}}
+    </div>
+  </div>
+  <div class="row">
+  <div class="sidebar-module-inset col-xs-10">
+    <h4>About</h4>
+      {{format-markdown about}}
+  </div>
+  </div>
+{{/with}}
+  <div class="row">
+  <div class="sidebar-module col-xs-6">
+    <h4>Archives</h4>
+    <ol class="list-unstyled">
+      {{#each sidebarArchive}}
+        <li {{bind-attr title=title}}>{{#link-to 'post' this}}{{format-archive-date created}}{{/link-to}}</li>
+      {{/each}}
+    </ol>
+  </div>
+  </div>
+  <div class="row">
+  <div class="sidebar-module col-xs-6">
+    <h4>Elsewhere</h4>
+      <ol class="list-unstyled">
+      {{#each blogLinks}}
+        {{#if elseUrl}}
+          <li><a {{ bind-attr href=url }}>{{link_name}}</a></li>
+        {{/if}}
+      {{/each}}
+      </ol>
+  </div>
+</div>
+</div>

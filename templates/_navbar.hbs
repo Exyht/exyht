@@ -1,0 +1,18 @@
+{{#if hasNavbar}}
+
+<div class="blog-masthead" id="topNavbar" {{bind-attr style="navBgColor"}}>
+    <div class="container">
+        <nav class="blog-nav">
+          {{#each blogLinks}}
+           {{#if navUrl}}
+            {{#if isBlogUrl}}
+              {{#link-to 'index' class="blog-nav-item active"}}{{link_name}}{{/link-to}}
+            {{else}}
+              <a class="blog-nav-item" {{ bind-attr href=url }}>{{link_name}}</a>
+            {{/if}}
+           {{/if}}
+          {{/each}}
+        </nav>
+    </div>
+</div>
+{{/if}}

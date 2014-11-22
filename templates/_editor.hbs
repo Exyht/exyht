@@ -1,0 +1,100 @@
+{{#unless readOnlyMode}}
+{{#if commentFeature}}
+  {{#if isCommentDivShown}}
+  <div class="addCommentDiv">
+
+   <div id="showError"></div>
+
+   <h4><span class="pull-right">
+
+   <button type="button" class="btn btn-danger btn-xs" {{action 'cancelAddComment'}}>Cancel</button>
+   <button type="button" class="btn btn-primary btn-xs" {{action 'hideAddComment'}}>Hide <i class="fa fa-chevron-up"></i></button>
+   </span>
+   &nbsp; 
+
+   {{#if isReplying}}
+    <small>Replying to&nbsp;
+      comment 
+      by <img {{bind-attr src=view.ngravatarUrl}}/>
+       <strong>{{currentCommenterNameToReply}}:</strong>
+    </small>
+   {{else}}
+    <small>Commenting to&nbsp;
+      {{#link-to 'post' actualOnlyCurrentSlug actualPostIdForAddComment}}{{{actualTitleForAddComment}}}{{/link-to}}
+    </small>
+   {{/if}}
+     
+   </h4>
+   <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-lg-6">
+        
+        <div class="btn-group btn-group-sm">
+          <button type="button" class="btn btn-default" {{action 'insertBold'}}><i class="fa fa-bold"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertItalic'}}><i class="fa fa-italic"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertLink'}}><i class="fa fa-link"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertQuote'}}><i class="fa fa-comment-o"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertCode'}}><i class="fa fa-code"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertOrderedlist'}}><i class="fa fa-list-ol"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertUnorderedlist'}}><i class="fa fa-list"></i></button>
+    
+          <button type="button" class="btn btn-default" {{action 'insertHorizontalrule'}}><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertStrikethrough'}}><i class="fa fa-strikethrough"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertSubscript'}}><i class="fa fa-subscript"></i></button>
+          <button type="button" class="btn btn-default" {{action 'insertSuperscript'}}><i class="fa fa-superscript"></i></button>
+
+          <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-header"></i>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation"><a href=""{{action 'insertHeading1'}}>H1</a></li>
+              <li role="presentation"><a href=""{{action 'insertHeading2'}}>H2</a></li>
+              <li role="presentation"><a href=""{{action 'insertHeading3'}}>H3</a></li>
+            </ul>
+          </div>
+        </div>
+          {{auto-expanding-text-area class="form-control" maxlength="2000" row="7" value=typeComment}}
+   
+          {{#if showNewCommentLength}}
+            <div style="text-align:center;padding:0.5%;">{{newCommentLength}} to go for the post</div>
+          {{/if}}
+          <div class="row" style="margin-top:2px;" >
+            <div class="col-xs-4">
+              <label class="sr-only" for="name">Name:</label>
+                {{input class="form-control input-sm" type="text" id="name" value=name placeholder="Name"}}
+            </div>
+            <div class="col-xs-4">
+              <label class="sr-only" for="email">Email:</label>
+                {{input class="form-control input-sm" type="email" id="email" value=email placeholder="Email"}}
+            </div>
+            <div class="col-xs-2">
+                {{input type="hidden" value=actualPostIdForAddComment}}
+                {{#if sendingCommentOn}}
+                  <button class="btn btn-primary btn-sm">Submitting...</button>
+                {{else}}
+                  <button type="button" {{action "addComment"}} class="btn btn-success btn-sm">Submit</button>
+                  {{input type="text" name="spam_bot" class="hidden" value="Leave it, if U're human"}}
+                {{/if}}
+            </div>
+          </div>
+    
+      </div>
+        <div class="col-lg-6" id="typingCommentDiv" style="border:1px dashed #000;background-color:#ffffff;padding:1%;height:115px;overflow:auto;">
+          {{format-markdown typeComment}}
+        </div>
+     </div>
+    </div>
+   </div>
+  {{/if}}
+
+
+  {{#if isHideAddComment}}
+  <div class="addCommentDiv" style="padding:1%;cursor:pointer;text-align:center;" {{action 'showAddComment'}}>
+   Show <i class="fa fa-chevron-down"></i>
+  </div>
+  {{/if}}
+{{/if}}  
+{{/unless}}
