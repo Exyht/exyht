@@ -18,7 +18,6 @@ Route::group(array('before' => 'csrf'), function()
   Route::post('install/comments', 'InstallerController@createCommentsTable');
   Route::post('install/bloglinks', 'InstallerController@createBloglinksTable');
   Route::post('install/signup', 'InstallerController@createAccount');
-  Route::post('install/resetInstaller', 'InstallerController@resetInstaller');
 });
 /*
 |--------------------------------------------------------------------------
