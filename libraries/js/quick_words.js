@@ -1,0 +1,1 @@
+var words=["apple", "Exyht", "exyht","facebook","github","google","instagram","microsoft","mozilla","pinterest","reddit","stackoverflow","tumblr","twitter","wikipedia","yahoo","youtube"];
