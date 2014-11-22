@@ -1,0 +1,53 @@
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Exyht</a>
+    </div>
+    <!-- /.navbar-header -->
+
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>{{#link-to 'profilesetting'}}<i class="fa fa-gear fa-fw"></i> Settings{{/link-to}}
+                </li>
+                <li class="divider"></li>
+                <li {{action "logOut"}} style="cursor:pointer;text-align:center;"><i class="fa fa-sign-out fa-fw"></i>
+                 Logout
+                </li>
+            </ul>
+            <!-- /.dropdown-user -->
+        </li>
+        <!-- /.dropdown -->
+    </ul>
+    <!-- /.navbar-top-links -->
+
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li>
+                    {{#link-to 'index'}}<i class="fa fa-dashboard fa-fw"></i> Dashboard {{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'typeblogpost'}}<i class="fa fa-edit fa-fw"></i> Manage Post {{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'uisettings'}}<i class="fa fa-wrench fa-fw"></i> Ui Settings {{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'profilesetting'}}<i class="fa fa-gear fa-fw"></i> Profile Settings/ Logo{{/link-to}}
+                </li>
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+    <!-- /.navbar-static-side -->
+</nav>

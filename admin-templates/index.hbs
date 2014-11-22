@@ -1,0 +1,155 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-3 huge">
+                Dashboard
+                </div>
+                <div class="col-md-9">
+                <div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+                  
+                  <div class="btn-group" role="group" aria-label="...">
+                  {{#link-to 'profilesetting'}}
+                      <button class="btn btn-primary">
+
+                      <i class="fa fa-certificate"></i>
+                        Manage Logo
+                      </button>
+                    {{/link-to}}
+                  </div>
+                  <div class="btn-group" role="group" aria-label="...">
+                  <button class="btn btn-success" data-toggle="modal" data-target="#blog_setting_modal"><i class="fa fa-magic"></i> Manage Blog Settings</button>
+                  <!-- Button trigger modal -->
+                  <!-- Modal -->
+                  <div class="modal fade" id="blog_setting_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <h4 class="modal-title" id="myModalLabel"><i class="fa fa-magic"></i> Manage Blog Settings</h4>
+                        </div>
+                        <div class="modal-body" style="font-size:18px;">
+                         <div class="form-group">
+                          <div class="input-group">
+                            {{input class="form-control" type="text" value=blog_name placeholder="Blog name"}}
+                            <span class="input-group-btn">
+                            {{#if loadingOn}}
+                              <button type="button" class="btn btn-primary disabled">Submit</button>
+                            {{else}}
+                              <button {{action 'changeBlogName'}} type="button" class="btn btn-primary">Submit</button>
+                            {{/if}}  
+                            </span>
+                          </div>
+                         </div>
+                         <div class="form-group">
+                          <div class="input-group">
+                            {{input class="form-control" type="text" value=blog_subtitle placeholder="Blog subtitle"}}
+                            <span class="input-group-btn">
+                            {{#if loadingOn}}
+                              <button type="button" class="btn btn-primary disabled">Submit</button>
+                            {{else}}
+                              <button {{action 'changeSubtitle'}} type="button" class="btn btn-primary">Submit</button>
+                            {{/if}}
+                            </span>
+                          </div>
+                         </div>
+                          <div class="row">
+                           <div class="col-lg-6">
+                              <div class="form-group">
+                               Read Only Mode: 
+                               {{#unless read_only_mode}}
+                                 Off: <span {{action 'turnReadOnlyModeOn'}} style="cursor:pointer;"><i class="fa fa-toggle-off fa-lg text-danger"></i></span>
+                               {{else}}
+                                 On: <span {{action 'turnReadOnlyModeOff'}} style="cursor:pointer;"><i class="fa fa-toggle-on fa-lg text-success"></i></span>
+                               {{/unless}}
+                              </div>
+                              <div class="form-group">
+                               Has Comment Feature: 
+                               {{#unless has_cmnt_feature}}
+                                 Off: <span {{action 'turnCommentFeatureOn'}} style="cursor:pointer;"><i class="fa fa-toggle-off fa-lg text-danger"></i></span>
+                               {{else}}
+                                 On: <span {{action 'turnCommentFeatureOff'}} style="cursor:pointer;"><i class="fa fa-toggle-on fa-lg text-success"></i></span>
+                               {{/unless}}
+                              </div>
+                              </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                               Has Navbar: 
+                               {{#unless has_navbar}}
+                                 Off: <span {{action 'turnNavbarOn'}} style="cursor:pointer;"><i class="fa fa-toggle-off fa-lg text-danger"></i></span>
+                               {{else}}
+                                 On: <span {{action 'turnNavbarOff'}} style="cursor:pointer;"><i class="fa fa-toggle-on fa-lg text-success"></i></span>
+                               {{/unless}}
+                              </div>
+                            </div>
+                          </div>
+                          Add New Blog links:
+                         <div class="form-group">
+                            {{input class="form-control" type="text" value=link_name placeholder="Link name. e.g: example"}}
+                          <div class="input-group">
+                            {{input class="form-control" type="url" value=link_url placeholder="http://example.com"}}
+                            <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                              <ul class="dropdown-menu" role="menu">
+                                <li {{action "addNavLink"}} style="cursor:pointer;"><a>Navbar</a></li>
+                                <li {{action "addElseLink"}} style="cursor:pointer;"><a>Elsewhere</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                         </div>
+                         {{#if loadingOn}}
+                           <div class="alert alert-warning" role="alert" style="text-align:center;padding:2%;font-size:18px;">Loading...</div>
+                         {{/if}}
+                         Allowed links for Navbar & Elsewhere:
+                         {{#each model.blog_links}}
+                           {{render 'bloglink' this}}
+                         {{/each}}
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="btn-group" role="group" aria-label="...">
+                  {{#link-to 'typeblogpost'}}
+                    <button class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i>
+                     Create New Post 
+                    </button>
+                    {{/link-to}}
+                  </div>
+                </div> 
+              </div>
+            </div>
+            </div>
+    </div>
+    <!-- /.col-lg-12 -->
+    </div>
+    
+	{{render 'toprow' this}}
+		
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{view.numberOfPost}}</strong> 
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                  {{#each model.posts}}
+                    {{render 'posttitle' this}}
+                  {{/each}}
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->

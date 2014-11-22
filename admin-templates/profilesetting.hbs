@@ -1,0 +1,105 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Profile Settings & Blog Logo</h2>
+            <hr />
+            <div>
+              {{#if image}}
+                <img {{bind-attr src=image}} id="profileImageDiv" height="170px" width="170px"/>
+                {{#unless isRemoved}}
+                  {{#if isRemovingPicture}}
+                    <button type="button" class="btn btn-danger">Removing Picture...</button>
+                  {{else}}
+                    <button type="button" class="btn btn-default" {{action 'removeProfPicture'}}>Remove Profile Picture</button>
+                  {{/if}}
+                {{/unless}}
+              {{else}}
+                <img {{bind-attr src=hashedEmail}} id="profileImageDiv" height="170px" width="170px"/>
+              {{/if}}
+              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#profileImgModal">Change Profile Picture/ Blog Logo</button>
+              <!-- Modal -->
+              <div class="modal fade" id="profileImgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" {{action 'cancelUploadingImage'}} data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-lg text-info"></i> Upload Image</h4>
+                    </div>
+                    <div class="modal-body">
+              	      <div id="imgFeedback"></div>
+              	      <div id="imgLoadingDiv" style="display:none;text-align:center;"><i class="fa fa-spinner fa-spin"></i> Uploading...</div>
+              	       
+              	      <iframe name="upload_profile_img_iframe" src="" style="display:none;"></iframe>
+                        
+                        <form method="POST" action="uploadProfileImage" accept-charset="UTF-8" target="upload_profile_img_iframe" enctype="multipart/form-data">
+                          {{input type="hidden" name="non_ajax_token" value=admin_token}}
+                          <input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
+                          <input name="file" size="20" type="file" accept="image/jpg, image/png, image/gif, image/jpeg"/>
+                          <br />
+                          Save as:
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="picType" value="1" checked>Author
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="picType" value="2">Blog logo
+                            </label>
+                          </div>
+                          <br />
+              	          <input type="submit" class="btn btn-primary" name="submit" value="Upload" onclick="showImgLoading();"/>
+                        </form>
+              	      </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" {{action 'cancelUploadingImage'}} data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              <hr />
+        </div>
+        <!-- /.col-lg-12 -->
+        <div class="col-lg-12" style="padding-bottom:2%;">
+             <div class="col-lg-4" style="background-color:#f5f5f5;">
+              <h2>Change Password:</h2>
+              {{#unless pwd_match}}
+               <div class="alert alert-danger" role="alert">Passwords did not match.</div>
+              {{/unless}}
+              {{#if too_small}}
+              <div class="alert alert-danger" role="alert">Password must have atleast 6 characters.</div>
+              {{/if}}
+                <div class="form-group">
+                  <label for="oldPassword">Old Password</label>
+                  {{input type="password" value=old_password class="form-control" id="oldPassword" placeholder="Old Password"}}
+                </div>
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  {{input type="password" value=new_password class="form-control" id="newPassword" placeholder="New Password"}}
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm New Password</label>
+                  {{input type="password" value=confirm_password class="form-control" id="confirmPassword" placeholder="Confirm New Password"}}
+                </div>
+                <input type="submit" {{action "changePassword"}} class="btn btn-success" value="Change Password"/>
+              
+             </div>
+              <div class="col-lg-8">
+                <h2>About</h2>
+                {{format-markdown about}}
+                <div>
+                  {{#unless isProfileEditingOnForProfileSetting}}
+                    <button type="button" {{action 'editProfileTrue' this}} class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Edit</button>
+                  {{else}}
+                    <button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> Editing On</button>
+                  {{/unless}}
+                  <br />
+                </div>
+              </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+</div>
