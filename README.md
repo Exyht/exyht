@@ -51,7 +51,7 @@ A `Grunt` file is already built. If you want to use build tools like `Grunt`, `G
 
 ## Security
 
-Security issue is taken seriously. For backends, necessary Laravel security steps've been taken. For user input sanitization *HtmlPurifier*, *Google caja html sanitizer*, *markdown sanitizer* are used.
+Security issue is taken seriously. For backend, necessary Laravel security steps've been taken. For user input sanitization *HtmlPurifier*, *Google caja html sanitizer*, *markdown sanitizer* are used.
 
 Besides You can *Block IP*, *Manage flagged comment*, etc very easily from your admin page.
 
