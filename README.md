@@ -53,6 +53,14 @@ Security issue is taken seriously. For backend, necessary Laravel security steps
 
 Besides You can *Block IP*, *Manage flagged comment*, etc very easily from your admin page.
 
+## Contribute
+
+Exyht is 100% open source. So contribute in Exyht and make it great.
+
+## Report Bugs or issues/ Pull request
+
+Bugs always exist. Report any bug or issue in https://github.com/Exyht/exyht/issues and Pull request in https://github.com/Exyht/exyht/pulls.
+
 ## LICENSE
 
 Licensed under the GNU General Public License Version 2.0 (or later). You may not use this software if you do not agree with the License.
