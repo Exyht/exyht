@@ -1,6 +1,6 @@
 ## Exyht (Express your thought)
 
-Exyht is a fully open source blogging software. This is a very light weight and easy to use one page web App.
+Exyht is a fully open source & free blogging software. This is a very light weight and easy to use one page web App.
 
 ## Built with
 
