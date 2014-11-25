@@ -16,7 +16,7 @@ You can customize the Blog template's *Blog name & sub-title*, *font family*, *c
 
 You'll also love the text editor, use *markdown*, *emoji* with *textcomplete* feature. Type your comment while browsing from one topic to another & you'll experience faster topic load Since this is a one page web App.
 
-Exyht use backend Laravel Api with Ember at front end.
+Exyht uses backend Laravel Api with Ember at front end.
 
 ## Install Exyht
 
