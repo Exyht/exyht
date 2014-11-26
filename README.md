@@ -47,6 +47,10 @@ Exyht's browser requirements are also high since it's mainly a Javascript based 
 
 A `Grunt` file is already built. If you want to use build tools like `Grunt`, `Gulp`, etc. you need to install *Node npm*.
 
+## Adding Google Analytics Tracking 
+
+[Here in Ember guide, you'll get how to add analytics tracking to Ember App](http://emberjs.com/guides/cookbook/helpers_and_components/adding_google_analytics_tracking/).
+
 ## Security
 
 Security issue is taken seriously. For backend, necessary Laravel security steps've been taken. For user input sanitization *HtmlPurifier*, *Google caja html sanitizer*, *markdown sanitizer* are used.
