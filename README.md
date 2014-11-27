@@ -18,6 +18,17 @@ You'll also love the text editor, use *markdown*, *emoji* with *textcomplete* fe
 
 Exyht uses backend Laravel Api with Ember at front end.
 
+## Mobile & Tablet friendly 
+
+![fullscreen capture 11272014 110833 am bmp](https://cloud.githubusercontent.com/assets/9896315/5212870/1db0c6ce-762c-11e4-9b99-3fd1f0bedac7.jpg)
+## Text Editor won't interrupt while reading or changing topic.
+
+![fullscreen capture 11272014 101028 am bmp](https://cloud.githubusercontent.com/assets/9896315/5212874/38e89eee-762c-11e4-97ca-e94e1e345ab4.jpg)
+## Customize Colors & Fonts.
+
+![fullscreen capture 11272014 111722 am bmp](https://cloud.githubusercontent.com/assets/9896315/5212878/4d94df1a-762c-11e4-91df-e501f4b76be2.jpg)
+
+
 ## Install Exyht
 
 Installation of Exyht is very easy. Follow the below steps:
