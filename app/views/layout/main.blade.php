@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
     
-		<title>{{{$title}}}</title>
-    <meta name="description" content="{{{$meta_description}}}">
-		<?php
-		// Change csrf_token in SESSION with each page load
-      Session::put('_token', md5(microtime()));
-      $getHomeController = new HomeController();
-		?>
-		<meta name="csrf-token" content="{{csrf_token()}}">
-		@include('layout.libraries')
-	<style type="text/css">
+<title>{{{$title}}}</title>
+<meta name="description" content="{{{$meta_description}}}">
+<?php
+// Change csrf_token in SESSION with each page load
+Session::put('_token', md5(microtime()));
+$getHomeController = new HomeController();
+?>
+<meta name="csrf-token" content="{{csrf_token()}}">
+<script type="text/javascript">
+/*
+            _________              __      __
+           / _______/             / /    _/ /_
+          / /____ __  __ __  __  / /__  /_  _/
+         / _____/ \ \/ / \ \/ / / ___ \  / /
+        / /______ /_/\_\  \  / / /  / / / /__
+       /________/         /_/ /_/  /_/ /____/
+*/
+</script>
+	@include('layout.libraries')
+<style type="text/css">
   .form-control{
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
@@ -50,9 +60,9 @@
     margin-left: 2%;
     margin-right: 2%;
    }
-	</style>
-	</head>
-  <body>
+</style>
+</head>
+<body>
         
     @include('layout.noscript')
     
@@ -92,5 +102,5 @@
       
       Exyht.advanceReadiness();
     </script>        
-  </body>
+</body>
 </html>
