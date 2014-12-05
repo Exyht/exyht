@@ -59,6 +59,7 @@ Ember.Handlebars.helper('format-archive-date', function(input) {
 Ember.Handlebars.helper('format-comment-number', function(input) {
   return (input == 1)?' Comment':' Comments';
 });
+
 Exyht.Router.map(function() {
   this.route('index', {path: Exyht.BaseURL});
   this.route('post', {path: Exyht.BaseURL+'post/:post_slug/:post_id'});
@@ -105,6 +106,7 @@ Exyht.PostRoute = Ember.Route.extend({
     return { post_slug: slug, post_id: model.id };
   }  
 });
+
 Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
   didInsertElement: function(){
  
@@ -136,12 +138,6 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
             }));
         },
         template: function (value) {
-            emoji.sheet_path = Exyht.PathToLibraries+'/libraries/js/sheet_twitter_72.png';
-            emoji.use_sheet = true;
-
-            // show the short-name as a `title` attribute for css/img emoji
-            emoji.include_title = true;
-            emoji.init_env();
             return new Ember.Handlebars.SafeString(emoji.replace_colons(':'+value.toLowerCase()+':') +' :'+ value+':');
         },
         replace: function (value) {
