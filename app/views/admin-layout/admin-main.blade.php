@@ -13,7 +13,17 @@
          Session::put('admin-token', md5(microtime()));
          $adminToken = Session::get('admin-token');
     ?>
-        <meta name="csrf-token" content="{{$adminToken}}">
+    <meta name="csrf-token" content="{{$adminToken}}">
+    <script type="text/javascript">
+    /*
+            _________              __      __
+           / _______/             / /    _/ /_
+          / /____ __  __ __  __  / /__  /_  _/
+         / _____/ \ \/ / \ \/ / / ___ \  / /
+        / /______ /_/\_\  \  / / /  / / / /__
+       /________/         /_/ /_/  /_/ /____/
+    */
+    </script>
         @include('admin-layout.admin-libraries')
     
     <style type="text/css">
