@@ -82,7 +82,7 @@ class Post extends Eloquent {
   |--------------------------------------------------------------------------
   */
   public static function findArchive(){
-    return Post::select('id', 'title', 'created')
+    return Post::select(array('id', 'title', 'created', DB::raw('LEFT(body, 300) AS slicedBody')))
                   ->status()
                   ->orderdesc()
                   ->get();
