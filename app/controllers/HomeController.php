@@ -69,6 +69,24 @@ class HomeController extends BaseController {
     }
     /*
     |--------------------------------------------------------------------------
+    | Get first image
+    |--------------------------------------------------------------------------
+    */
+    protected function catchFirstImage($post) {
+
+      $dom = new DOMDocument();
+      $dom->loadHtml($post);
+      $imgTags = $dom->getElementsByTagName('img');
+
+      if ($imgTags->length > 0) {
+        $imgElement = $imgTags->item(0);
+        return '<img src="'.$imgElement->getAttribute('src').'">';
+      } else {
+        return $post;
+      }
+    }
+    /*
+    |--------------------------------------------------------------------------
     | View home page with data
     |--------------------------------------------------------------------------
     */
@@ -223,14 +241,19 @@ class HomeController extends BaseController {
       $posts = Post::findArchive();
 
       if(!$posts->isEmpty())
-      {
-
+      { 
+        $dom = new DOMDocument();
         foreach ($posts as $post)
         {
+          $dom->loadHtml(self::getMarkdown($post->slicedBody));
+          $imgTags = $dom->getElementsByTagName('img');
+
           $quiz[] = array(
             "id"        => $post->id,
             "title"     => self::getHtmlPurifier($post->title),
-            "created"   => $post->created
+            "created"   => $post->created,
+            "has_img"   => ($imgTags->length > 0)?true:false,
+            "first_img" => ($imgTags->length > 0)?self::getHtmlPurifier(self::catchFirstImage(self::getMarkdown($post->slicedBody))):''
           );
         }
         return $quiz;
@@ -300,7 +323,8 @@ class HomeController extends BaseController {
         {
 
           $title  = self::getHtmlPurifier($post->title);
-          $body   = self::getHtmlPurifier(self::getMarkdown($post->slicedBody));
+          //$body   = self::getHtmlPurifier(self::getMarkdown($post->slicedBody));
+          $body   = self::getHtmlPurifier(self::catchFirstImage(self::getMarkdown($post->slicedBody)));
 
           $quiz['posts'][] = array(
             "id"        =>  $post->id,
