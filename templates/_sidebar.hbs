@@ -1,5 +1,5 @@
 
-  <div class="col-sm-3 col-sm-offset-1 blog-sidebar" {{bind-attr style="sidebarBgColor"}}>
+<div class="col-sm-3 col-sm-offset-1 blog-sidebar" {{bind-attr style="sidebarBgColor"}}>
 {{#with sidebarAuthor}}
   <div class="row">
     <div class="sidebar-module col-xs-6">
@@ -18,11 +18,21 @@
   </div>
 {{/with}}
   <div class="row">
-  <div class="sidebar-module col-xs-6">
+  <div class="sidebar-module col-xs-10">
     <h4>Archives</h4>
     <ol class="list-unstyled">
       {{#each sidebarArchive}}
-        <li {{bind-attr title=title}}>{{#link-to 'post' this}}{{format-archive-date created}}{{/link-to}}</li>
+        <li {{bind-attr title=title}}>
+          {{#link-to 'post' this}}
+
+            {{#if has_img}}
+              {{format-markdown first_img}}
+            {{/if}}
+
+            {{format-archive-date created}}
+
+          {{/link-to}}
+        </li>
       {{/each}}
     </ol>
   </div>
