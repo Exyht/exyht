@@ -325,28 +325,42 @@ function program6(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'title': ("title")
   },hashTypes:{'title': "ID"},hashContexts:{'title': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">");
+  data.buffer.push(">\r\n          ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "post", "", options) : helperMissing.call(depth0, "link-to", "post", "", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</li>\r\n      ");
+  data.buffer.push("\r\n        </li>\r\n      ");
   return buffer;
   }
 function program7(depth0,data) {
   
-  var helper, options;
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\r\n\r\n            ");
+  stack1 = helpers['if'].call(depth0, "has_img", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n            ");
   data.buffer.push(escapeExpression((helper = helpers['format-archive-date'] || (depth0 && depth0['format-archive-date']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "created", options) : helperMissing.call(depth0, "format-archive-date", "created", options))));
+  data.buffer.push("\r\n\r\n          ");
+  return buffer;
+  }
+function program8(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\r\n              ");
+  data.buffer.push(escapeExpression((helper = helpers['format-markdown'] || (depth0 && depth0['format-markdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "first_img", options) : helperMissing.call(depth0, "format-markdown", "first_img", options))));
+  data.buffer.push("\r\n            ");
+  return buffer;
   }
 
-function program9(depth0,data) {
+function program10(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\r\n        ");
-  stack1 = helpers['if'].call(depth0, "elseUrl", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "elseUrl", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n      ");
   return buffer;
   }
-function program10(depth0,data) {
+function program11(depth0,data) {
   
   var buffer = '', stack1;
   data.buffer.push("\r\n          <li><a ");
@@ -360,18 +374,18 @@ function program10(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("\r\n  <div class=\"col-sm-3 col-sm-offset-1 blog-sidebar\" ");
+  data.buffer.push("\r\n<div class=\"col-sm-3 col-sm-offset-1 blog-sidebar\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'style': ("sidebarBgColor")
   },hashTypes:{'style': "STRING"},hashContexts:{'style': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">\r\n");
   stack1 = helpers['with'].call(depth0, "sidebarAuthor", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n  <div class=\"row\">\r\n  <div class=\"sidebar-module col-xs-6\">\r\n    <h4>Archives</h4>\r\n    <ol class=\"list-unstyled\">\r\n      ");
+  data.buffer.push("\r\n  <div class=\"row\">\r\n  <div class=\"sidebar-module col-xs-10\">\r\n    <h4>Archives</h4>\r\n    <ol class=\"list-unstyled\">\r\n      ");
   stack1 = helpers.each.call(depth0, "sidebarArchive", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n    </ol>\r\n  </div>\r\n  </div>\r\n  <div class=\"row\">\r\n  <div class=\"sidebar-module col-xs-6\">\r\n    <h4>Elsewhere</h4>\r\n      <ol class=\"list-unstyled\">\r\n      ");
-  stack1 = helpers.each.call(depth0, "blogLinks", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "blogLinks", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n      </ol>\r\n  </div>\r\n</div>\r\n</div>");
   return buffer;
@@ -396,7 +410,7 @@ function program3(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'src': ("blogLogo")
   },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" height=\"70px\" width=\"70px\" max-width=\"300px\"/>\r\n        ");
+  data.buffer.push(" height=\"70px\" max-width=\"300px\"/>\r\n        ");
   return buffer;
   }
 
@@ -439,7 +453,7 @@ function program5(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "sidebar", options) : helperMissing.call(depth0, "partial", "sidebar", options))));
   data.buffer.push("  \r\n      </div><!-- /.row -->\r\n    </div><!-- /.container -->\r\n\r\n    \r\n  </div> <!-- /container full -->\r\n  ");
   data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "footer", options) : helperMissing.call(depth0, "partial", "footer", options))));
-  data.buffer.push("\r\n  ");
+  data.buffer.push("\r\n  \r\n  ");
   data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "editor", options) : helperMissing.call(depth0, "partial", "editor", options))));
   data.buffer.push("\r\n");
   return buffer;
