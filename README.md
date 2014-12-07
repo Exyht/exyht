@@ -33,7 +33,7 @@ Exyht uses backend Laravel Api with Ember at front end.
 
 Installation of Exyht is very easy. Follow the below steps:
 + Download **Exyht** zip from github and extract it in a folder `blog`(recommended) in `public_html` or `htdocs`.
-+ Save your **username** & **password** for `mysql` in `app/config/database.php`.
++ Save your **database**, **username** & **password** for `mysql` in `app/config/database.php`.
 + Now run Exyht installer by browsing `http://yourdomain/blog/installer` & follow the instructions. It will take not more than 30 seconds.
 + Congrates, installation is complete. Now go to **Admin panel** by browsing `http://yourdomain/blog/admin-page`.
 + Your blog path `http://yourdomain/blog/`.
