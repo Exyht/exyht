@@ -200,7 +200,11 @@ function program1(depth0,data) {
   data.buffer.push("\r\n    <p>Copyright &copy; ");
   stack1 = helpers._triageMustache.call(depth0, "currentYear", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" - All rights reserved</p>\r\n    <p class=\"small\">Exyht</p>\r\n</div>");
+  data.buffer.push(" - ");
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "blogTitle", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push(" - All rights reserved</p>\r\n    <p class=\"small\">Built with <a href=\"https://github.com/Exyht/exyht\" alt=\"Exyht link\">Exyht</a></p>\r\n</div>");
   return buffer;
   
 });
@@ -556,7 +560,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 
 
-  data.buffer.push("<div class=\"col-sm-8 blog-main\">\r\n	<div class=\"alert alert-warning\" role=\"alert\" style=\"text-align:center;padding:2%;\">Error!</div>\r\n</div>");
+  data.buffer.push("<div class=\"col-sm-8 blog-main\">\r\n	<div class=\"alert alert-warning\" role=\"alert\" style=\"text-align:center;padding:2%;\">Error! Maybe Server Error.</div>\r\n</div>");
   
 });
 
