@@ -76,7 +76,7 @@
                   <button class="btn btn-primary btn-sm">Submitting...</button>
                 {{else}}
                   <button type="button" {{action "addComment"}} class="btn btn-success btn-sm">Submit</button>
-                  {{input type="text" name="spam_bot" class="hidden" value="Leave it, if U're human"}}
+                  {{input type="text" name="spam_bot" class="hidden" value=valueForSpam}}
                 {{/if}}
             </div>
           </div>

@@ -13,6 +13,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
   currentCommentIdToReply: '',
   currentCommenterNameToReply: '',
   currentCommenterGravaterToReply: '',
+  valueForSpam: '',
   postKey: function(){
   
     var getNewCommentLength = this.get('typeComment').length;
@@ -104,6 +105,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
       var postId = this.get('actualPostIdForAddComment');
       var email = this.get('email');
       var replyingCommentId = this.get('currentCommentIdToReply');
+      var valueForSpamBot = this.get('valueForSpam');
       
       if ((!addedComment || addedComment.length < 20) || !name || !email) {
          this.set('isCommentDivShown', true);
@@ -121,6 +123,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
          comment: addedComment,
          name: name,
          email: email,
+         spam_bot: valueForSpamBot,
          replyToCommentId: replyingCommentId
         },function(data){
 
