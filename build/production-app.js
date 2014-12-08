@@ -18,7 +18,7 @@ function addCss(cssString) {
     head.appendChild(newCss);
   } catch(err) { return; }
 } 
-		
+    
 var currentDate = new Date();
 Exyht.currentYear = currentDate.getFullYear();
 
@@ -33,7 +33,7 @@ Ember.Handlebars.helper('format-markdown', function(input) {
    if (typeof input == 'undefined')  return;
    
 var markdown = new Markdown.getSanitizingConverter();
-
+//var markdown = new Markdown.Converter();
 emoji.sheet_path = Exyht.PathToLibraries+'/libraries/js/sheet_twitter_72.png';
 emoji.use_sheet = true;
 
@@ -59,7 +59,6 @@ Ember.Handlebars.helper('format-archive-date', function(input) {
 Ember.Handlebars.helper('format-comment-number', function(input) {
   return (input == 1)?' Comment':' Comments';
 });
-
 Exyht.Router.map(function() {
   this.route('index', {path: Exyht.BaseURL});
   this.route('post', {path: Exyht.BaseURL+'post/:post_slug/:post_id'});
@@ -106,7 +105,6 @@ Exyht.PostRoute = Ember.Route.extend({
     return { post_slug: slug, post_id: model.id };
   }  
 });
-
 Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
   didInsertElement: function(){
  
@@ -195,6 +193,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
   currentCommentIdToReply: '',
   currentCommenterNameToReply: '',
   currentCommenterGravaterToReply: '',
+  valueForSpam: '',
   postKey: function(){
   
     var getNewCommentLength = this.get('typeComment').length;
@@ -286,6 +285,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
       var postId = this.get('actualPostIdForAddComment');
       var email = this.get('email');
       var replyingCommentId = this.get('currentCommentIdToReply');
+      var valueForSpamBot = this.get('valueForSpam');
       
       if ((!addedComment || addedComment.length < 20) || !name || !email) {
          this.set('isCommentDivShown', true);
@@ -303,6 +303,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
          comment: addedComment,
          name: name,
          email: email,
+         spam_bot: valueForSpamBot,
          replyToCommentId: replyingCommentId
         },function(data){
 
@@ -586,10 +587,10 @@ addOnlyCurrentSlug: Ember.computed.alias("controllers.application.actualOnlyCurr
   }
 });
 Exyht.IndexController = Ember.ObjectController.extend({
-  	postBgColor: function(){
-  		var bgClr = Ember.get('Exyht.BlogStyle.post_bg_clr');
-    	return (bgClr !== "")?"background-color: "+bgClr:"background-color: #ffffff";
-  	}.property('Exyht.BlogStyle.post_bg_clr'),
+    postBgColor: function(){
+      var bgClr = Ember.get('Exyht.BlogStyle.post_bg_clr');
+      return (bgClr !== "")?"background-color: "+bgClr:"background-color: #ffffff";
+    }.property('Exyht.BlogStyle.post_bg_clr'),
 });
 Exyht.PostController = Ember.ObjectController.extend({
   needs: ["application", "index"],
@@ -666,8 +667,8 @@ Exyht.PostView = Ember.View.extend({
   }).property("controller.created"),
 
   pageViewCount: (function(){
-  	
-  	var pageViews = parseInt(this.get("controller.views"));
-  	return new Ember.Handlebars.SafeString((pageViews === 0)?'1 seen' : pageViews + 1 + ' seen');
+    
+    var pageViews = parseInt(this.get("controller.views"));
+    return new Ember.Handlebars.SafeString((pageViews === 0)?'1 seen' : pageViews + 1 + ' seen');
   }).property("controller.views"),
 });
