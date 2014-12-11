@@ -9,7 +9,9 @@
 
          <h5 class="media-heading">
              <strong>{{{name}}}</strong>
-             <div class="pull-right" {{bind-attr title=cdate}}>{{format-date cdate}}</div>
+             <div class="pull-right" {{bind-attr title=cdate}}>
+              <time>{{time-ago createdAt=cdate}}</time>
+             </div>
              {{#if replyToComment.commentHasReply}}
                <div class="pull-right small" style="padding-right:1%;">
                  <i class="fa fa-share"></i>&nbsp;
