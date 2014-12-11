@@ -1,12 +1,12 @@
 window.Exyht = Ember.Application.create({
     currentPath: '',
+    BaseURL: '/blog/',
+    gravatarVersion: 'identicon'
 });
 
 Exyht.deferReadiness();
 
-Exyht.BaseURL = '/blog/';
 Exyht.currentBaseUri = window.location.protocol+"//"+window.location.hostname+Exyht.BaseURL;
-Exyht.gravatarVersion = 'identicon';
 
 function addCss(cssString) {
   try{
