@@ -173,7 +173,7 @@ module.exports = function(grunt) {
                     templateBasePath: /templates/
                 },
                 files: {
-                    "build/templates.js": "templates/*.hbs"
+                    "build/templates.js": ["templates/*.hbs","templates/**/*.hbs"]
                 }
             },
             adminapp: {
