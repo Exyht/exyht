@@ -1,12 +1,12 @@
 window.Exyht = Ember.Application.create({
     currentPath: '',
+    BaseURL: '/blog/',
+    gravatarVersion: 'identicon'
 });
 
 Exyht.deferReadiness();
 
-Exyht.BaseURL = '/blog/';
 Exyht.currentBaseUri = window.location.protocol+"//"+window.location.hostname+Exyht.BaseURL;
-Exyht.gravatarVersion = 'identicon';
 
 function addCss(cssString) {
   try{
@@ -18,7 +18,7 @@ function addCss(cssString) {
     head.appendChild(newCss);
   } catch(err) { return; }
 } 
-    
+		
 var currentDate = new Date();
 Exyht.currentYear = currentDate.getFullYear();
 
@@ -44,12 +44,6 @@ emoji.init_env();
 function urlX(url) { if(/^https?:\/\//.test(url)) { return url; }}
   
    return new Ember.Handlebars.SafeString(emoji.replace_colons(html_sanitize(markdown.makeHtml(input), urlX)));
-});
-
-Ember.Handlebars.helper('format-date', function(input) {
-  timezone = jstz.determine();
-  timezoneName = timezone.name();
-  return moment.tz(input, timezoneName).fromNow();
 });
 
 Ember.Handlebars.helper('format-archive-date', function(input) {
@@ -128,7 +122,7 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
       this.$().focus();
         
       this.$().textcomplete([
-          { // emoji strategy
+      { // emoji strategy
         match: /\B:([\-+\w]*)$/,
         search: function (term, callback) {
             callback($.map(emojies, function (emoji) {
@@ -146,8 +140,8 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
             check(text);
             return !isInCode;
         }
-    },
-        { // words strategy
+      },
+      { // words strategy
         match: /\b(\w{2,})$/,
         search: function (term, callback) {
             callback($.map(words, function (word) {
@@ -159,7 +153,7 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
             return word + ' ';
         },
         context: function () { return isInCode; }
-    }
+      }
 ]);
 
   this.$().scroll(function() {
@@ -177,6 +171,18 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
 
   }.bind(this));
 }
+});
+Exyht.TimeAgoComponent = Ember.Component.extend({
+  timeAgo: '',
+  
+  clock: function() {
+  	timezone = jstz.determine();
+  	timezoneName = timezone.name();
+    var newTimeAgo =  moment.tz(this.get('createdAt'), timezoneName).fromNow();
+    this.set('timeAgo', newTimeAgo);
+    
+    Ember.run.later(this, this.clock, 1000 * 60);
+  }.on('didInsertElement') 
 });
 Exyht.ApplicationController = Ember.ArrayController.extend({
   needs: "post",
@@ -434,7 +440,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
       this.set('isHideAddComment', false);
       $("div.container-full").css({"margin-top":"0"});
     },
-
+    
     // Editor tools
     insertBold: function(){
      var textarea = $('textarea');
@@ -587,10 +593,10 @@ addOnlyCurrentSlug: Ember.computed.alias("controllers.application.actualOnlyCurr
   }
 });
 Exyht.IndexController = Ember.ObjectController.extend({
-    postBgColor: function(){
-      var bgClr = Ember.get('Exyht.BlogStyle.post_bg_clr');
-      return (bgClr !== "")?"background-color: "+bgClr:"background-color: #ffffff";
-    }.property('Exyht.BlogStyle.post_bg_clr'),
+  	postBgColor: function(){
+  		var bgClr = Ember.get('Exyht.BlogStyle.post_bg_clr');
+    	return (bgClr !== "")?"background-color: "+bgClr:"background-color: #ffffff";
+  	}.property('Exyht.BlogStyle.post_bg_clr'),
 });
 Exyht.PostController = Ember.ObjectController.extend({
   needs: ["application", "index"],
@@ -641,7 +647,6 @@ Exyht.ApplicationView = Ember.View.extend({
   
   templateName: "application",
 
-
   ngravatarUrl: (function() {
     return "http://www.gravatar.com/avatar/"+this.get("controller.currentCommenterGravaterToReply") + '?d='+Exyht.gravatarVersion+'&s=20';
   }).property("controller.currentCommenterGravaterToReply")
@@ -667,8 +672,8 @@ Exyht.PostView = Ember.View.extend({
   }).property("controller.created"),
 
   pageViewCount: (function(){
-    
-    var pageViews = parseInt(this.get("controller.views"));
-    return new Ember.Handlebars.SafeString((pageViews === 0)?'1 seen' : pageViews + 1 + ' seen');
+  	
+  	var pageViews = parseInt(this.get("controller.views"));
+  	return new Ember.Handlebars.SafeString((pageViews === 0)?'1 seen' : pageViews + 1 + ' seen');
   }).property("controller.views"),
 });
