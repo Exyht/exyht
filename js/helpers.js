@@ -17,12 +17,6 @@ function urlX(url) { if(/^https?:\/\//.test(url)) { return url; }}
    return new Ember.Handlebars.SafeString(emoji.replace_colons(html_sanitize(markdown.makeHtml(input), urlX)));
 });
 
-Ember.Handlebars.helper('format-date', function(input) {
-  timezone = jstz.determine();
-  timezoneName = timezone.name();
-  return moment.tz(input, timezoneName).fromNow();
-});
-
 Ember.Handlebars.helper('format-archive-date', function(input) {
   return moment(input).format('DD MMM YYYY');
 });
