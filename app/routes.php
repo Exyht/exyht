@@ -18,6 +18,7 @@ Route::group(array('before' => 'csrf'), function()
   Route::post('install/comments', 'InstallerController@createCommentsTable');
   Route::post('install/bloglinks', 'InstallerController@createBloglinksTable');
   Route::post('install/signup', 'InstallerController@createAccount');
+  Route::post('install/resetInstaller', 'InstallerController@resetInstaller');
 });
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::get('/', 'HomeController@showWelcome');
 
 Route::get('getPostTitle/{postId}', 'HomeController@getPostTitle')->where('postId', '[0-9]+');
 
-Route::get('getBlogPosts', 'HomeController@getBlogPosts');
+Route::get('getBlogPosts/{offset}/{limit}', 'HomeController@getBlogPosts')->where(array('offset'=>'[0-9]+','limit'=>'[0-9]+'));
 
 Route::get('post/{slug}/{postId}', 'HomeController@showWelcomeWithParameters')->where('postId', '[0-9]+');
 
@@ -71,6 +72,10 @@ Route::group(array('before' => 'auth'), function()
 
   Route::get('admin-page/profilesetting', 'AdminController@showAdminpage');
 
+  Route::get('admin-page/imggallery', 'AdminController@showAdminpage');
+
+  Route::get('admin-page/getGalleryImg/{from}/{to}', 'GalleryController@getGalleryImages')->where(array('from' => '[0-9]+','to' => '[0-9]+'));
+
   Route::get('admin-page/comments/{postId}', 'AdminController@showAdminpage')->where('postId', '[0-9]+');
 
   Route::get('admin-page/getBlogPosts', 'AdminController@getBlogPostsForAdmin');
@@ -82,6 +87,7 @@ Route::group(array('before' => 'auth'), function()
 
 Route::group(array('before' => 'auth|admin-csrf'), function()
 { 
+  // Manage blog settings modal route starts
   Route::post('admin-page/changeBlogName', 'SettingController@changeBlogName');
 
   Route::post('admin-page/changeSubtitle', 'SettingController@changeSubtitle');
@@ -103,7 +109,8 @@ Route::group(array('before' => 'auth|admin-csrf'), function()
   Route::post('admin-page/addElseLink', 'SettingController@addElseLink');
 
   Route::post('admin-page/removeLink', 'SettingController@removeLink');
-
+  // Manage blog settings modal route ends
+  // Comment managing related routes starts
   Route::post('admin-page/removeComment/{commentId}', 'CommentController@removeComment')->where('commentId', '[0-9]+');
 
   Route::post('admin-page/banIp/{ipAddress}', 'CommentController@banIp')->where('ipAddress', '[A-Za-z0-9.:]+');
@@ -111,13 +118,15 @@ Route::group(array('before' => 'auth|admin-csrf'), function()
   Route::post('admin-page/removeFlag/{commentId}', 'CommentController@removeFlag')->where('commentId', '[0-9]+');
 
   Route::post('admin-page/markAsSeen/{commentId}', 'CommentController@markAsSeen')->where('commentId', '[0-9]+');
-
+  // Comment managing related routes ends
+  // Profile related routes starts
   Route::post('admin-page/removeProfileImage', 'ProfileController@removeProfileImage');
 
   Route::post('admin-page/saveProfileEdit', 'ProfileController@saveProfileEdit');
 
   Route::post('admin-page/changePassword', 'ProfileController@changePassword');
-
+  // Profile related routes ends
+  // Post related routes starts
   Route::post('admin-page/createNewPost', function()
   {
   	return View::make('actions.addNewPost');
@@ -132,14 +141,18 @@ Route::group(array('before' => 'auth|admin-csrf'), function()
   {
   	return View::make('actions.saveEditedPost');
   });
-  
+  // Post related routes ends
+  // UI settings routes starts
   Route::post('admin-page/changeColor', function()
   {
   	return View::make('actions.changeColor');
   });
   
   Route::post('admin-page/changeFontFamily', 'SettingController@changeFontFamily');
-
+  // UI settings routes ends
+  // Image gallery route starts
+  Route::post('admin-page/removeGimg', 'GalleryController@removeGimg');
+  // Image gallery route ends
   Route::post('admin-page/logout', function()
   {
     Auth::logout();

@@ -1,6 +1,116 @@
 <?php
 
 class InstallerController extends BaseController {
+  /*
+  |--------------------------------------------------------------------------
+  | Add column in table
+  |--------------------------------------------------------------------------
+  */
+  private function addCol($table, $k, $col){
+    if($k == 'inc') {
+      $table->increments($col);
+    }
+    elseif($k == 'int') {
+      $table->integer($col);
+    }
+    elseif ($k == 'str') {
+      $colLen = explode(':', $col, 2);
+      $table->string($col, $colLen[1]);
+    }
+    elseif ($k == 'txt') {
+      $table->text($col);
+    }
+    elseif ($k == 'dt') {
+      $table->dateTime($col)->nullable();
+    }
+  }
+  /*
+  |--------------------------------------------------------------------------
+  | Create table
+  |--------------------------------------------------------------------------
+  */
+  private function createTb($tableName, $cols){
+    Schema::create($tableName, function($table) use ($cols)
+    {
+      foreach ($cols as $k => $type) {
+        foreach ($cols[$k] as $col) {
+          self::addCol($table, $k, $col);
+        }
+      }
+    });
+  }
+  /*
+  |--------------------------------------------------------------------------
+  | Modify table
+  |--------------------------------------------------------------------------
+  */
+  private function modifyTable($tableName, $cols){
+      foreach ($cols as $k => $type) {
+        foreach ($cols[$k] as $col) {
+          // Explode col, because str contains name & length
+          $colName = explode(':', $col, 2);
+          if(!Schema::hasColumn($tableName, $colName[0])){
+            Schema::table($tableName, function($table) use ($k, $col)
+            {
+              self::addCol($table, $k, $col);
+            });
+          }
+        }
+      }
+  }
+  /*
+  |--------------------------------------------------------------------------
+  | Check for existed table, if not create one
+  |--------------------------------------------------------------------------
+  */
+  private function checkTb($tableName, $cols){
+    if (Schema::hasTable($tableName))
+    {
+      self::modifyTable($tableName, $cols);
+        $res = array(
+                 "msg"        => '`'.$tableName.'` table has been modified!',
+                 "is_created" => true,
+                 "is_modified"=> true
+                );
+    }
+    else{
+      self::createTb($tableName, $cols);
+      /*
+      |--------------------------------------------------------------------------
+      | Insert initial data for the following tables
+      |--------------------------------------------------------------------------
+      */
+      if($tableName == 'blogsettings'){
+        DB::table($tableName)->insert(
+                  array(
+                    'blog_name'        => "Blog name",
+                    'subtitle'         => "Sub title",
+                    'read_only_mode'   => 0,
+                    'has_navbar'       => 1,
+                    'has_cmnt_feature' => 1
+                  )
+            );
+      }
+      elseif ($tableName == 'bloglinks') {
+        DB::table($tableName)->insert(
+                  array(
+                    'link_name'  => 'Blog',
+                    'url'        => '/blog/',
+                    'isBlogUrl'  => 1,
+                    'navUrl'     => 1,
+                    'elseUrl'    => 0,
+                    'status'     => 1
+                  )
+            );
+      }
+      $res = array(
+                   "msg"        => 'Table `'.$tableName.'` created successfully!',
+                   "is_created" => true,
+                   "is_modified"=> false
+                  );
+    }
+    return json_encode($res);
+  }
 	/*
   |--------------------------------------------------------------------------
   | Create `blog_settings` table
@@ -11,48 +121,29 @@ class InstallerController extends BaseController {
     if (Request::ajax())
     {
 		  $tableName = 'blogsettings';
-		
-		  if (Schema::hasTable($tableName))
-        {
-            $res = array(
-                     "msg"        => 'Table `'.$tableName.'` already existed!',
-                     "is_created" => false
-                    );
-            return json_encode($res);
-        }
-        else
-        {
-            Schema::create($tableName, function($table)
-            {
-                $table->increments('id');
-                $table->string('blog_name', 50);
-                $table->string('subtitle', 100);
-                $table->integer('read_only_mode');
-                $table->integer('has_navbar');
-                $table->integer('has_cmnt_feature');
-                $table->string('font_family', 15);
-                $table->string('bg_clr', 7);
-                $table->string('nav_bg_clr', 7);
-                $table->string('p_bg_clr', 7);
-                $table->string('s_bg_clr', 7);
-                $table->string('f_bg_clr', 7);
-                $table->string('link_clr', 7);
-            });
-            DB::table($tableName)->insert(
-                  array(
-                    'blog_name'        => "Blog name",
-                    'subtitle'         => "Sub title",
-                    'read_only_mode'   => 0,
-                    'has_navbar'       => 1,
-                    'has_cmnt_feature' => 1
-                  )
+		  
+      $cols = array(
+              'inc' => array(
+                          'id'
+                        ),
+              'int' => array(
+                          'read_only_mode',
+                          'has_navbar',
+                          'has_cmnt_feature'
+                        ),
+              'str' => array(
+                          'blog_name:50',
+                          'subtitle:100',
+                          'font_family:15',
+                          'bg_clr:7',
+                          'nav_bg_clr:7',
+                          'p_bg_clr:7',
+                          's_bg_clr:7',
+                          'f_bg_clr:7',
+                          'link_clr:7'
+                        )
             );
-                $res = array(
-                     "msg"        => 'Table `'.$tableName.'` created successfully!',
-                     "is_created" => true
-                    );
-            return json_encode($res);
-        }
+      return self::checkTb($tableName, $cols);
     }
 	}
     /*
@@ -66,34 +157,24 @@ class InstallerController extends BaseController {
       {
         $tableName = 'users';
         
-        if (Schema::hasTable($tableName))
-        {
-            $res = array(
-                     "msg"        => 'Table `'.$tableName.'` already existed!',
-                     "is_created" => false
-                    );
-            return json_encode($res);
-        }
-        else
-        {
-            Schema::create($tableName, function($table)
-            {
-                $table->increments('id');
-                $table->string('email', 50);
-                $table->string('username', 20);
-                $table->string('password', 64);
-                $table->string('remember_token', 255);
-                $table->dateTime('updated_at');
-                $table->string('about', 2000);
-                $table->string('image', 200);
-                $table->string('logo', 200);
-            });
-                 $res = array(
-                     "msg"        => 'Table `'.$tableName.'` created successfully!',
-                     "is_created" => true
-                    );
-            return json_encode($res);
-        }
+        $cols = array(
+              'inc' => array(
+                          'id'
+                        ),
+              'dt' => array(
+                          'updated_at'
+                        ),
+              'str' => array(
+                          'email:50',
+                          'username:20',
+                          'password:64',
+                          'remember_token:255',
+                          'about:2000',
+                          'image:200',
+                          'logo:200'
+                        )
+            );
+          return self::checkTb($tableName, $cols);
       }
     }
     /*
@@ -107,33 +188,27 @@ class InstallerController extends BaseController {
       {
         $tableName = 'posts';
         
-        if (Schema::hasTable($tableName))
-        {
-            $res = array(
-                     "msg"        => 'Table `'.$tableName.'` already existed!',
-                     "is_created" => false
-                    );
-            return json_encode($res);
-        }
-        else
-        {
-            Schema::create($tableName, function($table)
-            {
-                $table->increments('id');
-                $table->string('title', 50);
-                $table->text('body');
-                $table->dateTime('created')->nullable();
-                $table->dateTime('modified')->nullable();
-                $table->integer('user_id');
-                $table->integer('views');
-                $table->integer('status');
-            });
-                 $res = array(
-                     "msg"        => 'Table `'.$tableName.'` created successfully!',
-                     "is_created" => true
-                    );
-            return json_encode($res);
-        }
+        $cols = array(
+              'inc' => array(
+                          'id'
+                        ),
+              'int' => array(
+                          'user_id',
+                          'views',
+                          'status'
+                        ),
+              'txt' => array(
+                          'body'
+                        ),
+              'str' => array(
+                          'title:50'
+                        ),
+              'dt' => array(
+                          'created',
+                          'modified'
+                        )
+            );
+          return self::checkTb($tableName, $cols);
       }
     }
     /*
@@ -147,38 +222,30 @@ class InstallerController extends BaseController {
       {
         $tableName = 'comments';
         
-        if (Schema::hasTable($tableName))
-        {
-            $res = array(
-                     "msg"        => 'Table `'.$tableName.'` already existed!',
-                     "is_created" => false
-                    );
-            return json_encode($res);
-        }
-        else
-        {
-            Schema::create($tableName, function($table)
-            {
-                $table->increments('id');
-                $table->integer('postId');
-                $table->string('name', 15);
-                $table->string('email', 50);
-                $table->dateTime('date');
-                $table->string('comment', 500);
-                $table->integer('reply_to_id');
-                $table->integer('status');
-                $table->integer('seen');
-                $table->integer('ip_ban');
-                $table->string('ip_address', 45);
-                $table->string('browser', 20);
-                $table->string('os', 7);
-            });
-                 $res = array(
-                     "msg"        => 'Table `'.$tableName.'` created successfully!',
-                     "is_created" => true
-                    );
-            return json_encode($res);
-        }
+        $cols = array(
+              'inc' => array(
+                          'id'
+                        ),
+              'int' => array(
+                          'postId',
+                          'reply_to_id',
+                          'status',
+                          'seen',
+                          'ip_ban'
+                        ),
+              'str' => array(
+                          'name:15',
+                          'email:50',
+                          'comment:500',
+                          'ip_address:45',
+                          'browser:20',
+                          'os:7'
+                        ),
+              'dt' => array(
+                          'date'
+                        )
+            );
+          return self::checkTb($tableName, $cols);
       }
     }
     /*
@@ -192,42 +259,22 @@ class InstallerController extends BaseController {
       {
         $tableName = 'bloglinks';
         
-        if (Schema::hasTable($tableName))
-        {
-            $res = array(
-                     "msg"        => 'Table `'.$tableName.'` already existed!',
-                     "is_created" => false
-                    );
-            return json_encode($res);
-        }
-        else
-        {
-            Schema::create($tableName, function($table)
-            {
-                $table->increments('id');
-                $table->string('link_name', 50);
-                $table->string('url', 100);
-                $table->integer('isBlogUrl');
-                $table->integer('navUrl');
-                $table->integer('elseUrl');
-                $table->integer('status');
-            });
-            DB::table($tableName)->insert(
-                  array(
-                    'link_name'  => 'Blog',
-                    'url'        => '/blog/',
-                    'isBlogUrl'  => 1,
-                    'navUrl'     => 1,
-                    'elseUrl'    => 0,
-                    'status'     => 1
-                  )
+        $cols = array(
+              'inc' => array(
+                          'id'
+                        ),
+              'int' => array(
+                          'isBlogUrl',
+                          'navUrl',
+                          'elseUrl',
+                          'status'
+                        ),
+              'str' => array(
+                          'link_name:50',
+                          'url:100'
+                        )
             );
-                 $res = array(
-                     "msg"        => 'Table `'.$tableName.'` created successfully!',
-                     "is_created" => true
-                    );
-            return json_encode($res);
-        }
+        return self::checkTb($tableName, $cols);
       }
     }
     /*

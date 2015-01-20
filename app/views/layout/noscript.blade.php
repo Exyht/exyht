@@ -34,7 +34,7 @@ $blogLinks = json_decode($blog_links);
           <div class="blog-post">
             <?php
             $currentPost       = json_decode($getHomeController->getOnlyComments($postId));
-            $decodeBolgPosts   = json_decode($getHomeController->getBlogPostsForNoScript());
+            $decodeBolgPosts   = json_decode($getHomeController->getBlogPostsForNoScript(0, 10));
             $aboutAuthor       = json_decode(json_encode($getHomeController->getAboutAuthor()));
             $archive           = json_decode(json_encode($getHomeController->getArchive()));
             ?>
@@ -101,5 +101,6 @@ $blogLinks = json_decode($blog_links);
     </p>
     @endif
     <p>Copyright &copy; {{date("Y")}} - All rights reserved</p>
+    <p class="small">Built with <a href="https://github.com/Exyht/exyht" alt="Exyht link">Exyht</a></p>
 </div>
 </noscript>

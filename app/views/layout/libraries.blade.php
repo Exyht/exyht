@@ -4,5 +4,5 @@
 {{ HTML::style('/build/app-css.min.css') }}
 
 {{HTML::script('/build/app-lib.min.js')}}
-{{HTML::script('/build/production-app.min.js')}}
+{{HTML::script('/build/production-app.js')}}
 {{HTML::script('/build/templates.min.js')}}

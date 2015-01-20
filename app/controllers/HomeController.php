@@ -19,8 +19,7 @@ class HomeController extends BaseController {
     | Get Markdown
     |--------------------------------------------------------------------------
     */
-    public function getMarkdown($value)
-    {
+    public function getMarkdown($value){
       return MarkdownExtra::defaultTransform($value);
     }
 
@@ -29,12 +28,15 @@ class HomeController extends BaseController {
     | Get HtmlPurifier
     |--------------------------------------------------------------------------
     */
-    public function getHtmlPurifier($value)
-    {
+    public function getHtmlPurifier($value, $isYoutube){
 
       require_once('/libraries/php/htmlpurifier/library/HTMLPurifier.auto.php');
       
       $config   = HTMLPurifier_Config::createDefault();
+      if($isYoutube === 1){
+        $config->set('HTML.Trusted', true);
+        $config->set('Filter.YouTube', true);
+      }
       $purifier = new HTMLPurifier($config);
 
       return $purifier->purify($value);
@@ -45,8 +47,7 @@ class HomeController extends BaseController {
     | Get Gravater url
     |--------------------------------------------------------------------------
     */
-    public function getGravaterUrl($email)
-    {
+    public function getGravaterUrl($email){
         return md5( strtolower( trim($email) ) ); 
     }
     /*
@@ -54,8 +55,7 @@ class HomeController extends BaseController {
     | Create slug using title
     |--------------------------------------------------------------------------
     */
-    public function titleSlug($value)
-    {
+    public function titleSlug($value){
        return strtolower(preg_replace('/\s+/i', '-', preg_replace('/[^A-Za-z0-9\s+]/i', '', substr($value, 0, 60))));
     }
     /*
@@ -63,8 +63,7 @@ class HomeController extends BaseController {
     | Get blog settings data
     |--------------------------------------------------------------------------
     */  
-    public function getBlogSettings()
-    {
+    public function getBlogSettings(){
       return Blogsetting::findBlogSetting();
     }
     /*
@@ -80,8 +79,9 @@ class HomeController extends BaseController {
 
       if ($imgTags->length > 0) {
         $imgElement = $imgTags->item(0);
-        return '<img src="'.$imgElement->getAttribute('src').'">';
-      } else {
+        return '<img src="'.$imgElement->getAttribute('src').'"/>';
+      }
+      else {
         return $post;
       }
     }
@@ -90,8 +90,7 @@ class HomeController extends BaseController {
     | View home page with data
     |--------------------------------------------------------------------------
     */
-	  public function showWelcome()
-    {
+	  public function showWelcome(){
       $SettingController = new SettingController();
       $rom = self::getBlogSettings();
       $data = array(
@@ -100,8 +99,8 @@ class HomeController extends BaseController {
            'postId'           => '',
            'has_logo'         => (User::findLogo()->logo !== '')?'true':'false',
            'logo'             => (User::findLogo()->logo !== '')?User::findLogo()->logo:'',
-           'blog_name'        => self::getHtmlPurifier($rom->blog_name),
-           'blog_subtitle'    => self::getHtmlPurifier($rom->subtitle),
+           'blog_name'        => self::getHtmlPurifier($rom->blog_name, 0),
+           'blog_subtitle'    => self::getHtmlPurifier($rom->subtitle, 0),
            'read_only_mode'   => ($rom->read_only_mode == 0)?'false':'true',
            'has_cmnt_feature' => ($rom->has_cmnt_feature == 0)?'false':'true',
            'has_navbar'       => ($rom->has_navbar == 0)?'false':'true',
@@ -116,32 +115,29 @@ class HomeController extends BaseController {
     | View home page with data when routed with post id & slug
     |--------------------------------------------------------------------------
     */
-    public function showWelcomeWithParameters($slug, $postId)
-    {
+    public function showWelcomeWithParameters($slug, $postId){
 
       $SettingController = new SettingController();
       $rom = self::getBlogSettings();
 
-      if(!empty($postId))
-      {
+      if(!empty($postId)){
         $title    = self::getSingleTitle($postId);
         $postBody = self::getSinglePostBody($postId);
       }
-      else
-      {
+      else{
         $title    = "Blog";
         $postBody = "";
       }
 
       $data = array(
-          'title'            => self::getHtmlPurifier($title),
-          'meta_description' => self::getHtmlPurifier(Post::metaDescription($postId)),
-          'postBody'         => self::getHtmlPurifier($postBody),
+          'title'            => self::getHtmlPurifier($title, 0),
+          'meta_description' => self::getHtmlPurifier(Post::metaDescription($postId), 0),
+          'postBody'         => self::getHtmlPurifier($postBody, 1),
           'postId'           => $postId,
           'has_logo'         => (User::findLogo()->logo !== '')?'true':'false',
           'logo'             => (User::findLogo()->logo !== '')?User::findLogo()->logo:'',
-          'blog_name'        => self::getHtmlPurifier($rom->blog_name),
-          'blog_subtitle'    => self::getHtmlPurifier($rom->subtitle),
+          'blog_name'        => self::getHtmlPurifier($rom->blog_name, 0),
+          'blog_subtitle'    => self::getHtmlPurifier($rom->subtitle, 0),
           'read_only_mode'   => ($rom->read_only_mode == 0)?'false':'true',
           'has_cmnt_feature' => ($rom->has_cmnt_feature == 0)?'false':'true',
           'has_navbar'       => ($rom->has_navbar == 0)?'false':'true',
@@ -157,16 +153,13 @@ class HomeController extends BaseController {
     | Get title for newly loaded page
     |--------------------------------------------------------------------------
     */
-    public function getSingleTitle($postId)
-    {
-      if(!empty($postId))
-      {
+    public function getSingleTitle($postId){
+      if(!empty($postId)){
 
         $title = Post::singleTitle($postId);
 
-        if($title)
-        {
-          return self::getHtmlPurifier($title);
+        if($title){
+          return self::getHtmlPurifier($title, 0);
         } 
       }
     }
@@ -175,8 +168,7 @@ class HomeController extends BaseController {
     | Get title for newly loaded page in json
     |--------------------------------------------------------------------------
     */
-    public function getPostTitle($postId)
-    {
+    public function getPostTitle($postId){
       $data = array(
           "id"    => $postId,
           "title" => self::getSingleTitle($postId)
@@ -188,16 +180,13 @@ class HomeController extends BaseController {
     | Get post body for newly loaded page
     |--------------------------------------------------------------------------
     */
-    public function getSinglePostBody($postId)
-    {
-      if(!empty($postId))
-      {
+    public function getSinglePostBody($postId){
+      if(!empty($postId)){
 
         $post = Post::singlePostBody($postId);
 
-        if($post)
-        {
-          return self::getHtmlPurifier(self::getMarkdown($post));
+        if($post){
+          return self::getHtmlPurifier(self::getMarkdown($post), 1);
         } 
       }
     }
@@ -206,23 +195,19 @@ class HomeController extends BaseController {
     | Get comments for newly loaded page
     |--------------------------------------------------------------------------
     */
-    public function getOnlyComments($postId)
-    {
-      if(!empty($postId) || $postId !== '')
-      {
+    public function getOnlyComments($postId){
+      if(!empty($postId) || $postId !== ''){
 
         $comments = Comment::findComments($postId);
 
-        if(!$comments->isEmpty())
-        {            
-          foreach ($comments as $commentkey => $c)
-          {
+        if(!$comments->isEmpty()){            
+          foreach ($comments as $commentkey => $c){
           
             $quiz[] =  array(
                 "id"        => $c->id,
-                "name"      => self::getHtmlPurifier($c->name),
+                "name"      => self::getHtmlPurifier($c->name, 0),
                 "email"     => self::getGravaterUrl($c->email),
-                "comment"   => self::getHtmlPurifier(self::getMarkdown($c->comment)),
+                "comment"   => self::getHtmlPurifier(self::getMarkdown($c->comment), 0),
                 "cdate"     => $c->date
             );
           }
@@ -235,25 +220,23 @@ class HomeController extends BaseController {
     | Get archive of all blog posts
     |--------------------------------------------------------------------------
     */
-    public function getArchive()
-    {
+    public function getArchive(){
 
       $posts = Post::findArchive();
 
-      if(!$posts->isEmpty())
-      { 
+      if(!$posts->isEmpty()){
         $dom = new DOMDocument();
-        foreach ($posts as $post)
-        {
-          $dom->loadHtml(self::getMarkdown($post->slicedBody));
+        foreach ($posts as $post){
+          $first_img = self::catchFirstImage(self::getHtmlPurifier(self::getMarkdown($post->slicedBody), 0));
+          $dom->loadHtml($first_img);
           $imgTags = $dom->getElementsByTagName('img');
 
           $quiz[] = array(
             "id"        => $post->id,
-            "title"     => self::getHtmlPurifier($post->title),
+            "title"     => self::getHtmlPurifier($post->title, 0),
             "created"   => $post->created,
             "has_img"   => ($imgTags->length > 0)?true:false,
-            "first_img" => ($imgTags->length > 0)?self::getHtmlPurifier(self::catchFirstImage(self::getMarkdown($post->slicedBody))):''
+            "first_img" => ($imgTags->length > 0)?$first_img:''
           );
         }
         return $quiz;
@@ -264,33 +247,28 @@ class HomeController extends BaseController {
     | Get about Author
     |--------------------------------------------------------------------------
     */
-    public function getAboutAuthor()
-    {
+    public function getAboutAuthor(){
 
       $user = User::aboutAuthor();
 
-      if(empty($user->image) || $user->image == null)
-      {
+      if(empty($user->image) || $user->image == null){
         $image = false;
       }
-      else
-      {
+      else{
         $image = $user->image;
       }
 
-      if(empty($user->about) || $user->about == null)
-      {
+      if(empty($user->about) || $user->about == null){
         $about = $user->username;
       }
-      else
-      {
+      else{
         $about = $user->about;
       }              
 
       $quiz = array(
           "id"          => $user->id,
           "hashedEmail" => "http://www.gravatar.com/avatar/".self::getGravaterUrl($user->email)."?s=170",
-          "about"       => self::getHtmlPurifier(self::getMarkdown($about)),
+          "about"       => self::getHtmlPurifier(self::getMarkdown($about), 0),
           "image"       => $image
         );
       return $quiz;
@@ -300,8 +278,7 @@ class HomeController extends BaseController {
     | Get Side bar info
     |--------------------------------------------------------------------------
     */
-    public function getSidebarInfo()
-    {
+    public function getSidebarInfo(){
       $quiz['sidebar_info'] = array(
           "author"    =>  self::getAboutAuthor(),
           "archive"   =>  self::getArchive()
@@ -313,36 +290,33 @@ class HomeController extends BaseController {
     | Get all blog posts
     |--------------------------------------------------------------------------
     */
-    public function getBlogPosts()
-    {
+    public function getBlogPosts($offset, $limit){
 
-      $posts = Post::findBlogPosts();
-      if(!$posts->isEmpty())
-      {
-        foreach ($posts as $post)
-        {
+      $posts = Post::findBlogPosts($offset, $limit);
+      if(!$posts->isEmpty()){
 
-          $title  = self::getHtmlPurifier($post->title);
+        foreach ($posts as $post){
+
+          $title  = self::getHtmlPurifier($post->title, 0);
           //$body   = self::getHtmlPurifier(self::getMarkdown($post->slicedBody));
-          $body   = self::getHtmlPurifier(self::catchFirstImage(self::getMarkdown($post->slicedBody)));
+          $body   = self::catchFirstImage(self::getHtmlPurifier(self::getMarkdown($post->slicedBody), 0));
 
-          $quiz['posts'][] = array(
+          $quiz[] = array(
             "id"        =>  $post->id,
             "title"     =>  $title,
             "body"      =>  $body,
             "created"   =>  $post->created,
-            "no_post"   =>  false,
+            "no_post"   =>  false
           );
         }
         return $quiz;
       }
-      else
-      {
-        $quiz['posts'][] = array(
+      else{
+        $quiz[] = array(
             "id"        =>  1,
             "title"     =>  'No posts!',
             "body"      =>  'No post is posted!',
-            "no_post"   =>  true,
+            "no_post"   =>  true
           );
         return $quiz;
       }
@@ -352,18 +326,16 @@ class HomeController extends BaseController {
     | Get all blog posts for noscript tag
     |--------------------------------------------------------------------------
     */
-    public function getBlogPostsForNoScript()
-    {
+    public function getBlogPostsForNoScript($offset, $limit){
 
-      $posts = Post::findBlogPosts();
+      $posts = Post::findBlogPosts($offset, $limit);
 
-      if(!$posts->isEmpty())
-      {
-        foreach ($posts as $post)
-        {
+      if(!$posts->isEmpty()){
 
-          $title   = self::getHtmlPurifier($post->title);
-          $body    = self::getHtmlPurifier(self::getMarkdown($post->slicedBody));
+        foreach ($posts as $post){
+
+          $title   = self::getHtmlPurifier($post->title, 0);
+          $body    = self::getHtmlPurifier(self::getMarkdown($post->slicedBody), 1);
           $postUrl = self::titleSlug($title)."/".$post->id;
 
           $quiz[] = array(
@@ -381,8 +353,7 @@ class HomeController extends BaseController {
     | Update page views
     |--------------------------------------------------------------------------
     */
-    private function addPageViews($postId, $views)
-    {
+    private function addPageViews($postId, $views){
       Post::incrementPageView($postId, $views);
     }
     /*
@@ -390,66 +361,56 @@ class HomeController extends BaseController {
     | Get blog post and it's comments
     |--------------------------------------------------------------------------
     */
-    private function getPostCommentsFunction($rawPostId, $bool)
-    {
+    private function getPostCommentsFunction($rawPostId, $bool){
       // Allow only numeric integer characters
       $rawPostId = (int)$rawPostId;
       $rawPostId = preg_replace("/[^0-9]/","",$rawPostId);
 
       $singlePost = Post::postCommentsFunction($rawPostId);
         
-        if(count($singlePost) == 1)
-        {
-          // Update page views
-          if($bool === true)
-          {
-            self::addPageViews($rawPostId, $singlePost->views);
-          }
+      if(count($singlePost) == 1){
+        // Update page views
+        if($bool === true){
+          self::addPageViews($rawPostId, $singlePost->views);
+        }
         
-          // if any comments made, return true
-          if($singlePost->commentsLength > 0)
-          {
-            $commentsLength = true;
-          }
-          else
-          {
-            $commentsLength = false;
-          }
+        // if any comments made, return true
+        if($singlePost->commentsLength > 0){
+          $commentsLength = true;
+        }
+        else{
+          $commentsLength = false;
+        }
 
-        $postTitle     = self::getHtmlPurifier($singlePost->title);
-        $postBody      = self::getHtmlPurifier(self::getMarkdown($singlePost->body));
-        $prevTitle     = self::getHtmlPurifier($singlePost->prevTitle);
-        $nextTitle     = self::getHtmlPurifier($singlePost->nextTitle);
+        $postTitle     = self::getHtmlPurifier($singlePost->title, 0);
+        $postBody      = self::getHtmlPurifier(self::getMarkdown($singlePost->body), 1);
+        $prevTitle     = self::getHtmlPurifier($singlePost->prevTitle, 0);
+        $nextTitle     = self::getHtmlPurifier($singlePost->nextTitle, 0);
         $prevTitleSlug = self::titleSlug($prevTitle);
         $nextTitleSlug = self::titleSlug($nextTitle);
         
+        $p_quiz        = array(
+          "id"              =>  $singlePost->id,
+          "title"           =>  $postTitle,
+          "post"            =>  $postBody,
+          "created"         =>  $singlePost->created,
+          "views"           =>  $singlePost->views,
+          "commentsLength"  =>  $commentsLength,
+          "comments"        =>  array()
+          );
         // for first post, display only next link, pagination purpose
-        if($singlePost->previousId == 0 && $singlePost->nextId != $singlePost->id)
-        {
+        if($singlePost->previousId == 0 && $singlePost->nextId != $singlePost->id){
 
-          $p_quiz       = array(
-          "id"              =>  $singlePost->id,
-          "title"           =>  $postTitle,
-          "post"            =>  $postBody,
-          "created"         =>  $singlePost->created,
-          "views"           =>  $singlePost->views,
+          $q_quiz       = array(
           "nextId"          =>  $singlePost->nextId,
           "nextTitle"       =>  $nextTitle,
           "nextTitleSlug"   =>  $nextTitleSlug,
-          "isNextId"        =>  (empty($singlePost->nextId))?false:true,
-          "commentsLength"  =>  $commentsLength,
-          "comments"        =>  array()
+          "isNextId"        =>  (empty($singlePost->nextId))?false:true
           );
         }
-        elseif(($singlePost->nextId > $singlePost->id) && ($singlePost->previousId < $singlePost->id))
-        {
+        elseif(($singlePost->nextId > $singlePost->id) && ($singlePost->previousId < $singlePost->id)){
         // display both previous & next post links, pagination purpose
-          $p_quiz     = array(
-          "id"              =>  $singlePost->id,
-          "title"           =>  $postTitle,
-          "post"            =>  $postBody,
-          "created"         =>  $singlePost->created,
-          "views"           =>  $singlePost->views,
+          $q_quiz     = array(
           "previousId"      =>  $singlePost->previousId,
           "prevTitle"       =>  $prevTitle,
           "prevTitleSlug"   =>  $prevTitleSlug,
@@ -457,48 +418,38 @@ class HomeController extends BaseController {
           "nextId"          =>  $singlePost->nextId,
           "nextTitle"       =>  $nextTitle,
           "nextTitleSlug"   =>  $nextTitleSlug,
-          "isNextId"        =>  true,
-          "commentsLength"  =>  $commentsLength,
-          "comments"        =>  array()
+          "isNextId"        =>  true
           );
         }
-        else
-        {
+        else{
         // for last post, display only previous link, pagination purpose
-          $p_quiz     = array(
-          "id"              =>  $singlePost->id,
-          "title"           =>  $postTitle,
-          "post"            =>  $postBody,
-          "created"         =>  $singlePost->created,
-          "views"           =>  $singlePost->views,
+          $q_quiz     = array(
           "previousId"      =>  $singlePost->previousId,
           "prevTitle"       =>  $prevTitle,
           "prevTitleSlug"   =>  $prevTitleSlug,
-          "isPrevId"        =>  true,
-          "commentsLength"  =>  $commentsLength,
-          "comments"        =>  array()
+          "isPrevId"        =>  true
           );
         }
-        }
+      }
+      $p_quiz = array_merge($p_quiz, $q_quiz);
+      
       $comments = Comment::findComments($rawPostId);
     
-      if(!$comments->isEmpty())
-      {
-        foreach ($comments as $commentkey => $c)
-        {
+      if(!$comments->isEmpty()){
+
+        foreach ($comments as $commentkey => $c){
           
           $p_quiz['comments'][] =  array(
                 "id"               => $c->id,
-                "name"             => self::getHtmlPurifier($c->name),
+                "name"             => self::getHtmlPurifier($c->name, 0),
                 "email"            => self::getGravaterUrl($c->email),
-                "comment"          => self::getHtmlPurifier(self::getMarkdown($c->comment)),
+                "comment"          => self::getHtmlPurifier(self::getMarkdown($c->comment), 0),
                 "cdate"            => $c->date,
                 "isFlagged"        => ($c->status === 2)?true:false,
                 "replyToComment"   => array()
           );
           
-          if($c->reply_to_id > 0)
-          {
+          if($c->reply_to_id > 0){
 
             $getReplyToComment = Comment::findReplyToComment($c->reply_to_id);
 
@@ -517,18 +468,14 @@ class HomeController extends BaseController {
     }
 
     // For API
-    public function getPostComments($postId)
-    {
-      if(!empty($postId))
-      {
+    public function getPostComments($postId){
+      if(!empty($postId)){
         return self::getPostCommentsFunction($postId, true);
       }
     }
     // For Noscript
-    public function getPostCommentsForMainPage($postId)
-    {
-      if(!empty($postId))
-      {
+    public function getPostCommentsForMainPage($postId){
+      if(!empty($postId)){
         return self::getPostCommentsFunction($postId, false);
       }
     }
@@ -537,16 +484,13 @@ class HomeController extends BaseController {
     | View all blog posts inside noscript tag
     |--------------------------------------------------------------------------
     */
-    public function noScriptPosts($value)
-    {
+    public function noScriptPosts($value){
 
-      if(!empty($value))
-      {
+      if(!empty($value)){
 
         $noScriptPosts = "";
   
-        foreach ($value as $blogpost)
-        {
+        foreach ($value as $blogpost){
           $noScriptPosts .= '<a href="'.Request::url().'/post/'.$blogpost->postUrl.'">'.$blogpost->title.'</a>';
           $noScriptPosts .= $blogpost->body."<hr />\n";
         }
@@ -559,15 +503,12 @@ class HomeController extends BaseController {
     | View all comments inside noscript tag
     |--------------------------------------------------------------------------
     */
-    public function noScriptComments($value)
-    {
+    public function noScriptComments($value){
       
-      if(!empty($value))
-      {
+      if(!empty($value)){
         $noScriptComments = "";
   
-        foreach ($value as $comments)
-        {
+        foreach ($value as $comments){
           $noScriptComments .= '<div class="media"><div class="media-body"><h5 class="media-heading">';
           $noScriptComments .= "<strong>".$comments->name."</strong>\n";
           $noScriptComments .= '<div class="pull-right">'.$comments->cdate.'</div></h5>';

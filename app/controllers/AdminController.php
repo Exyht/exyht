@@ -2,13 +2,11 @@
 
 class AdminController extends BaseController {
    
-    public function showAdminpage()
-    {
+    public function showAdminpage(){
       return View::make('admin-layout.admin-main');
     }
     
-    public function loginUser()
-    {
+    public function loginUser(){
 
         $email    = Input::get('email');
         $password = Input::get('password');
@@ -35,29 +33,23 @@ class AdminController extends BaseController {
           $messages
         );
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
           // The given data did not pass validation
           $messages = $validator->messages();
 
-          if ($messages->has('email'))
-          {
+          if ($messages->has('email')){
             return View::make('admin-layout.admin-login')->with('loginError', $messages->first('email')); 
           }
-          elseif ($messages->has('password'))
-          {
+          elseif ($messages->has('password')){
             return View::make('admin-layout.admin-login')->with('loginError', $messages->first('password')); 
           }
 
         }
-        else
-        {
-          if (Auth::attempt(array('email' => $email, 'password' => $password)))
-          {
+        else{
+          if (Auth::attempt(array('email' => $email, 'password' => $password))){
             return View::make('admin-layout.admin-main');
           }
-          else
-          {
+          else{
             return View::make('admin-layout.admin-login')->with('loginError', 'Wrong Email or Password!');
           }
 
@@ -72,8 +64,7 @@ class AdminController extends BaseController {
     |
     */
     
-    public function getBlogPostsForAdmin()
-    {
+    public function getBlogPostsForAdmin(){
 
       $HomeController = new HomeController();
 
@@ -81,13 +72,11 @@ class AdminController extends BaseController {
                 ->orderBy('id', 'desc')
                 ->get();
 
-      if($posts)
-      {
+      if($posts){
 
-        foreach ($posts as $key => $post)
-        {
+        foreach ($posts as $key => $post){
 
-          $title  = $HomeController->getHtmlPurifier($post->title);
+          $title  = $HomeController->getHtmlPurifier($post->title, 0);
           $quiz["posts"][] = array(
             "id"        =>  $post->id,
             "title"     =>  $title,
@@ -95,18 +84,14 @@ class AdminController extends BaseController {
             "modified"  =>  ($post->modified !== null)?$post->modified : false
           );
 
-          if($post->status == 0)
-          {
-
+          if($post->status == 0){
             $quiz["posts"][$key]["isDraft"] = true;
-
           }
 
           // Count total comments for a single `post`
           $commentCount = Comment::where('postId', $post->id)
                                   ->count();
-          if($commentCount > 0)
-          {
+          if($commentCount > 0){
             $quiz["posts"][$key]["hasComment"]    = true;
             $quiz["posts"][$key]["total_comment"] = ($commentCount > 1)?$commentCount.' comments' : '1 comment';
           }
@@ -114,20 +99,17 @@ class AdminController extends BaseController {
           // Count total `new` comments for a single `post`
           $ncommentCount = Comment::countNewCommentForSinglePost($post->id);
 
-          if($ncommentCount > 0)
-          {
+          if($ncommentCount > 0){
             $quiz["posts"][$key]["hasNewComment"] = true;
           }
 
           // Count total `flagged` comments for a single `post`
           $fcommentCount = Comment::countFlaggedCommentForSinglePost($post->id);
 
-          if($fcommentCount > 0)
-          {
+          if($fcommentCount > 0){
             $quiz["posts"][$key]["hasFlaggedComment"] = true;
           }
-          else
-          {
+          else{
             $quiz["posts"][$key]["hasFlaggedComment"] = false;
           }
         }
@@ -137,40 +119,34 @@ class AdminController extends BaseController {
       $newCommentCount = Comment::where('seen', 0)
                        ->count();
 
-        if($newCommentCount > 0)
-        {
+        if($newCommentCount > 0){
           $quiz["newComment"]  = $newCommentCount;
         }
-        else
-        {
+        else{
           $quiz["newComment"]  = 0;
         }
       // Count total number of flagged comments
       $flaggedCommentCount = Comment::where('status', 2)
-                       ->count();
+                                    ->count();
 
-        if($flaggedCommentCount > 0)
-        {
+        if($flaggedCommentCount > 0){
           $quiz["flaggedComment"]  = $flaggedCommentCount;
         }
-        else
-        {
+        else{
           $quiz["flaggedComment"]  = 0;
         }
 
         // Blog settings
         $rom = Blogsetting::findBlogSetting();
 
-        if($rom)
-        {
+        if($rom){
           $quiz["blog_name"]        = $rom->blog_name;
           $quiz["blog_subtitle"]    = $rom->subtitle;              
           $quiz["read_only_mode"]   = ($rom->read_only_mode == 0)?false:true;
           $quiz["has_cmnt_feature"] = ($rom->has_cmnt_feature == 0)?false:true;
           $quiz["has_navbar"]       = ($rom->has_navbar == 0)?false:true;
         }
-        else
-        {
+        else{
           $quiz["read_only_mode"]   = false;
           $quiz["has_cmnt_feature"] = false;
           $quiz["has_navbar"]       = false;
@@ -201,8 +177,7 @@ class AdminController extends BaseController {
     | This function get profile information about Admin/Author.
     |
     */
-    public function getProfileInfo()
-    {
+    public function getProfileInfo(){
       $HomeController = new HomeController();
       return $HomeController->getAboutAuthor();
     }
@@ -215,8 +190,7 @@ class AdminController extends BaseController {
     |
     */
     
-    public function getOnlyPostBody($postId)
-    {
+    public function getOnlyPostBody($postId){
 
       $HomeController = new HomeController();
 
@@ -224,7 +198,7 @@ class AdminController extends BaseController {
                 ->where('id', $postId)
                 ->first();
      
-        $body  = $HomeController->getHtmlPurifier($post->body);
+        $body  = $HomeController->getHtmlPurifier($post->body, 0);
         $quiz  = array(
                   "id"     => $post->id,
                   "body"   => $body
@@ -240,112 +214,100 @@ class AdminController extends BaseController {
     |
     */
 
-    public function uploadImageFunction($path, $saveInDB)
-    {
+    public function uploadImageFunction($path, $saveInDB){
 
        $temp_filename = $_FILES["file"]["tmp_name"];
 
-       if($_FILES["file"]["size"] > 5000000)
-       {
+       if($_FILES["file"]["size"] > 5000000){
     
-            $message = '<div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Oops! file size too large</strong></div>';
-            $imgUrl  = '';
+          $message = '<div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Oops! file size too large</strong></div>';
+          $imgUrl  = '';
+          
+          return array(
+            'message' => $message,
+            'imgUrl'  => $imgUrl
+          );
+        }
+        else{
+          if (!is_uploaded_file($temp_filename)){ // return true if filename is uploaded via HTTP POST
+            exit;
+          }
+          $imageData = @getimagesize($temp_filename);
+          // checking file mime type
+          if($imageData === FALSE || !($imageData[2] == IMAGETYPE_GIF || $imageData[2] == IMAGETYPE_JPEG || $imageData[2] == IMAGETYPE_PNG)){
             
+            $message ='<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Wrong file type.</strong></div>';
+            $imgUrl  = '';
             return array(
               'message' => $message,
               'imgUrl'  => $imgUrl
             );
-        }
-        else
-        {
-            if (!is_uploaded_file($temp_filename)) // return true if filename is uploaded via HTTP POST
-               {
-                exit;
-               }
-            $imageData = @getimagesize($temp_filename);
-            // checking file mime type
-            if($imageData === FALSE || !($imageData[2] == IMAGETYPE_GIF || $imageData[2] == IMAGETYPE_JPEG || $imageData[2] == IMAGETYPE_PNG))
-            {
-              
-              $message ='<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Wrong file type.</strong></div>';
-              $imgUrl  = '';
-
-              return array(
-                'message' => $message,
-                'imgUrl'  => $imgUrl
-              );
-            }
-            else
-            {
+          }
+          else{
                    
-                $err = $_FILES["file"]["error"];
-                $message = '<div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Oops! </strong>';
-                if ($err > 0)
-                {
-                       switch($err)
-                       {
-                             case '1':
-                                   $message.='php.ini max file size exceeded.';
-                                   break;
-                             case '2':
-                                   $message.='max file size exceeded.';
-                                   break;
-                             case '3':
-                                   $message.='file upload was only partial.';
-                                   break;
-                             case '4':
-                                   $message.='no file was attached.';
-                                   break;
-                             case '7':
-                                   $message.='file permission denied.';
-                                   break;
-                             default :
-                                   $message.='Unexpected error occurs.';
-                        }
-                        $message.='</div>';
-                }
-                else
-                {
-
-                       $filename = md5(strtolower(trim($_FILES["file"]["name"]))).'.png';
-
-                        if (file_exists($path.'/'.$filename))
-                        {
-                             $message.='file already exist <b>:-)</b>.</div>';
-                             $imgUrl = URL::to($path).'/'.$filename;
-                        }
-                        else
-                        {
-                             @move_uploaded_file($temp_filename,$path.'/'.$filename);
-                             $message='<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>File has been successfully uploaded.</strong></div>';
-                             $imgUrl = URL::to($path).'/'.$filename;
-                        }
-                      if($saveInDB === 1)
-                      { // picType '1' for author '2' for blog logo
-                        if(isset($_POST['picType']) && $_POST['picType'] == 1)
-                        {
-                          User::where('id', 1)
-                                ->update(array(
-                                    'image' => $imgUrl
-                                )
-                              );
-                        }        
-                        else
-                        {
-                          User::where('id', 1)
-                                ->update(array(
-                                    'logo' => $imgUrl
-                                )
-                              );
-                        }
-                      }
-                }
-                return array(
-                  'message' => $message,
-                  'imgUrl'  => $imgUrl
-                );
+            $err = $_FILES["file"]["error"];
+            $message = '<div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Oops! </strong>';
+            if ($err > 0){
+              switch($err){
+                case '1':
+                      $message.='php.ini max file size exceeded.';
+                      break;
+                case '2':
+                      $message.='max file size exceeded.';
+                      break;
+                case '3':
+                      $message.='file upload was only partial.';
+                      break;
+                case '4':
+                      $message.='no file was attached.';
+                      break;
+                case '7':
+                      $message.='file permission denied.';
+                      break;
+                default :
+                      $message.='Unexpected error occurs.';
+              }
+              $message.='</div>';
             }
-        }
+            else{
+
+              $filename = $_FILES["file"]["name"];
+              $ext = pathinfo($filename, PATHINFO_EXTENSION);
+              $new_filename = md5(strtolower(trim($filename))).'.'.$ext;
+
+              if (file_exists($path.'/'.$new_filename)){
+                $message.='file already exist <b>:-)</b>.</div>';
+                $imgUrl = URL::to($path).'/'.$new_filename;
+              }
+              else{
+                @move_uploaded_file($temp_filename,$path.'/'.$new_filename);
+                $message ='<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>File has been successfully uploaded.</strong></div>';
+                $imgUrl  = URL::to($path).'/'.$new_filename;
+              }
+
+              if($saveInDB === 1){ // picType '1' for author '2' for blog logo
+                if(isset($_POST['picType']) && $_POST['picType'] == 1){
+                  User::where('id', 1)
+                        ->update(array(
+                            'image' => $imgUrl
+                        )
+                      );
+                }
+                else{
+                  User::where('id', 1)
+                        ->update(array(
+                            'logo' => $imgUrl
+                        )
+                      );
+                }
+              }
+            }
+            return array(
+              'message' => $message,
+              'imgUrl'  => $imgUrl
+            );
+          }
+      }
     }
     /*
     |--------------------------------------------------------------------------
@@ -355,11 +317,10 @@ class AdminController extends BaseController {
     | This function will upload image for text editor.
     |
     */
-    public function uploadImage()
-    {
-        $response = self::uploadImageFunction('upload_dir', 0);
+    public function uploadImage(){
+      $response = self::uploadImageFunction('upload_dir', 0);
         
-        echo '<script src="'.URL::to('libraries/js/jquery-1.10.2.min.js').'"></script><script>$("#loadingDiv", window.parent.document).hide();$("#feedback", window.parent.document).html("'.addslashes($response['message']).'");$("#imageUrlTextField", window.parent.document).empty().val("'.addslashes($response['imgUrl']).'");</script>';
+      echo '<script src="'.URL::to('libraries/js/jquery-1.10.2.min.js').'"></script><script>$("#loadingDiv", window.parent.document).hide();$("#feedback", window.parent.document).html("'.addslashes($response['message']).'");$("#imageUrlTextField", window.parent.document).empty().val("'.addslashes($response['imgUrl']).'");</script>';
     }
     /*
     |--------------------------------------------------------------------------
@@ -370,10 +331,9 @@ class AdminController extends BaseController {
     | status: '1' => 'published'.
     |
     */
-    public function addNewBlogPost($title, $body, $dateTime)
-    {
-        Post::saveNewBlogPost($title, $body, $dateTime);
-        return 'Saved as published';
+    public function addNewBlogPost($title, $body, $dateTime){
+      Post::saveNewBlogPost($title, $body, $dateTime);
+      return 'Saved as published';
     }
     /*
     |--------------------------------------------------------------------------
@@ -384,8 +344,7 @@ class AdminController extends BaseController {
     | status: '0' => 'draft'.
     |
     */
-    public function addNewBlogPostAsDraft($title, $body, $dateTime)
-    {
+    public function addNewBlogPostAsDraft($title, $body, $dateTime){
       Post::saveNewBlogPostAsDraft($title, $body, $dateTime);
       return 'Saved as draft';
     }
@@ -398,16 +357,15 @@ class AdminController extends BaseController {
     | status: '0' => 'draft', '1' => 'published'
     |
     */
-    public function saveEditedPost($postId, $title, $body, $status, $dateTime)
-    {
+    public function saveEditedPost($postId, $title, $body, $status, $dateTime){
         Post::where('id', $postId)
-                     ->update(array(
-                        'title'    => $title,
-                        'body'     => $body,
-                        'status'   => $status,
-                        'modified' => $dateTime
-                        )
-                     );
+            ->update(array(
+                'title'    => $title,
+                'body'     => $body,
+                'status'   => $status,
+                'modified' => $dateTime
+              )
+            );
         return 'Edit saved';
     }
 }

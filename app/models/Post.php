@@ -85,6 +85,7 @@ class Post extends Eloquent {
     return Post::select(array('id', 'title', 'created', DB::raw('LEFT(body, 300) AS slicedBody')))
                   ->status()
                   ->orderdesc()
+                  ->skip(0)->take(20)
                   ->get();
   }
   /*
@@ -111,10 +112,11 @@ class Post extends Eloquent {
   | Get all blog posts
   |--------------------------------------------------------------------------
   */
-  public static function findBlogPosts(){
+  public static function findBlogPosts($offset, $limit){
     return Post::select(array('id', 'title', 'created', DB::raw('LEFT(body, 500) AS slicedBody')))
               ->status()
               ->orderdesc()
+              ->skip($offset)->take($limit)
               ->get();
   }
   /*

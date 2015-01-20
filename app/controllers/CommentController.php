@@ -6,13 +6,11 @@ class CommentController extends BaseController {
     | Add new comment
     |--------------------------------------------------------------------------
     */
-    public function addComment($postId, $commenterName, $email, $comment, $dateTime, $replyToCommentId, $csrf_token)
-    {
+    public function addComment($postId, $commenterName, $email, $comment, $dateTime, $replyToCommentId, $csrf_token){
       $HomeController       = new HomeController();
       $check_read_only_mode = $HomeController->getBlogSettings();
 
-      if($check_read_only_mode->read_only_mode === 0)
-      {
+      if($check_read_only_mode->read_only_mode === 0){
         $clientBrowser = self::getClientBrowser();
         Comment::insert(
                   array(
@@ -30,8 +28,7 @@ class CommentController extends BaseController {
         );
         return json_encode(array('token' => $csrf_token, 'controller_response' => 'saved'));
       }
-      else
-      {
+      else{
         return json_encode(array('token' => $csrf_token, 'controller_response' => 'Read only mode is On.', 'read_only_mode' => 1));
       }
     }
@@ -44,18 +41,16 @@ class CommentController extends BaseController {
     |
     */
     
-    public function getComments($postId)
-    {
+    public function getComments($postId){
 
       $HomeController = new HomeController();
 
       $comments = Comment::where('postId', $postId)
                             ->get();
 
-        foreach ($comments as $key => $c)
-        {
+        foreach ($comments as $key => $c){
 
-            $comment  = $HomeController->getHtmlPurifier($c->comment);
+            $comment  = $HomeController->getHtmlPurifier($c->comment, 0);
             $quiz[]   = array(
                 "id"          => $c->id,
                 "name"        => $c->name,
@@ -83,8 +78,7 @@ class CommentController extends BaseController {
     | This function will do common updating task for Comment model.
     |
     */
-    private function commonUpdatingTask($whereField, $whereValue, $updateField, $updateValue)
-    {
+    private function commonUpdatingTask($whereField, $whereValue, $updateField, $updateValue){
       return Comment::where($whereField, $whereValue)
                 ->update(array(
                         $updateField => $updateValue
@@ -100,8 +94,7 @@ class CommentController extends BaseController {
     |
     */
     
-    public function flagComment()
-    {
+    public function flagComment(){
       $commentId = (int)$_POST['commentId'];
       $commentId = preg_replace("/[^0-9]/","",$commentId);
       self::commonUpdatingTask('id', $commentId, 'status', 2);
@@ -117,8 +110,7 @@ class CommentController extends BaseController {
     |
     */
     
-    public function markAsSeen($commentId)
-    {
+    public function markAsSeen($commentId){
       self::commonUpdatingTask('id', $commentId, 'seen', 1);
 
       return "Marked as seen";
@@ -132,8 +124,7 @@ class CommentController extends BaseController {
     |
     */
     
-    public function removeComment($commentId)
-    {
+    public function removeComment($commentId){
       self::commonUpdatingTask('id', $commentId, 'status', 0);
 
       return "Comment removed";
@@ -147,8 +138,7 @@ class CommentController extends BaseController {
     |
     */
     
-    public function removeFlag($commentId)
-    {
+    public function removeFlag($commentId){
       self::commonUpdatingTask('id', $commentId, 'status', 1);
 
       return "Flag removed";
@@ -158,8 +148,7 @@ class CommentController extends BaseController {
     | Check if Ip address is banned
     |--------------------------------------------------------------------------
     */
-    public function checkForBannedIp($ip)
-    {
+    public function checkForBannedIp($ip){
       $count = Comment::findBannedIp($ip);
       return ($count > 0)?true:false;
     }
@@ -172,8 +161,7 @@ class CommentController extends BaseController {
     |
     */
     
-    public function banIp($ipAddress)
-    {
+    public function banIp($ipAddress){
       self::commonUpdatingTask('ip_address', $ipAddress, 'ip_ban', 1);
 
       return "This Ip address in all comments is banned";
@@ -183,65 +171,51 @@ class CommentController extends BaseController {
     | Detect Client Browser name and OS
     |--------------------------------------------------------------------------
     */
-    protected function getClientBrowser()
-    {
+    protected function getClientBrowser(){
       $user_agent   = $_SERVER['HTTP_USER_AGENT'];
       $browser_name = 'Unknown';
       $platform     = 'Unknown';
 
       //First get the platform?
-      if (preg_match('/linux/i', $user_agent))
-      {
-          $platform = 'Linux';
+      if (preg_match('/linux/i', $user_agent)){
+        $platform = 'Linux';
       }
-      elseif (preg_match('/windows|win32/i', $user_agent))
-      {
-          $platform = 'Windows';
+      elseif (preg_match('/windows|win32/i', $user_agent)){
+        $platform = 'Windows';
       }
-      elseif (preg_match('/macintosh|mac os x/i', $user_agent))
-      {
-          $platform = 'Mac';
+      elseif (preg_match('/macintosh|mac os x/i', $user_agent)){
+        $platform = 'Mac';
       }
-      elseif (preg_match('/android/i', $user_agent))
-      {
-          $platform = 'Android';
+      elseif (preg_match('/android/i', $user_agent)){
+        $platform = 'Android';
       }
-      elseif (preg_match('/iPhone/i', $user_agent))
-      {
-          $platform = 'IOS';
+      elseif (preg_match('/iPhone/i', $user_agent)){
+        $platform = 'IOS';
       }
    
       // Get the name of the useragent
-      if(preg_match('/MSIE/i', $user_agent) && !preg_match('/Opera/i', $user_agent))
-      {
+      if(preg_match('/MSIE/i', $user_agent) && !preg_match('/Opera/i', $user_agent)){
           $browser_name = 'Internet Explorer';
       }
-      elseif(preg_match('/Firefox/i', $user_agent))
-      {
+      elseif(preg_match('/Firefox/i', $user_agent)){
           $browser_name = 'Mozilla Firefox';
       }
-      elseif(preg_match('/Chrome/i', $user_agent))
-      {
+      elseif(preg_match('/Chrome/i', $user_agent)){
           $browser_name = 'Google Chrome';
       }
-      elseif(preg_match('/Safari/i', $user_agent))
-      {
+      elseif(preg_match('/Safari/i', $user_agent)){
           $browser_name = 'Apple Safari';
       }
-      elseif(preg_match('/Opera|OPR/i', $user_agent))
-      {
+      elseif(preg_match('/Opera|OPR/i', $user_agent)){
           $browser_name = 'Opera';
       }
-      elseif(preg_match('/Android/i', $user_agent))
-      {
+      elseif(preg_match('/Android/i', $user_agent)){
           $browser_name = 'Android';
       }
-      elseif(preg_match('/iPhone/i', $user_agent))
-      {
+      elseif(preg_match('/iPhone/i', $user_agent)){
           $browser_name = 'iPhone';
       }
-      elseif(preg_match('/Netscape/i', $user_agent))
-      {
+      elseif(preg_match('/Netscape/i', $user_agent)){
           $browser_name = 'Netscape';
       }
 

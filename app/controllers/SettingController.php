@@ -12,14 +12,14 @@ class SettingController extends BaseController {
     public function getBlogStyle()
     {
       $blogStyle = Blogsetting::findBlogSetting();
-      $quiz = array(
-          "font_family"        => (!empty($blogStyle->font_family))?'"body{font-family:'.$blogStyle->font_family.'}"' : '""',
-          "body_bg_clr"        => (!empty($blogStyle->bg_clr))?'"'.$blogStyle->bg_clr.'"': '""',
-          "nav_bg_clr"         => (!empty($blogStyle->nav_bg_clr))?'"'.$blogStyle->nav_bg_clr.'"': '""',
-          "post_bg_clr"        => (!empty($blogStyle->p_bg_clr))?'"'.$blogStyle->p_bg_clr.'"': '""',
-          "sidebar_bg_clr"     => (!empty($blogStyle->s_bg_clr))?'"'.$blogStyle->s_bg_clr.'"': '""',
-          "footer_bg_clr"      => (!empty($blogStyle->f_bg_clr))?'"'.$blogStyle->f_bg_clr.'"': '""',
-          "link_color"         => (!empty($blogStyle->link_clr))?'"a{color :'.$blogStyle->link_clr.'}"' : '""',
+      $quiz         = array(
+          "font_family"     => (!empty($blogStyle->font_family))?'"body{font-family:'.$blogStyle->font_family.'}"' : '""',
+          "body_bg_clr"     => (!empty($blogStyle->bg_clr))?'"'.$blogStyle->bg_clr.'"': '""',
+          "nav_bg_clr"      => (!empty($blogStyle->nav_bg_clr))?'"'.$blogStyle->nav_bg_clr.'"': '""',
+          "post_bg_clr"     => (!empty($blogStyle->p_bg_clr))?'"'.$blogStyle->p_bg_clr.'"': '""',
+          "sidebar_bg_clr"  => (!empty($blogStyle->s_bg_clr))?'"'.$blogStyle->s_bg_clr.'"': '""',
+          "footer_bg_clr"   => (!empty($blogStyle->f_bg_clr))?'"'.$blogStyle->f_bg_clr.'"': '""',
+          "link_color"      => (!empty($blogStyle->link_clr))?'"a{color :'.$blogStyle->link_clr.'}"' : '""',
         );
       return json_encode($quiz);
     }
@@ -123,7 +123,6 @@ class SettingController extends BaseController {
         }
         else
         {
-
           self::commonSettingTask('subtitle', $blog_subtitle);
           
           return "Blog subtitle changed!";
