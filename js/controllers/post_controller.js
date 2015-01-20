@@ -25,21 +25,24 @@ Exyht.PostController = Ember.ObjectController.extend({
   }.property("model.id"),
   actions: {
     addCommentTrue: function(){
-      this.set('addCommentBtn', true);
-      this.set('getIsHideAddComment', false);
-      this.set('getIsReplying', false);
-      var actualPostIdForAddCommmentHere = this.get('model.id');
-      var actualTitleForAddCommmentHere = this.get('model.title').substring(0, 60);
-      var currentSlug = this.get('model.title').substring(0, 60).replace(/[^A-Za-z0-9\s+]/g, '').replace(/\s+/g, '-').toLowerCase();
       
-      this.set('addActualTitle', actualTitleForAddCommmentHere);
-      this.set('addActualPostId', actualPostIdForAddCommmentHere);
-      this.set('addOnlyCurrentSlug', currentSlug);
-      var getCommentsArray = this.get('model.comments');
-      this.set('newComment', getCommentsArray);
-      this.set('setcommentIdToReply', '');
-      this.set('setcommenterNameToReply', '');
-      this.set('setcommenterGravaterToReply', '');
+      var actualPostIdForAddCommmentHere = this.get('model.id'),
+          actualTitleForAddCommmentHere = this.get('model.title').substring(0, 60),
+          currentSlug = this.get('model.title').substring(0, 60).replace(/[^A-Za-z0-9\s+]/g, '').replace(/\s+/g, '-').toLowerCase(),
+          getCommentsArray = this.get('model.comments');
+
+      this.setProperties({
+        'addCommentBtn': true,
+        'getIsHideAddComment': false,
+        'getIsReplying': false,
+        'addActualTitle': actualTitleForAddCommmentHere,
+        'addActualPostId': actualPostIdForAddCommmentHere,
+        'addOnlyCurrentSlug': currentSlug,
+        'newComment': getCommentsArray,
+        'setcommentIdToReply': '',
+        'setcommenterNameToReply': '',
+        'setcommenterGravaterToReply': ''
+      });
     }
   }
 });

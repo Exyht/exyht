@@ -29,12 +29,6 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
             }));
         },
         template: function (value) {
-            emoji.sheet_path = Exyht.PathToLibraries+'/libraries/js/sheet_twitter_72.png';
-            emoji.use_sheet = true;
-
-            // show the short-name as a `title` attribute for css/img emoji
-            emoji.include_title = true;
-            emoji.init_env();
             return new Ember.Handlebars.SafeString(emoji.replace_colons(':'+value.toLowerCase()+':') +' :'+ value+':');
         },
         replace: function (value) {

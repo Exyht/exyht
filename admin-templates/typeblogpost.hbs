@@ -1,19 +1,19 @@
 <div id="page-wrapper">
   <div class="row">
-      <div class="col-lg-12">
-          <h1 class="page-header">
-          {{#if isEditingOn}}
-           Edit post
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        {{#if isEditingOn}}
+          Edit post
+        {{else}}
+          {{#if isProfileEditingOn}}
+            Edit Profile
           {{else}}
-           {{#if isProfileEditingOn}}
-             Edit Profile
-           {{else}}
-             Create new post
-           {{/if}}
+            Create new post
           {{/if}}
-          </h1>
-      </div>
-      <!-- /.col-lg-12 -->
+        {{/if}}
+      </h1>
+    </div>
+    <!-- /.col-lg-12 -->
   </div>
   <!-- /.row -->
   <div class="row">
@@ -22,67 +22,8 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-lg-6">
-                
-                <div class="btn-group btn-group-sm">
-                  <button type="button" class="btn btn-default" {{action 'insertBold'}}><i class="fa fa-bold"></i></button>
-                  <button type="button" class="btn btn-default" {{action 'insertItalic'}}><i class="fa fa-italic"></i></button>
-                  <button type="button" class="btn btn-default" {{action 'insertLink'}}><i class="fa fa-link"></i></button>
-                  <button type="button" class="btn btn-default" {{action 'insertQuote'}}><i class="fa fa-comment-o"></i></button>
-                  <button type="button" class="btn btn-default" {{action 'insertCode'}}><i class="fa fa-code"></i></button>
-                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#imgModal"><i class="fa fa-file-image-o"></i></button>
-                
-                    <!-- Modal -->
-                    <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" {{action 'cancelUploadImage'}} data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-lg text-info"></i> Upload Image</h4>
-                          </div>
-                          <div class="modal-body">
-                            <div id="feedback"></div>
-                            <div id="loadingDiv" style="display:none;text-align:center;"><i class="fa fa-spinner fa-spin"></i> Uploading...</div>
-                            <label for="imageUrlTextField">Type URL / Upload from my Computer: </label>
-                            <input type="text" id="imageUrlTextField" value="" placeholder="http://example.com/image.jpg" class="form-control">
-                         
-                            <br />
-                            <iframe name="upload_iframe" src="" style="display:none;"></iframe>
-                          
-                            <form method="POST" action="uploadImage" accept-charset="UTF-8" target="upload_iframe" enctype="multipart/form-data">
-                              {{input type="hidden" name="non_ajax_token" value=admin_token}}
-                              <input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
-                              <input name="file" size="20" type="file" accept="image/jpg, image/png, image/gif, image/jpeg"/>
-                              <br />
-                              <input type="submit" class="btn btn-primary" name="submit" value="Upload" onclick="showLoading();"/>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" {{action 'cancelUploadImage'}} data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" {{action 'insertImage'}} data-dismiss="modal">Insert in Editor</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="button" class="btn btn-default" {{action 'insertOrderedlist'}}><i class="fa fa-list-ol"></i></button>
-                    <button type="button" class="btn btn-default" {{action 'insertUnorderedlist'}}><i class="fa fa-list"></i></button>
-                    
-                    <button type="button" class="btn btn-default" {{action 'insertHorizontalrule'}}><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-default" {{action 'insertStrikethrough'}}><i class="fa fa-strikethrough"></i></button>
-                    <button type="button" class="btn btn-default" {{action 'insertSubscript'}}><i class="fa fa-subscript"></i></button>
-                    <button type="button" class="btn btn-default" {{action 'insertSuperscript'}}><i class="fa fa-superscript"></i></button>
-                
-                        <div class="btn-group btn-group-sm">
-                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-header"></i>
-                            <span class="caret"></span>
-                          </button>
-                           <ul class="dropdown-menu" role="menu">
-                            <li role="presentation"><a href=""{{action 'insertHeading1'}}>H1</a></li>
-                            <li role="presentation"><a href=""{{action 'insertHeading2'}}>H2</a></li>
-                            <li role="presentation"><a href=""{{action 'insertHeading3'}}>H3</a></li>
-                           </ul>
-                        </div>
-                </div><br /><br />               
+                {{partial "editortools"}}
+                <br /><br />               
                 <form id="createNewNoteForm">
 				
                 {{#unless isProfileEditingOn}}
@@ -94,53 +35,7 @@
                 {{/if}}
 				  
                 {{auto-expanding-text-area class="form-control" id="newBody" name="body" rows="14" value=nbody}}<br />
-                {{#unless isProfileEditingOn}}    
-                  {{#if isEditingOn}}
-                  {{view Ember.Select
-                       class="form-control"
-                       content=status
-                       optionValuePath="content.id"
-                       optionLabelPath="content.postStatus"
-                       value=currentStatus.id}}
-                       <br />
-                  <button class="btn btn-danger" {{action 'saveEdit' postId}}>Save Edit</button>
-                  <button class="btn btn-success" {{action 'cancelEditing'}}>Cancel Editing</button>
-                  {{else}}
-                    {{#if isSavingAsDraft}}
-                      <button class="btn btn-danger">Saving as draft...</button>
-                    {{else}}
-                      <button class="btn btn-danger" {{action 'createDraft'}}>Save as draft</button>
-                    {{/if}}
-                    {{#if isPublishing}}
-                      <button class="btn btn-success">Creating new post...</button>
-                    {{else}}
-                      <button class="btn btn-success" {{action 'createNew'}}>Create new post</button>
-                    {{/if}}
-                  {{/if}}
-                {{else}}
-                <button class="btn btn-danger" {{action 'saveProfileEdit'}}>Save Edit</button>
-                    <button class="btn btn-success" {{action 'cancelProfileEditing'}}>Cancel Editing</button>
-                {{/unless}}
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Reset</button>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Reset whole textarea</h4>
-                      </div>
-                      <div class="modal-body">
-                        You have some unsaved data in this text field. Are you sure to reset? 
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" {{action 'resetTextarea'}} data-dismiss="modal">Reset</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {{partial "editoractionbutton"}}
                 </form>
               </div>
               <!-- /.col-lg-6 (nested) -->
@@ -152,7 +47,7 @@
                 {{#unless isProfileEditingOn}}
                   <h3 style="border:1px dashed #000;padding:1%;overflow-x: auto;">{{ntitle}}</h3> <br />
                 {{/unless}}
-                <div id="postBodyDiv" style="border:1px dashed #000;padding:1%;height:350px;overflow: auto;">{{format-markdown nbody}}</div><br />
+                <div id="postBodyDiv" style="border:1px dashed #000;padding:1%;height:350px;overflow: auto;">{{format-xmarkdown nbody}}</div><br />
               </div>
               <!-- /.col-lg-6 (nested) -->
             </div>

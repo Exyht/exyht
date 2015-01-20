@@ -16,35 +16,45 @@ setcommenterNameToReply: Ember.computed.alias("controllers.application.currentCo
 setcommenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
 addActualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
 addOnlyCurrentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
+
+flagCmt: function(){
+  var commentId = this.get('id');
+  var self = this;
+  $.ajax({
+      type: "POST",
+      url: Exyht.BaseURL+"flagComment",
+      data: {commentId: commentId},
+      success: function(msg){
+        self.set('isFlagged', true);
+      }
+  });
+},
+
   actions: {
     replyToCommentTrue: function(){
-      this.set('addReplyCommentBtn', true);
-      this.set('getIsHideAddComment', false);
-      this.set('setIsReplying', true);
-      var actualPostIdForReplyCommmentHere = this.get('actualPostIdFromPostController');
-      this.set('actualPostId', actualPostIdForReplyCommmentHere);
-      var getCommentsArrayFromPost = this.get('getCommentsArrayFromPostController');
-      this.set('newComment', getCommentsArrayFromPost);
-      var getCommentId = this.get('id');
-      this.set('setcommentIdToReply', getCommentId);
-      var getCommenterName = this.get('name');
-      this.set('setcommenterNameToReply', getCommenterName);
-      var getCommenterGravater = this.get('email');
-      this.set('setcommenterGravaterToReply', getCommenterGravater);
-      this.set('addActualTitle', '');
-      this.set('addOnlyCurrentSlug', '');
+      
+      var actualPostIdForReplyCommmentHere = this.get('actualPostIdFromPostController'),
+          getCommentsArrayFromPost = this.get('getCommentsArrayFromPostController'),
+          getCommentId = this.get('id'),
+          getCommenterName = this.get('name'),
+          getCommenterGravater = this.get('email');
+
+      this.setProperties({
+        'addReplyCommentBtn': true,
+        'getIsHideAddComment': false,
+        'setIsReplying': true,
+        'actualPostId': actualPostIdForReplyCommmentHere,
+        'newComment': getCommentsArrayFromPost,
+        'setcommentIdToReply': getCommentId,
+        'setcommenterNameToReply': getCommenterName,
+        'setcommenterGravaterToReply': getCommenterGravater,
+        'addActualTitle': '',
+        'addOnlyCurrentSlug': ''
+      });
     },
     flagComment: function(){
-      var commentId = this.get('id');
-      var self = this;
-      $.ajax({
-          type: "POST",
-          url: Exyht.BaseURL+"flagComment",
-          data: {commentId: commentId},
-          success: function(msg){
-            self.set('isFlagged', true);
-          }
-      });
+      // Debounce for 0.5 second
+      Ember.run.debounce(this, this.flagCmt, 500);
     }
   }
 });

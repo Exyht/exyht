@@ -130,6 +130,8 @@ module.exports = function(grunt) {
                     'libraries/js/Markdown.Sanitizer.min.js',
                     'libraries/js/html-sanitizer.min.js',
                     'libraries/js/jquery.textcomplete.min.js',
+                    'libraries/js/jquery.imagesloaded.min.js',
+                    'libraries/js/masonry.pkgd.min.js',
                     'libraries/js/emojies_list.js',
                     'libraries/js/quick_words.js',
                     '!libraries/js/moment-timezone.min.js',

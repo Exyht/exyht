@@ -9,6 +9,20 @@ body {
     font-family: "Segoe UI", Times, serif;
 }
 
+iframe {
+    width: 80%;
+    height:350px;
+    border: 0;
+    margin: 0 auto;
+    display:block;
+}
+
+.item { width: 28%; min-width: 200px; }
+
+.thumb {
+    margin-bottom: 2%;
+}
+
 .input-group-addon{
     background-color: #ffffff;
 }

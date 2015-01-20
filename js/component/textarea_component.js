@@ -2,6 +2,7 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
   didInsertElement: function(){
  
     Ember.run.next(function() {
+      // This check function check for code block matches
       var isInCode = false;
       function check(text) {
           var match;
@@ -21,7 +22,7 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
       this.$().focus();
         
       this.$().textcomplete([
-          { // emoji strategy
+      { // emoji strategy
         match: /\B:([\-+\w]*)$/,
         search: function (term, callback) {
             callback($.map(emojies, function (emoji) {
@@ -29,12 +30,6 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
             }));
         },
         template: function (value) {
-            emoji.sheet_path = Exyht.PathToLibraries+'/libraries/js/sheet_twitter_72.png';
-            emoji.use_sheet = true;
-
-            // show the short-name as a `title` attribute for css/img emoji
-            emoji.include_title = true;
-            emoji.init_env();
             return new Ember.Handlebars.SafeString(emoji.replace_colons(':'+value.toLowerCase()+':') +' :'+ value+':');
         },
         replace: function (value) {
@@ -45,8 +40,8 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
             check(text);
             return !isInCode;
         }
-    },
-        { // words strategy
+      },
+      { // words strategy
         match: /\b(\w{2,})$/,
         search: function (term, callback) {
             callback($.map(words, function (word) {
@@ -58,9 +53,9 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
             return word + ' ';
         },
         context: function () { return isInCode; }
-    }
+      }
 ]);
-
+  // Animate scrolltop of div with scrolltop of textarea
   this.$().scroll(function() {
 
       var scroll = $(this).scrollTop();

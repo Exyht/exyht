@@ -95,61 +95,59 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
   sidebarArchive: function(){
     return Ember.get('Exyht.SidebarInfo.sidebar_info.archive');
   }.property('Exyht.SidebarInfo.sidebar_info.archive'),
-  
-  actions: {
-    addComment: function(){
-      var name = this.get('name');
+
+  addCommentToPost: function(){
+    var name = this.get('name').trim();
       
-      var addedComment = this.get('typeComment');
+    var addedComment = this.get('typeComment');
       
-      var postId = this.get('actualPostIdForAddComment');
-      var email = this.get('email');
-      var replyingCommentId = this.get('currentCommentIdToReply');
-      var valueForSpamBot = this.get('valueForSpam');
+    var postId = this.get('actualPostIdForAddComment');
+    var email = this.get('email').trim();
+    var replyingCommentId = this.get('currentCommentIdToReply');
+    var valueForSpamBot = this.get('valueForSpam');
       
-      if ((!addedComment || addedComment.length < 20) || !name || !email) {
-         this.set('isCommentDivShown', true);
-         return false;
-      }
-      if (!addedComment.trim()) { return; }
+    if ((!addedComment || addedComment.length < 20) || !name || !email) {
+       this.set('isCommentDivShown', true);
+       return false;
+    }
+    if (!addedComment.trim()) { return; }
       
-      this.set('sendingCommentOn', true);
+    this.set('sendingCommentOn', true);
       
-      var self = this;
+    var self = this;
          
-      $.post(Exyht.BaseURL+"addComment",
-        {
-         postId: postId,
-         comment: addedComment,
-         name: name,
-         email: email,
-         spam_bot: valueForSpamBot,
-         replyToCommentId: replyingCommentId
-        },function(data){
+    $.post(Exyht.BaseURL+"addComment",
+      {
+       postId: postId,
+       comment: addedComment,
+       name: name,
+       email: email,
+       spam_bot: valueForSpamBot,
+       replyToCommentId: replyingCommentId
+      },function(data){
+        // Remove previous meta tag with old csrf-token
+        $('meta[name="csrf-token"]').remove();
+        // Append new meta tag with new csrf-token
+        $('head').append( '<meta name="csrf-token" content="'+data.token+'">' );
+        // Update headers 'X-CSRF-Token' with new csrf-token
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
 
-             // Remove previous meta tag with old csrf-token
-              $('meta[name="csrf-token"]').remove();
-              // Append new meta tag with new csrf-token
-              $('head').append( '<meta name="csrf-token" content="'+data.token+'">' );
-              // Update headers 'X-CSRF-Token' with new csrf-token
-              $.ajaxSetup({
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                }
-              });
 
-
-          if(data.controller_response == "saved")
-            {
-              //alert("Data: " + data + "\nStatus: " + status);
-              self.set('isCommentDivShown', false);
+        if(data.controller_response == "saved")
+          {
+            //alert("Data: " + data + "\nStatus: " + status);
+            self.set('isCommentDivShown', false);
+          
+            var gravatarEmail = CryptoJS.MD5(self.get('email').trim().toLowerCase());
             
-              var gravatarEmail = CryptoJS.MD5(self.get('email').trim().toLowerCase());
-              
-              var repliedToCommenterName = self.get('currentCommenterNameToReply');
-              var repliedToCommenterGravater = self.get('currentCommenterGravaterToReply');
-              
-              if(self.get('isReplying') === true){
+            var repliedToCommenterName = self.get('currentCommenterNameToReply');
+            var repliedToCommenterGravater = self.get('currentCommenterGravaterToReply');
+            
+            if(self.get('isReplying') === true){
               self.get('newCurrentComment').pushObject({
                 name: name,
                 email: gravatarEmail,
@@ -160,68 +158,79 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
                   email: repliedToCommenterGravater
                 })
               });
-              }
-              else
-              {
+            }
+            else
+            {
               self.get('newCurrentComment').pushObject({
                 name: name,
                 email: gravatarEmail,
                 comment: addedComment,
                 replyToComment: []
               });
-              }
-              self.set('name', '');
-              self.set('email', '');
-              self.set('typeComment', '');
-              self.set('actualPostIdForAddComment', '');
-              self.set('actualTitleForAddComment', '');
-              self.set('actualOnlyCurrentSlug', '');
-              self.set('isReplying', false);
-              self.set('currentCommentIdToReply', '');
-              self.set('currentCommenterNameToReply', '');
-              self.set('currentCommenterGravaterToReply', '');
-            }else if(data.read_only_mode === 1){
-              $("#showError").addClass("alert alert-danger");
-              $("#showError").html(data.controller_response);
-            }else
-            {
-             $("#showError").html(data.error_msg);
             }
-            self.set('sendingCommentOn', false);
-        },"json");
-   
+            self.setProperties({
+              'name': '',
+              'email': '',
+              'typeComment': '',
+              'actualPostIdForAddComment': '',
+              'actualTitleForAddComment': '',
+              'actualOnlyCurrentSlug': '',
+              'isReplying': false,
+              'currentCommentIdToReply': '',
+              'currentCommenterNameToReply': '',
+              'currentCommenterGravaterToReply': ''
+            });
+          }else if(data.read_only_mode === 1){
+            $("#showError").addClass("alert alert-danger");
+            $("#showError").html(data.controller_response);
+          }else
+          {
+            $("#showError").html(data.error_msg);
+          }
+          self.set('sendingCommentOn', false);
+      },"json");
+  },
+  
+  actions: {
+    addComment: function(){
+      // Debounce for 1 second
+      Ember.run.debounce(this, this.addCommentToPost, 1000);
     },
     cancelAddComment: function(){
       var typedComment = this.get('typeComment');
       
       if(typeof typedComment == 'undefined' || typedComment.length === 0)
       {
-          this.set('name', '');
-          this.set('email', '');
-          this.set('isCommentDivShown', false);
-          this.set('actualPostIdForAddComment', '');
-          this.set('actualTitleForAddComment', '');
-          this.set('actualOnlyCurrentSlug', '');
-          this.set('isReplying', false);
-          this.set('currentCommentIdToReply', '');
-          this.set('currentCommenterNameToReply', '');
-          this.set('currentCommenterGravaterToReply', '');
+        this.setProperties({
+          'name': '',
+          'email': '',
+          'isCommentDivShown': false,
+          'actualPostIdForAddComment': '',
+          'actualTitleForAddComment': '',
+          'actualOnlyCurrentSlug': '',
+          'isReplying': false,
+          'currentCommentIdToReply': '',
+          'currentCommenterNameToReply': '',
+          'currentCommenterGravaterToReply': ''
+        });
       }
       else
       {
         var confirmCanceling = confirm("Want to cancel?");
         if (confirmCanceling === true) {
-          this.set('name', '');
-          this.set('email', '');
-          this.set('typeComment', '');
-          this.set('isCommentDivShown', false);
-          this.set('actualPostIdForAddComment', '');
-          this.set('actualTitleForAddComment', '');
-          this.set('actualOnlyCurrentSlug', '');
-          this.set('isReplying', false);
-          this.set('currentCommentIdToReply', '');
-          this.set('currentCommenterNameToReply', '');
-          this.set('currentCommenterGravaterToReply', '');
+          this.setProperties({
+            'name': '',
+            'email': '',
+            'typeComment': '',
+            'isCommentDivShown': false,
+            'actualPostIdForAddComment': '',
+            'actualTitleForAddComment': '',
+            'actualOnlyCurrentSlug': '',
+            'isReplying': false,
+            'currentCommentIdToReply': '',
+            'currentCommenterNameToReply': '',
+            'currentCommenterGravaterToReply': ''
+          });
         }
       }
     },
@@ -230,22 +239,26 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
       
       if(typeof addedComment == 'undefined' || addedComment.length === 0)
       {
-        this.set('isCommentDivShown', false);
-        this.set('isHideAddComment', false);
-        this.set('name', '');
-        this.set('email', '');
-        this.set('actualPostIdForAddComment', '');
-        this.set('actualTitleForAddComment', '');
-        this.set('actualOnlyCurrentSlug', '');
-        this.set('isReplying', false);
-        this.set('currentCommentIdToReply', '');
-        this.set('currentCommenterNameToReply', '');
-        this.set('currentCommenterGravaterToReply', '');
+        this.setProperties({
+            'name': '',
+            'email': '',
+            'isHideAddComment': false,
+            'isCommentDivShown': false,
+            'actualPostIdForAddComment': '',
+            'actualTitleForAddComment': '',
+            'actualOnlyCurrentSlug': '',
+            'isReplying': false,
+            'currentCommentIdToReply': '',
+            'currentCommenterNameToReply': '',
+            'currentCommenterGravaterToReply': ''
+        });
       }
       else
       {
-        this.set('isCommentDivShown', false);
-        this.set('isHideAddComment', true);
+        this.setProperties({
+          'isCommentDivShown': false,
+          'isHideAddComment': true
+        });
         $("div.container-full").css({"margin-top":"50px"});
       }
     },
@@ -254,105 +267,61 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
       this.set('isHideAddComment', false);
       $("div.container-full").css({"margin-top":"0"});
     },
-
+    
     // Editor tools
+    ctv: function(input){
+      var textarea = $('textarea');
+      textarea.val(textarea.val() + input);
+    },
+    citv: function(input1, input2){
+      var textarea = $('textarea');
+      if (textarea.val() === ''){
+        textarea.val(textarea.val() + input1);
+      }else{
+        textarea.val(textarea.val() + input2);
+      }
+    },
     insertBold: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + " **bold** ");
+      this.send('ctv', " **bold** ");
     },
     insertItalic: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + " *italic* ");
+      this.send('ctv', " *italic* ");
     },
     insertLink: function(){
-     var textarea = $('textarea');
-     if (textarea.val() === '')
-     {
-      textarea.val(textarea.val() + "[Link description](http://example.com)");
-     }
-     else
-     {
-      textarea.val(textarea.val() + "\n [Link description](http://example.com)");
-     }
+      this.send('citv', "[Link description](http://example.com)", "\n [Link description](http://example.com)");
     },
     insertQuote: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + "\n > your quote here");
+      this.send('ctv', "\n > your quote here");
     },
     insertCode: function(){
-     var textarea = $('textarea');
-     if (textarea.val() === '')
-     {
-      textarea.val(textarea.val() + "`For inline code` \n\n\tFor pre code");
-     }
-     else
-     {
-      textarea.val(textarea.val() + "\n\n`For inline code` \n\n\tFor pre code");
-     }
+      this.send('citv', "`For inline code` \n\n\tFor pre code", "\n\n`For inline code` \n\n\tFor pre code");
     },
     insertOrderedlist: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + "Indent one space after the dot \'.\'\n\n1. Ordered list1\n2. Ordered list2");
+      this.send('ctv', "Indent one space after the dot \'.\'\n\n1. Ordered list1\n2. Ordered list2");
     },
     insertUnorderedlist: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + "Indent one space after the + or -.\n\n- Unordered list1\n\t+ Nested list");
+      this.send('ctv', "Indent one space after the + or -.\n\n- Unordered list1\n\t+ Nested list");
     },
     insertHorizontalrule: function(){
-     var textarea = $('textarea');
-     if (textarea.val() === '')
-     {
-      textarea.val(textarea.val() + "-----\nNew line");
-     }
-     else
-     {
-      textarea.val(textarea.val() + "\n\n-----\nNew line");
-     }
+      this.send('citv', "-----\nNew line", "\n\n-----\nNew line");
     },
     insertStrikethrough: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + "<del>Strike through</del>");
+      this.send('ctv', "<del>Strike through</del>");
     },
     insertSubscript: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + "Sub<sub>script</sub>");
+      this.send('ctv', "Sub<sub>script</sub>");
     },
     insertSuperscript: function(){
-     var textarea = $('textarea');
-     textarea.val(textarea.val() + "Sub<sup>script</sup>");
+      this.send('ctv', "Sub<sup>script</sup>");
     },
     insertHeading1: function(){
-     var textarea = $('textarea');
-     if (textarea.val() === '')
-     {
-      textarea.val(textarea.val() + "# Heading1\n");
-     }
-     else
-     {
-      textarea.val(textarea.val() + "\n# Heading1\n");
-     }
+      this.send('citv', "# Heading1\n", "\n# Heading1\n");
     },
     insertHeading2: function(){
-     var textarea = $('textarea');
-     if (textarea.val() === '')
-     {
-      textarea.val(textarea.val() + "## Heading2\n");
-     }
-     else
-     {
-      textarea.val(textarea.val() + "\n## Heading2\n");
-     }
+      this.send('citv', "# Heading2\n", "\n# Heading2\n");
     },
     insertHeading3: function(){
-     var textarea = $('textarea');
-     if (textarea.val() === '')
-     {
-      textarea.val(textarea.val() + "### Heading3\n");
-     }
-     else
-     {
-      textarea.val(textarea.val() + "\n### Heading3\n");
-     }
+      this.send('citv', "# Heading3\n", "\n# Heading3\n");
     }
   }
 });

@@ -1,3 +1,153 @@
+Ember.TEMPLATES["_editoractionbutton"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("    \r\n  ");
+  stack1 = helpers['if'].call(depth0, "isEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n    ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+    'class': ("form-control"),
+    'content': ("status"),
+    'optionValuePath': ("content.id"),
+    'optionLabelPath': ("content.postStatus"),
+    'value': ("currentStatus.id")
+  },hashTypes:{'class': "STRING",'content': "ID",'optionValuePath': "STRING",'optionLabelPath': "STRING",'value': "ID"},hashContexts:{'class': depth0,'content': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'value': depth0},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\r\n    <br />\r\n    <button class=\"btn btn-danger\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveEdit", "postId", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">Save Edit</button>\r\n    <button class=\"btn btn-success\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelEditing", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Cancel Editing</button>\r\n  ");
+  return buffer;
+  }
+
+function program4(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n    ");
+  stack1 = helpers['if'].call(depth0, "isSavingAsDraft", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n    ");
+  stack1 = helpers['if'].call(depth0, "isPublishing", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n  ");
+  return buffer;
+  }
+function program5(depth0,data) {
+  
+  
+  data.buffer.push("\r\n      <button class=\"btn btn-danger\">Saving as draft...</button>\r\n    ");
+  }
+
+function program7(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n      <button class=\"btn btn-danger\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "createDraft", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Save as draft</button>\r\n    ");
+  return buffer;
+  }
+
+function program9(depth0,data) {
+  
+  
+  data.buffer.push("\r\n      <button class=\"btn btn-success\">Creating new post...</button>\r\n    ");
+  }
+
+function program11(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n      <button class=\"btn btn-success\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "createNew", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Create new post</button>\r\n    ");
+  return buffer;
+  }
+
+function program13(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n  <button class=\"btn btn-danger\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveProfileEdit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Save Edit</button>\r\n  <button class=\"btn btn-success\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelProfileEditing", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Cancel Editing</button>\r\n");
+  return buffer;
+  }
+
+  stack1 = helpers.unless.call(depth0, "isProfileEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(13, program13, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n<button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#myModal\">Reset</button>\r\n                \r\n<!-- Modal -->\r\n<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\r\n        <h4 class=\"modal-title\" id=\"myModalLabel\">Reset whole textarea</h4>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        You have some unsaved data in this text field. Are you sure to reset? \r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n        <button type=\"button\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "resetTextarea", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" data-dismiss=\"modal\">Reset</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["_editortools"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+
+
+  data.buffer.push("<div class=\"btn-group btn-group-sm\">\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertBold", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-bold\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertItalic", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-italic\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertLink", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-link\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertQuote", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-comment-o\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertCode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-code\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#imgModal\"><i class=\"fa fa-file-image-o\"></i></button>\r\n                \r\n    <!-- Modal -->\r\n    <div class=\"modal fade\" id=\"imgModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\r\n      <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n          <div class=\"modal-header\">\r\n            <button type=\"button\" class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelUploadImage", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\r\n            <h4 class=\"modal-title\" id=\"myModalLabel\"><i class=\"fa fa-picture-o fa-lg text-info\"></i> Upload Image</h4>\r\n          </div>\r\n          <div class=\"modal-body\">\r\n            <div role=\"tabpanel\">\r\n              <!-- Nav tabs -->\r\n              <ul class=\"nav nav-tabs\" role=\"tablist\">\r\n                <li role=\"presentation\" class=\"active\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "imgTabStatus", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><a href=\"#imgTab\" aria-controls=\"imgTab\" role=\"tab\" data-toggle=\"tab\">Insert Image</a></li>\r\n                <li role=\"presentation\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "vidTabStatus", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><a href=\"#videoTab\" aria-controls=\"videoTab\" role=\"tab\" data-toggle=\"tab\">Insert Video</a></li>\r\n              </ul>\r\n\r\n              <!-- Tab panes -->\r\n              <div class=\"tab-content\">\r\n                <div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"imgTab\">\r\n                  <div id=\"feedback\"></div>\r\n                  <div id=\"loadingDiv\" style=\"display:none;text-align:center;\"><i class=\"fa fa-spinner fa-spin\"></i> Uploading...</div>\r\n                  <label for=\"imageUrlTextField\">Type URL / Upload from my Computer: </label>\r\n                  <input type=\"text\" id=\"imageUrlTextField\" value=\"\" placeholder=\"http://example.com/image.jpg\" class=\"form-control\">\r\n         \r\n                  <br />\r\n                  <iframe name=\"upload_iframe\" src=\"\" style=\"display:none;\"></iframe>\r\n          \r\n                  <form method=\"POST\" action=\"uploadImage\" accept-charset=\"UTF-8\" target=\"upload_iframe\" enctype=\"multipart/form-data\">\r\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("hidden"),
+    'name': ("non_ajax_token"),
+    'value': ("admin_token")
+  },hashTypes:{'type': "STRING",'name': "STRING",'value': "ID"},hashContexts:{'type': depth0,'name': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\r\n                    <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"5000000\" />\r\n                    <input name=\"file\" size=\"20\" type=\"file\" accept=\"image/jpg, image/png, image/gif, image/jpeg\"/>\r\n                    <br />\r\n                    <input type=\"submit\" class=\"btn btn-primary\" name=\"submit\" value=\"Upload\" onclick=\"showLoading();\"/>\r\n                  </form>\r\n                </div>\r\n                <div role=\"tabpanel\" class=\"tab-pane fade\" id=\"videoTab\">\r\n                  <label for=\"videoUrlTextField\">Exyht supports Youtube video: </label>\r\n                  <input type=\"text\" id=\"videoUrlTextField\" value=\"\" placeholder=\"Place Youtube video link here\" class=\"form-control\">\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"modal-footer\">\r\n            <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelUploadImage", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" data-dismiss=\"modal\">Close</button>\r\n            <button type=\"button\" class=\"btn btn-primary\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertImage", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" data-dismiss=\"modal\">Insert in Editor</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertOrderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-list-ol\"></i></button>\r\n    <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertUnorderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-list\"></i></button>\r\n                    \r\n    <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHorizontalrule", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-minus\"></i></button>\r\n    <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertStrikethrough", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-strikethrough\"></i></button>\r\n    <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSubscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-subscript\"></i></button>\r\n    <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSuperscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-superscript\"></i></button>\r\n                \r\n    <div class=\"btn-group btn-group-sm\">\r\n      <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">\r\n        <i class=\"fa fa-header\"></i>\r\n        <span class=\"caret\"></span>\r\n      </button>\r\n       <ul class=\"dropdown-menu\" role=\"menu\">\r\n        <li role=\"presentation\"><a href=\"\"");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading1", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">H1</a></li>\r\n        <li role=\"presentation\"><a href=\"\"");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading2", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">H2</a></li>\r\n        <li role=\"presentation\"><a href=\"\"");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading3", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">H3</a></li>\r\n       </ul>\r\n    </div>\r\n</div>");
+  return buffer;
+  
+});
+
 Ember.TEMPLATES["_navbar"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -33,6 +183,12 @@ function program9(depth0,data) {
   data.buffer.push("<i class=\"fa fa-gear fa-fw\"></i> Profile Settings/ Logo");
   }
 
+function program11(depth0,data) {
+  
+  
+  data.buffer.push("<i class=\"fa fa-picture-o fa-fw\"></i>\r\n Image Gallery");
+  }
+
   data.buffer.push("<!-- Navigation -->\r\n<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">\r\n    <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n            <span class=\"sr-only\">Toggle navigation</span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"#\">Exyht</a>\r\n    </div>\r\n    <!-- /.navbar-header -->\r\n\r\n    <ul class=\"nav navbar-top-links navbar-right\">\r\n        <li class=\"dropdown\">\r\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\r\n                <i class=\"fa fa-user fa-fw\"></i>  <i class=\"fa fa-caret-down\"></i>\r\n            </a>\r\n            <ul class=\"dropdown-menu dropdown-user\">\r\n                <li>");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "profilesetting", options) : helperMissing.call(depth0, "link-to", "profilesetting", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -49,6 +205,9 @@ function program9(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                </li>\r\n                <li>\r\n                    ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "profilesetting", options) : helperMissing.call(depth0, "link-to", "profilesetting", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n                </li>\r\n                <li>\r\n                    ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "imggallery", options) : helperMissing.call(depth0, "link-to", "imggallery", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                </li>\r\n            </ul>\r\n        </div>\r\n        <!-- /.sidebar-collapse -->\r\n    </div>\r\n    <!-- /.navbar-static-side -->\r\n</nav>");
   return buffer;
@@ -318,6 +477,69 @@ function program3(depth0,data) {
   stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</strong>\r\n            </div>\r\n        </div>\r\n                <!-- /.panel -->\r\n    </div>\r\n            <!-- /.col-lg-12 -->\r\n\r\n   </div>\r\n   <!-- /.row -->\r\n</div>\r\n<!-- /#page-wrapper -->");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["imggallery"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n    <div class=\"item thumb\">\r\n    ");
+  stack1 = helpers['if'].call(depth0, "img.img_visible", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n     </div>\r\n  ");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\r\n        <img ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'src': ("img.srcPath")
+  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" class=\"img-thumbnail img-responsive\"/>\r\n        <span class=\"bg-primary\" style=\"position:absolute;top:0;left:86%;z-index:1;padding:1%;\">\r\n          ");
+  stack1 = helpers['if'].call(depth0, "img.deletingImg", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n        </span>\r\n        <p>\r\n          <label class=\"sr-only\" for=\"inputHelpBlock\">Image Link:</label>\r\n          ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'id': ("inputHelpBlock"),
+    'class': ("form-control"),
+    'aria-describedby': ("helpBlock"),
+    'value': ("img.srcPath")
+  },hashTypes:{'type': "STRING",'id': "STRING",'class': "STRING",'aria-describedby': "STRING",'value': "ID"},hashContexts:{'type': depth0,'id': depth0,'class': depth0,'aria-describedby': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\r\n        </p>\r\n    ");
+  return buffer;
+  }
+function program3(depth0,data) {
+  
+  
+  data.buffer.push("\r\n            <span>Removing...</span>\r\n          ");
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n            <span ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "removeGimg", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" style=\"cursor:pointer;\"><i class=\"fa fa-times fa-lg\"></i></span>\r\n          ");
+  return buffer;
+  }
+
+  data.buffer.push("<div id=\"page-wrapper\">\r\n	<h2>Image Gallery! (");
+  stack1 = helpers._triageMustache.call(depth0, "totalImgs", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(") Images</h2>\r\n	<hr />\r\n  <div id=\"galleryContainer\">\r\n  ");
+  stack1 = helpers.each.call(depth0, "img", "in", "images", {hash:{
+    'itemController': ("galleryimage")
+  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n  </div>\r\n</div>");
   return buffer;
   
 });
@@ -781,28 +1003,28 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("\r\n           Edit post\r\n          ");
+  data.buffer.push("\r\n          Edit post\r\n        ");
   }
 
 function program3(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n           ");
+  data.buffer.push("\r\n          ");
   stack1 = helpers['if'].call(depth0, "isProfileEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n          ");
+  data.buffer.push("\r\n        ");
   return buffer;
   }
 function program4(depth0,data) {
   
   
-  data.buffer.push("\r\n             Edit Profile\r\n           ");
+  data.buffer.push("\r\n            Edit Profile\r\n          ");
   }
 
 function program6(depth0,data) {
   
   
-  data.buffer.push("\r\n             Create new post\r\n           ");
+  data.buffer.push("\r\n            Create new post\r\n          ");
   }
 
 function program8(depth0,data) {
@@ -834,87 +1056,6 @@ function program10(depth0,data) {
 function program12(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("    \r\n                  ");
-  stack1 = helpers['if'].call(depth0, "isEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(15, program15, data),fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                ");
-  return buffer;
-  }
-function program13(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\r\n                  ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
-    'class': ("form-control"),
-    'content': ("status"),
-    'optionValuePath': ("content.id"),
-    'optionLabelPath': ("content.postStatus"),
-    'value': ("currentStatus.id")
-  },hashTypes:{'class': "STRING",'content': "ID",'optionValuePath': "STRING",'optionLabelPath': "STRING",'value': "ID"},hashContexts:{'class': depth0,'content': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'value': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\r\n                       <br />\r\n                  <button class=\"btn btn-danger\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveEdit", "postId", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
-  data.buffer.push(">Save Edit</button>\r\n                  <button class=\"btn btn-success\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelEditing", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Cancel Editing</button>\r\n                  ");
-  return buffer;
-  }
-
-function program15(depth0,data) {
-  
-  var buffer = '', stack1;
-  data.buffer.push("\r\n                    ");
-  stack1 = helpers['if'].call(depth0, "isSavingAsDraft", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(18, program18, data),fn:self.program(16, program16, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                    ");
-  stack1 = helpers['if'].call(depth0, "isPublishing", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(22, program22, data),fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                  ");
-  return buffer;
-  }
-function program16(depth0,data) {
-  
-  
-  data.buffer.push("\r\n                      <button class=\"btn btn-danger\">Saving as draft...</button>\r\n                    ");
-  }
-
-function program18(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\r\n                      <button class=\"btn btn-danger\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "createDraft", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Save as draft</button>\r\n                    ");
-  return buffer;
-  }
-
-function program20(depth0,data) {
-  
-  
-  data.buffer.push("\r\n                      <button class=\"btn btn-success\">Creating new post...</button>\r\n                    ");
-  }
-
-function program22(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\r\n                      <button class=\"btn btn-success\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "createNew", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Create new post</button>\r\n                    ");
-  return buffer;
-  }
-
-function program24(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\r\n                <button class=\"btn btn-danger\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveProfileEdit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Save Edit</button>\r\n                    <button class=\"btn btn-success\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelProfileEditing", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Cancel Editing</button>\r\n                ");
-  return buffer;
-  }
-
-function program26(depth0,data) {
-  
-  var buffer = '', stack1;
   data.buffer.push("\r\n                  <h3 style=\"border:1px dashed #000;padding:1%;overflow-x: auto;\">");
   stack1 = helpers._triageMustache.call(depth0, "ntitle", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -922,50 +1063,12 @@ function program26(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"page-wrapper\">\r\n  <div class=\"row\">\r\n      <div class=\"col-lg-12\">\r\n          <h1 class=\"page-header\">\r\n          ");
+  data.buffer.push("<div id=\"page-wrapper\">\r\n  <div class=\"row\">\r\n    <div class=\"col-lg-12\">\r\n      <h1 class=\"page-header\">\r\n        ");
   stack1 = helpers['if'].call(depth0, "isEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n          </h1>\r\n      </div>\r\n      <!-- /.col-lg-12 -->\r\n  </div>\r\n  <!-- /.row -->\r\n  <div class=\"row\">\r\n    <div class=\"col-lg-12\">\r\n        <div class=\"panel panel-default\">\r\n          <div class=\"panel-body\">\r\n            <div class=\"row\">\r\n              <div class=\"col-lg-6\">\r\n                \r\n                <div class=\"btn-group btn-group-sm\">\r\n                  <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertBold", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-bold\"></i></button>\r\n                  <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertItalic", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-italic\"></i></button>\r\n                  <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertLink", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-link\"></i></button>\r\n                  <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertQuote", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-comment-o\"></i></button>\r\n                  <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertCode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-code\"></i></button>\r\n                  <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#imgModal\"><i class=\"fa fa-file-image-o\"></i></button>\r\n                \r\n                    <!-- Modal -->\r\n                    <div class=\"modal fade\" id=\"imgModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\r\n                      <div class=\"modal-dialog\">\r\n                        <div class=\"modal-content\">\r\n                          <div class=\"modal-header\">\r\n                            <button type=\"button\" class=\"close\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelUploadImage", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\r\n                            <h4 class=\"modal-title\" id=\"myModalLabel\"><i class=\"fa fa-picture-o fa-lg text-info\"></i> Upload Image</h4>\r\n                          </div>\r\n                          <div class=\"modal-body\">\r\n                            <div id=\"feedback\"></div>\r\n                            <div id=\"loadingDiv\" style=\"display:none;text-align:center;\"><i class=\"fa fa-spinner fa-spin\"></i> Uploading...</div>\r\n                            <label for=\"imageUrlTextField\">Type URL / Upload from my Computer: </label>\r\n                            <input type=\"text\" id=\"imageUrlTextField\" value=\"\" placeholder=\"http://example.com/image.jpg\" class=\"form-control\">\r\n                         \r\n                            <br />\r\n                            <iframe name=\"upload_iframe\" src=\"\" style=\"display:none;\"></iframe>\r\n                          \r\n                            <form method=\"POST\" action=\"uploadImage\" accept-charset=\"UTF-8\" target=\"upload_iframe\" enctype=\"multipart/form-data\">\r\n                              ");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-    'type': ("hidden"),
-    'name': ("non_ajax_token"),
-    'value': ("admin_token")
-  },hashTypes:{'type': "STRING",'name': "STRING",'value': "ID"},hashContexts:{'type': depth0,'name': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\r\n                              <input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"5000000\" />\r\n                              <input name=\"file\" size=\"20\" type=\"file\" accept=\"image/jpg, image/png, image/gif, image/jpeg\"/>\r\n                              <br />\r\n                              <input type=\"submit\" class=\"btn btn-primary\" name=\"submit\" value=\"Upload\" onclick=\"showLoading();\"/>\r\n                            </form>\r\n                          </div>\r\n                          <div class=\"modal-footer\">\r\n                            <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelUploadImage", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" data-dismiss=\"modal\">Close</button>\r\n                            <button type=\"button\" class=\"btn btn-primary\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertImage", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" data-dismiss=\"modal\">Insert in Editor</button>\r\n                          </div>\r\n                        </div>\r\n                      </div>\r\n                    </div>\r\n                    <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertOrderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-list-ol\"></i></button>\r\n                    <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertUnorderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-list\"></i></button>\r\n                    \r\n                    <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHorizontalrule", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-minus\"></i></button>\r\n                    <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertStrikethrough", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-strikethrough\"></i></button>\r\n                    <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSubscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-subscript\"></i></button>\r\n                    <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSuperscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-superscript\"></i></button>\r\n                \r\n                        <div class=\"btn-group btn-group-sm\">\r\n                          <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">\r\n                            <i class=\"fa fa-header\"></i>\r\n                            <span class=\"caret\"></span>\r\n                          </button>\r\n                           <ul class=\"dropdown-menu\" role=\"menu\">\r\n                            <li role=\"presentation\"><a href=\"\"");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading1", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">H1</a></li>\r\n                            <li role=\"presentation\"><a href=\"\"");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading2", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">H2</a></li>\r\n                            <li role=\"presentation\"><a href=\"\"");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading3", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">H3</a></li>\r\n                           </ul>\r\n                        </div>\r\n                </div><br /><br />               \r\n                <form id=\"createNewNoteForm\">\r\n				\r\n                ");
+  data.buffer.push("\r\n      </h1>\r\n    </div>\r\n    <!-- /.col-lg-12 -->\r\n  </div>\r\n  <!-- /.row -->\r\n  <div class=\"row\">\r\n    <div class=\"col-lg-12\">\r\n        <div class=\"panel panel-default\">\r\n          <div class=\"panel-body\">\r\n            <div class=\"row\">\r\n              <div class=\"col-lg-6\">\r\n                ");
+  data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "editortools", options) : helperMissing.call(depth0, "partial", "editortools", options))));
+  data.buffer.push("\r\n                <br /><br />               \r\n                <form id=\"createNewNoteForm\">\r\n				\r\n                ");
   stack1 = helpers.unless.call(depth0, "isProfileEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n				\r\n                ");
@@ -980,15 +1083,12 @@ function program26(depth0,data) {
     'value': ("nbody")
   },hashTypes:{'class': "STRING",'id': "STRING",'name': "STRING",'rows': "STRING",'value': "ID"},hashContexts:{'class': depth0,'id': depth0,'name': depth0,'rows': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "auto-expanding-text-area", options))));
   data.buffer.push("<br />\r\n                ");
-  stack1 = helpers.unless.call(depth0, "isProfileEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(24, program24, data),fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                <button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#myModal\">Reset</button>\r\n                \r\n                <!-- Modal -->\r\n                <div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\r\n                  <div class=\"modal-dialog\">\r\n                    <div class=\"modal-content\">\r\n                      <div class=\"modal-header\">\r\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\r\n                        <h4 class=\"modal-title\" id=\"myModalLabel\">Reset whole textarea</h4>\r\n                      </div>\r\n                      <div class=\"modal-body\">\r\n                        You have some unsaved data in this text field. Are you sure to reset? \r\n                      </div>\r\n                      <div class=\"modal-footer\">\r\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n                        <button type=\"button\" class=\"btn btn-primary\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "resetTextarea", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" data-dismiss=\"modal\">Reset</button>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n                </form>\r\n              </div>\r\n              <!-- /.col-lg-6 (nested) -->\r\n              <div class=\"col-lg-6\">\r\n                <style>\r\n                  #postBodyDiv pre{max-height:500px;max-width:100%;overflow:auto;}\r\n                  img{max-height:500px;max-width:100%;}\r\n                </style>\r\n                ");
-  stack1 = helpers.unless.call(depth0, "isProfileEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(26, program26, data),contexts:[depth0],types:["ID"],data:data});
+  data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "editoractionbutton", options) : helperMissing.call(depth0, "partial", "editoractionbutton", options))));
+  data.buffer.push("\r\n                </form>\r\n              </div>\r\n              <!-- /.col-lg-6 (nested) -->\r\n              <div class=\"col-lg-6\">\r\n                <style>\r\n                  #postBodyDiv pre{max-height:500px;max-width:100%;overflow:auto;}\r\n                  img{max-height:500px;max-width:100%;}\r\n                </style>\r\n                ");
+  stack1 = helpers.unless.call(depth0, "isProfileEditingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                <div id=\"postBodyDiv\" style=\"border:1px dashed #000;padding:1%;height:350px;overflow: auto;\">");
-  data.buffer.push(escapeExpression((helper = helpers['format-markdown'] || (depth0 && depth0['format-markdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "nbody", options) : helperMissing.call(depth0, "format-markdown", "nbody", options))));
+  data.buffer.push(escapeExpression((helper = helpers['format-xmarkdown'] || (depth0 && depth0['format-xmarkdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "nbody", options) : helperMissing.call(depth0, "format-xmarkdown", "nbody", options))));
   data.buffer.push("</div><br />\r\n              </div>\r\n              <!-- /.col-lg-6 (nested) -->\r\n            </div>\r\n            <!-- /.row (nested) -->\r\n          </div>\r\n          <!-- /.panel-body -->\r\n        </div>\r\n        <!-- /.panel -->\r\n    </div>\r\n    <!-- /.col-lg-12 -->\r\n  </div>\r\n  <!-- /.row -->\r\n</div>\r\n<!-- /#page-wrapper -->");
   return buffer;
   

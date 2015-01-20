@@ -5,8 +5,8 @@ window.Exyht = Ember.Application.create({
 });
 
 Exyht.deferReadiness();
-
-Exyht.currentBaseUri = window.location.protocol+"//"+window.location.hostname+Exyht.BaseURL;
+var hostnameWithProtocolPort = window.location.protocol+"//"+window.location.hostname+(window.location.port ? ':' + window.location.port: '');
+Exyht.currentBaseUri = hostnameWithProtocolPort+Exyht.BaseURL;
 
 function addCss(cssString) {
   try{

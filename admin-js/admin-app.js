@@ -1,19 +1,22 @@
-window.Exyht = Ember.Application.create({});
+window.Exyht = Ember.Application.create({
+	currentPath: '',
+});
 
 Exyht.deferReadiness();
 
 Exyht.BaseUrl = '/blog/admin-page';
 Exyht.gravatarVersion = 'identicon';
-Exyht.currentBaseUri = window.location.protocol+"//"+window.location.hostname+Exyht.BaseUrl;
+Exyht.hostnameWithProtocolPort = window.location.protocol+"//"+window.location.hostname+(window.location.port ? ':' + window.location.port: '');
+Exyht.currentBaseUri = Exyht.hostnameWithProtocolPort+Exyht.BaseUrl;
 
 function showLoading(){
- var loadingDiv = $('#loadingDiv');
- loadingDiv.show();
+ 	var loadingDiv = $('#loadingDiv');
+ 	loadingDiv.show();
 }
 
 function showImgLoading(){
- var imgLoadingDiv = $('#imgLoadingDiv');
- imgLoadingDiv.show();
+ 	var imgLoadingDiv = $('#imgLoadingDiv');
+ 	imgLoadingDiv.show();
 }
 
 $.ajaxSetup({

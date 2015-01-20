@@ -2,6 +2,7 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 
   	needs: ["posttitle", "profilesetting"],
     
+    isImageTab: true,
     admin_token: Ember.computed.oneWay("controllers.profilesetting.admin_token"),
   	editOnForProfSetContr : Ember.computed.alias("controllers.profilesetting.isProfileEditingOnForProfileSetting"),
   	isProfileEditingOn: false,
@@ -39,17 +40,15 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
   	}.observes('nbody'),
     actions: {
     	createPost: function(value1, value2){
-        	var blogTitle = this.get('ntitle');
-	    	var blogBody = this.get('nbody');
-	  
-        	this.set(value1, true);
+        	var blogTitle = this.get('ntitle').trim();
+	    	var blogBody = this.get('nbody').trim();
 
 	    	var self = this;
 
 	    	if ((!blogTitle || blogTitle.length < 5) || (!blogBody || blogBody.length < 20)) {
         	   return false;
         	}
-
+        	this.set(value1, true);
 	    	console.log('Request: Sending request');
 
 	  		return $.ajax({
@@ -72,7 +71,7 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 		    this.send('createPost', 'isSavingAsDraft', 'createNewDraft');
 		},
 		saveProfileEdit: function(){
-    	   	var aboutAuthor = this.get('nbody');
+    	   	var aboutAuthor = this.get('nbody').trim();
     	   	console.log('Request: Sending request');
     	   	$.ajax({
 		    	type: "POST",
@@ -93,8 +92,8 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
     	    this.set('editOnForProfSetContr', false);
 		},
 		saveEdit: function(postId){
-		  	var blogTitle = this.get('ntitle');
-		  	var blogBody = this.get('nbody');
+		  	var blogTitle = this.get('ntitle').trim();
+		  	var blogBody = this.get('nbody').trim();
 		  	var status = this.get('currentStatus.id');
 		  	if ((!blogTitle || this.get('ntitle').length < 5) || (!blogBody || this.get('nbody').length < 20)/* || !csrfToken*/) {
     	  	   	return false;
@@ -116,118 +115,87 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 			this.set('postId', '');
 		},
 		// Editor tools
+		ctv: function(input){
+			var textarea = $('textarea');
+		 	textarea.val(textarea.val() + input);
+		},
+		citv: function(input1, input2){
+			var textarea = $('textarea');
+		 	if (textarea.val() === ''){
+		 	 	textarea.val(textarea.val() + input1);
+		 	}else{
+		 	 	textarea.val(textarea.val() + input2);
+		 	}
+		},
 		insertBold: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + " **bold** ");
+		 	this.send('ctv', " **bold** ");
 		},
 		insertItalic: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + " *italic* ");
+		 	this.send('ctv', " *italic* ");
 		},
 		insertLink: function(){
-		 	var textarea = $('textarea');
-		 	if (textarea.val() === '')
-		 	{
-		 	 	textarea.val(textarea.val() + "[Link description](http://example.com)");
-		 	}
-		 	else
-		 	{
-		 	 	textarea.val(textarea.val() + "\n [Link description](http://example.com)");
-		 	}
+		 	this.send('citv', "[Link description](http://example.com)", "\n [Link description](http://example.com)");
 		},
 		insertQuote: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + "\n > your quote here");
+		 	this.send('ctv', "\n > your quote here");
 		},
 		insertCode: function(){
+		 	this.send('citv', "`For inline code` \n\n\tFor pre code", "\n\n`For inline code` \n\n\tFor pre code");
+		},
+		imgTabStatus: function(){
+			this.set('isImageTab', true);
+		},
+		vidTabStatus: function(){
+			this.set('isImageTab', false);
+		},
+		ivtask: function(value){
 		 	var textarea = $('textarea');
-		 	if (textarea.val() === '')
-		 	{
-		 	 	textarea.val(textarea.val() + "`For inline code` \n\n\tFor pre code");
+			var ivUrl = $('#'+value+'UrlTextField');
+		 	if (ivUrl.val() === ''){
+		 		var iveVal = (value == 'image')?"![alt text](http://example.com/image.jpg)":"![isyoutube](Link to youtube)";
+		 		textarea.val(textarea.val() + iveVal);
+		 	}else{
+		 		var ivVal = (value == 'image')?'alt text':'isyoutube';
+		 		textarea.val(textarea.val() + "!["+ivVal+"]("+ivUrl.val()+")");
 		 	}
-		 	else
-		 	{
-		 	 	textarea.val(textarea.val() + "\n\n`For inline code` \n\n\tFor pre code");
-		 	}
+		 	ivUrl.val('');
 		},
 		insertImage: function(){
-		 	var textarea = $('textarea');
-		 	var imageUrl = $('#imageUrlTextField');
-			if (imageUrl.val() === '')
-		 	{
-		 	 	textarea.val(textarea.val() + "![alt text](http://example.com/image.jpg)");
-		 	}
-		 	else
-		 	{
-		 	 	textarea.val(textarea.val() + "![alt text]("+imageUrl.val()+")");
+		 	if(this.get('isImageTab') === true){
+		 		this.send('ivtask', 'image');
+		 	}else{
+		 		this.send('ivtask', 'video');
 		 	}
 		},
 		cancelUploadImage: function(){
 		 	$("#loadingDiv").hide();
 		},
 		insertOrderedlist: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + "Indent one space after the dot \'.\'\n\n1. Ordered list1\n2. Ordered list2");
+		 	this.send('ctv', "Indent one space after the dot \'.\'\n\n1. Ordered list1\n2. Ordered list2");
 		},
 		insertUnorderedlist: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + "Indent one space after the + or -.\n\n- Unordered list1\n\t+ Nested list");
+		 	this.send('ctv', "Indent one space after the + or -.\n\n- Unordered list1\n\t+ Nested list");
 		},
 		insertHorizontalrule: function(){
-		 	var textarea = $('textarea');
-		 	if (textarea.val() === '')
-		 	{
-		 	 	textarea.val(textarea.val() + "-----\nNew line");
-		 	}
-		 	else
-		 	{
-		 	 	textarea.val(textarea.val() + "\n\n-----\nNew line");
-		 	}
+		 	this.send('citv', "-----\nNew line", "\n\n-----\nNew line");
 		},
 		insertStrikethrough: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + "<del>Strike through</del>");
+		 	this.send('ctv', "<del>Strike through</del>");
 		},
 		insertSubscript: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + "Sub<sub>script</sub>");
+		 	this.send('ctv', "Sub<sub>script</sub>");
 		},
 		insertSuperscript: function(){
-		 	var textarea = $('textarea');
-		 	textarea.val(textarea.val() + "Sub<sup>script</sup>");
+		 	this.send('ctv', "Sub<sup>script</sup>");
 		},
 		insertHeading1: function(){
-		 	var textarea = $('textarea');
-		 	if (textarea.val() === '')
-			{
-		 	 	textarea.val(textarea.val() + "# Heading1\n");
-		 	}
-		 	else
-		 	{
-		 	 	textarea.val(textarea.val() + "\n# Heading1\n");
-		 	}
+		 	this.send('citv', "# Heading1\n", "\n# Heading1\n");
 		},
 		insertHeading2: function(){
-		 	var textarea = $('textarea');
-		 	if (textarea.val() === '')
-		 	{
-		 	 	textarea.val(textarea.val() + "## Heading2\n");
-		 	}
-		 	else
-		 	{
-		 	 	textarea.val(textarea.val() + "\n## Heading2\n");
-		 	}
+		 	this.send('citv', "# Heading2\n", "\n# Heading2\n");
 		},
 		insertHeading3: function(){
-		 	var textarea = $('textarea');
-		 	if (textarea.val() === '')
-		 	{
-		 	 	textarea.val(textarea.val() + "### Heading3\n");
-		 	}
-		 	else
-		 	{
-		 		textarea.val(textarea.val() + "\n### Heading3\n");
-		 	}
+		 	this.send('citv', "# Heading3\n", "\n# Heading3\n");
 		},
 		resetTextarea: function(){
 		 	var textarea = $('textarea');

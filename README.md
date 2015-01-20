@@ -10,11 +10,13 @@ Exyht is a fully open source & free blogging software. This is a very light weig
 
 ## Feature
 
-Exyht has *Read only Mode* feature & though it is mainly a JavaScript based App, it's **SEO** friendly (user friendly URL, optimized crawlable Exyht in `<noscript>` tag & json data) & works also if Javascript is disabled.
+Exyht has *Read only Mode* feature & though it is mainly a JavaScript based App, it's SEO friendly & works also if Javascript is disabled.
 
-You can customize the Blog template's *Blog name & sub-title*, *font family*, *colors*, *add links*, *Logo* and much more quite easily.
+Exyht support Infinite Scrolling. It also has an awesome Installer.
 
-You'll also love the text editor, use *markdown*, *emoji* with *textcomplete* feature. Type your comment while browsing from one topic to another & you'll experience faster topic load Since this is a one page web App.
+You can customize the Blog template's *Blog name & sub-title*, *font family*, *colors*, *add links*, *Logo*, **Image gallery** and much more quite easily.
+
+You'll also love the **text editor**, use *markdown* **(YouTube support)**, *emoji* with *textcomplete* feature. Type your comment while browsing from one topic to another & you'll experience faster topic load Since this is a one page web App.
 
 Exyht uses backend Laravel Api with Ember at front end.
 
@@ -33,7 +35,7 @@ Exyht uses backend Laravel Api with Ember at front end.
 
 Installation of Exyht is very easy. Follow the below steps:
 + Download **Exyht** zip from github and extract it in a folder `blog`(recommended) in `public_html` or `htdocs`.
-+ Save your **database**, **username** & **password** for `mysql` in `app/config/database.php`.
++ Save your **username** & **password** for `mysql` in `app/config/database.php`.
 + Now run Exyht installer by browsing `http://yourdomain/blog/installer` & follow the instructions. It will take not more than 30 seconds.
 + Congrates, installation is complete. Now go to **Admin panel** by browsing `http://yourdomain/blog/admin-page`.
 + Your blog path `http://yourdomain/blog/`.
@@ -70,7 +72,7 @@ Besides You can *Block IP*, *Manage flagged comment*, etc very easily from your 
 
 ## Contribute
 
-Exyht is 100% open source. So contribute in Exyht and make it great.
+Exyht is 100% free & open source. So contribute in Exyht and make it great.
 
 ## Report Bugs or issues/ Pull request
 

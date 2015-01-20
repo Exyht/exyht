@@ -217,43 +217,43 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n\r\n<div class=\"blog-masthead\" id=\"topNavbar\" ");
+  data.buffer.push("\r\n    <nav class=\"navbar navbar-default navbar-static-top\" id=\"topNavbar\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'style': ("navBgColor")
   },hashTypes:{'style': "STRING"},hashContexts:{'style': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\r\n    <div class=\"container\">\r\n        <nav class=\"blog-nav\">\r\n          ");
+  data.buffer.push(">\r\n        <div class=\"container container-fluid\">\r\n          <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse-1\">\r\n              <span class=\"sr-only\">Toggle navigation</span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n            </button>\r\n          </div>\r\n          <div class=\"collapse navbar-collapse\" id=\"navbar-collapse-1\">\r\n            <ul class=\"nav navbar-nav\">\r\n              ");
   stack1 = helpers.each.call(depth0, "blogLinks", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n        </nav>\r\n    </div>\r\n</div>\r\n");
+  data.buffer.push("\r\n            </ul>\r\n          </div><!-- /.navbar-collapse -->\r\n        </div>\r\n    </nav>\r\n");
   return buffer;
   }
 function program2(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n           ");
+  data.buffer.push("\r\n               ");
   stack1 = helpers['if'].call(depth0, "navUrl", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n          ");
+  data.buffer.push("\r\n              ");
   return buffer;
   }
 function program3(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n            ");
+  data.buffer.push("\r\n                ");
   stack1 = helpers['if'].call(depth0, "isBlogUrl", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(7, program7, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n           ");
+  data.buffer.push("\r\n               ");
   return buffer;
   }
 function program4(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n              ");
+  data.buffer.push("\r\n                  <li>");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("blog-nav-item active")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n            ");
+  data.buffer.push("</li>\r\n                ");
   return buffer;
   }
 function program5(depth0,data) {
@@ -267,14 +267,14 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   var buffer = '', stack1;
-  data.buffer.push("\r\n              <a class=\"blog-nav-item\" ");
+  data.buffer.push("\r\n                  <li><a class=\"blog-nav-item\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'href': ("url")
   },hashTypes:{'href': "ID"},hashContexts:{'href': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">");
   stack1 = helpers._triageMustache.call(depth0, "link_name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</a>\r\n            ");
+  data.buffer.push("</a></li>\r\n                ");
   return buffer;
   }
 
@@ -327,22 +327,24 @@ function program6(depth0,data) {
   var buffer = '', stack1, helper, options;
   data.buffer.push("\r\n        <li ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'title': ("title")
+    'title': ("sa.created")
   },hashTypes:{'title': "ID"},hashContexts:{'title': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\r\n          ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "post", "", options) : helperMissing.call(depth0, "link-to", "post", "", options));
+  data.buffer.push(" class=\"sidebar-archive-link\">\r\n          ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "post", "sa", options) : helperMissing.call(depth0, "link-to", "post", "sa", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n        </li>\r\n      ");
   return buffer;
   }
 function program7(depth0,data) {
   
-  var buffer = '', stack1, helper, options;
+  var buffer = '', stack1;
   data.buffer.push("\r\n\r\n            ");
-  stack1 = helpers['if'].call(depth0, "has_img", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "sa.has_img", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n            ");
-  data.buffer.push(escapeExpression((helper = helpers['format-archive-date'] || (depth0 && depth0['format-archive-date']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "created", options) : helperMissing.call(depth0, "format-archive-date", "created", options))));
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "sa.title", {hash:{
+    'unescaped': ("true")
+  },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
   data.buffer.push("\r\n\r\n          ");
   return buffer;
   }
@@ -350,7 +352,7 @@ function program8(depth0,data) {
   
   var buffer = '', helper, options;
   data.buffer.push("\r\n              ");
-  data.buffer.push(escapeExpression((helper = helpers['format-markdown'] || (depth0 && depth0['format-markdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "first_img", options) : helperMissing.call(depth0, "format-markdown", "first_img", options))));
+  data.buffer.push(escapeExpression((helper = helpers['format-markdown'] || (depth0 && depth0['format-markdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "sa.first_img", options) : helperMissing.call(depth0, "format-markdown", "sa.first_img", options))));
   data.buffer.push("\r\n            ");
   return buffer;
   }
@@ -386,7 +388,7 @@ function program11(depth0,data) {
   stack1 = helpers['with'].call(depth0, "sidebarAuthor", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n  <div class=\"row\">\r\n  <div class=\"sidebar-module col-xs-10\">\r\n    <h4>Archives</h4>\r\n    <ol class=\"list-unstyled\">\r\n      ");
-  stack1 = helpers.each.call(depth0, "sidebarArchive", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers.each.call(depth0, "sa", "in", "sidebarArchive", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n    </ol>\r\n  </div>\r\n  </div>\r\n  <div class=\"row\">\r\n  <div class=\"sidebar-module col-xs-6\">\r\n    <h4>Elsewhere</h4>\r\n      <ol class=\"list-unstyled\">\r\n      ");
   stack1 = helpers.each.call(depth0, "blogLinks", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
@@ -578,7 +580,7 @@ function program1(depth0,data) {
   stack1 = helpers.unless.call(depth0, "no_post", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n    <div>");
-  data.buffer.push(escapeExpression((helper = helpers['format-markdown'] || (depth0 && depth0['format-markdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "body", options) : helperMissing.call(depth0, "format-markdown", "body", options))));
+  data.buffer.push(escapeExpression((helper = helpers['format-xmarkdown'] || (depth0 && depth0['format-xmarkdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "body", options) : helperMissing.call(depth0, "format-xmarkdown", "body", options))));
   data.buffer.push("\r\n    <span>\r\n    	");
   stack1 = helpers.unless.call(depth0, "no_post", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -630,12 +632,21 @@ function program8(depth0,data) {
   data.buffer.push("Continue reading...");
   }
 
+function program10(depth0,data) {
+  
+  
+  data.buffer.push("\r\n<div class=\"panel panel-default\">\r\n  <div class=\"panel-body text-center\">\r\n    <i class=\"fa fa-circle-o-notch fa-spin fa-2x\"></i>\r\n  </div>\r\n</div>\r\n");
+  }
+
   data.buffer.push("\r\n<div class=\"col-sm-8 blog-main\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'style': ("postBgColor")
   },hashTypes:{'style': "STRING"},hashContexts:{'style': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">\r\n\r\n<div class=\"blog-post\">\r\n");
   stack1 = helpers.each.call(depth0, "posts", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n");
+  stack1 = helpers['if'].call(depth0, "loadingMoreTopics", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n</div><!-- /.blog-post -->\r\n\r\n</div><!-- /.blog-main -->");
   return buffer;
@@ -768,7 +779,7 @@ function program15(depth0,data) {
   stack1 = helpers._triageMustache.call(depth0, "view.postCreated", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n	<hr />\r\n\r\n	<div>");
-  data.buffer.push(escapeExpression((helper = helpers['format-markdown'] || (depth0 && depth0['format-markdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "post", options) : helperMissing.call(depth0, "format-markdown", "post", options))));
+  data.buffer.push(escapeExpression((helper = helpers['format-xmarkdown'] || (depth0 && depth0['format-xmarkdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "post", options) : helperMissing.call(depth0, "format-xmarkdown", "post", options))));
   data.buffer.push("</div>\r\n\r\n	  	");
   stack1 = helpers['if'].call(depth0, "isPrevId", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }

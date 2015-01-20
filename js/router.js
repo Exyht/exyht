@@ -8,10 +8,12 @@ Exyht.Router.reopen({
 });
 
 Exyht.IndexRoute = Ember.Route.extend({
+  init_post_offset: 0,
+  init_post_limit: 8,
   model: function()
     {
-      return Ember.$.getJSON(Exyht.currentBaseUri+'getBlogPosts').then(function(data) {
-        return data;
+      return Ember.$.getJSON(Exyht.currentBaseUri+'getBlogPosts/'+this.init_post_offset+'/'+this.init_post_limit).then(function(data) {
+        return {"posts":data};
       });
     },
   redirect: function() {

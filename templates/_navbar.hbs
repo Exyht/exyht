@@ -1,18 +1,27 @@
 {{#if hasNavbar}}
-
-<div class="blog-masthead" id="topNavbar" {{bind-attr style="navBgColor"}}>
-    <div class="container">
-        <nav class="blog-nav">
-          {{#each blogLinks}}
-           {{#if navUrl}}
-            {{#if isBlogUrl}}
-              {{#link-to 'index' class="blog-nav-item active"}}{{link_name}}{{/link-to}}
-            {{else}}
-              <a class="blog-nav-item" {{ bind-attr href=url }}>{{link_name}}</a>
-            {{/if}}
-           {{/if}}
-          {{/each}}
-        </nav>
-    </div>
-</div>
+    <nav class="navbar navbar-default navbar-static-top" id="topNavbar" {{bind-attr style="navBgColor"}}>
+        <div class="container container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              {{#each blogLinks}}
+               {{#if navUrl}}
+                {{#if isBlogUrl}}
+                  <li>{{#link-to 'index' class="blog-nav-item active"}}{{link_name}}{{/link-to}}</li>
+                {{else}}
+                  <li><a class="blog-nav-item" {{ bind-attr href=url }}>{{link_name}}</a></li>
+                {{/if}}
+               {{/if}}
+              {{/each}}
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
 {{/if}}
