@@ -55,6 +55,11 @@ Ember.Handlebars.helper('format-xmarkdown', function(input) {
 	var markdown = new Markdown.getSanitizingConverter();
 	return new Ember.Handlebars.SafeString(emoji.replace_colons(markdown.makeHtml(input)));
 });
+/*
+ |---------------------------
+ | Router
+ |---------------------------
+*/
 Exyht.Router.map(function() {
     this.route('index',  {path: Exyht.BaseUrl});
     this.route('comments', {path: Exyht.BaseUrl+'/comments/:post_id'});
@@ -109,6 +114,11 @@ model: function()
   });
 }
 });
+/*
+ |--------------------
+ | Textarea Component
+ |--------------------
+*/
 Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
   didInsertElement: function(){
  
@@ -183,6 +193,11 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
 }
 });
 
+/*
+ |------------------
+ | Index Controller
+ |------------------
+*/
 Exyht.IndexController = Ember.ObjectController.extend({
   loadingOn: false,
   actions: {
@@ -292,6 +307,11 @@ Exyht.IndexController = Ember.ObjectController.extend({
       }
   }
 });
+/*
+ |----------------
+ | App Controller
+ |----------------
+*/
 Exyht.ApplicationController = Ember.ObjectController.extend({
 	actions: {
 		logOut: function(){
@@ -303,6 +323,11 @@ Exyht.ApplicationController = Ember.ObjectController.extend({
 		}
 	},
 });
+/*
+ |----------------------
+ | Blog Link Controller
+ |----------------------
+*/
 Exyht.BloglinkController = Ember.ObjectController.extend({
   actions: {
     removeLink: function(){
@@ -325,11 +350,20 @@ Exyht.BloglinkController = Ember.ObjectController.extend({
     }
   }
 });
+/*
+ |---------------------
+ | Comments Controller
+ |---------------------
+*/
 Exyht.CommentsController = Ember.ArrayController.extend({
   needs: "posttitle",
   title: '',
 });
-
+/*
+ |--------------------
+ | Comment Controller
+ |--------------------
+*/
 Exyht.CommentController = Ember.ObjectController.extend({
   banLoading: false,
   flagLoading: false,
@@ -357,9 +391,11 @@ Exyht.CommentController = Ember.ObjectController.extend({
           url: Exyht.BaseUrl+"/removeComment/"+commentId,
           success: function(msg){
             console.log(msg);
-            self.set('showLoading', false);
-            self.set('isFlagged', false);
-            self.set('status', false);
+            self.setProperties({
+              'showLoading': false,
+              'isFlagged': false,
+              'status':  false
+            });
             alert(msg);
           }
         });
@@ -378,8 +414,10 @@ Exyht.CommentController = Ember.ObjectController.extend({
           url: Exyht.BaseUrl+"/banIp/"+ipAddress,
           success: function(msg){
             console.log(msg);
-            self.set('banLoading', false);
-            self.set('ip_status', true);
+            self.setProperties({
+              'banLoading': false,
+              'ip_status': true
+            });
             alert(msg);
           }
         });
@@ -398,8 +436,10 @@ Exyht.CommentController = Ember.ObjectController.extend({
           url: Exyht.BaseUrl+"/removeFlag/"+commentId,
           success: function(msg){
             console.log(msg);
-            self.set('flagLoading', false);
-            self.set('isFlagged', false);
+            self.setProperties({
+              'flagLoading': false,
+              'isFlagged': false
+            });
             alert(msg);
           }
         });
@@ -409,6 +449,11 @@ Exyht.CommentController = Ember.ObjectController.extend({
     }
   }
 });
+/*
+ |--------------------------
+ | Image Gallery Controller
+ |--------------------------
+*/
 Exyht.ImggalleryController = Ember.ObjectController.extend({
 	img_from: 15, // load more pics offset
 	img_to: 30, // load more pics limit
@@ -451,7 +496,11 @@ Exyht.ImggalleryController = Ember.ObjectController.extend({
 		}
 	}
 });
-
+/*
+ |--------------------------
+ | Gallery Image Controller
+ |--------------------------
+*/
 Exyht.GalleryimageController = Ember.ObjectController.extend({
 	deletingImg: false,
 	srcPath: function(){
@@ -472,14 +521,21 @@ Exyht.GalleryimageController = Ember.ObjectController.extend({
           		url: Exyht.BaseUrl+"/removeGimg",
           		data: {img_path: img_path},
           		success: function(msg){
-          		  self.set('img_visible', false);
-          		  self.set('deletingImg', false);
-          		  alert(msg);
+          			self.setProperties({
+          				'img_visible': false,
+          				'deletingImg': false
+          			});
+          		  	alert(msg);
           		}
         	});
 		}
 	}
 });
+/*
+ |-----------------------
+ | Post title controller
+ |-----------------------
+*/
 Exyht.PosttitleController = Ember.ObjectController.extend({
 
   needs: ["typeblogpost", "comments", "profilesetting"],
@@ -502,12 +558,14 @@ Exyht.PosttitleController = Ember.ObjectController.extend({
 
   actions: {
   	editPostTrue: function(){
-        this.set('isEditingOnForPostTitle', true);
-        this.set('postIdForTypeBlogPost', this.get('model.id'));
-  		  this.set('isEditingOnForTypeBlogPost', true);
-        this.set('isProfileEditingOnForTypeBlogPost', false);
-        this.set('editingOnForProfSetCtlr', false);
-        this.set('titleForTypeBlogPost', this.get('model.title'));
+      this.setProperties({
+        'isEditingOnForPostTitle': true,
+        'postIdForTypeBlogPost': this.get('model.id'),
+        'isEditingOnForTypeBlogPost': true,
+        'isProfileEditingOnForTypeBlogPost': false,
+        'editingOnForProfSetCtlr': false,
+        'titleForTypeBlogPost': this.get('model.title')
+      });
         
         var self = this;
         Ember.$.getJSON(Exyht.currentBaseUri+'/getOnlyPostBody/'+this.get('model.id')).then(function(data) {
@@ -523,6 +581,11 @@ Exyht.PosttitleController = Ember.ObjectController.extend({
     }
   }
 });
+/*
+ |---------------------------
+ | Profilesetting Controller
+ |---------------------------
+*/
 Exyht.ProfilesettingController = Ember.ObjectController.extend({
 needs: "typeblogpost",
 admin_token : function(){
@@ -562,16 +625,20 @@ actions: {
 	      success: function(msg){
 	      	console.log('Response: '+msg);
 	        alert(msg);
-	        self.set('old_password', '');
-	        self.set('new_password', '');
-	        self.set('confirm_password', '');
+	        self.setProperties({
+	        	'old_password': '',
+	        	'new_password': '',
+	        	'confirm_password': ''
+	        });
 	      }
 	    });
 	},
 	editProfileTrue: function(){
-		this.set('isProfileEditingOnForProfileSetting', true);
-		this.set('isProfEditOnForTypeBlogPost', true);
-        this.set('aboutAdminForTypeBlogPost', this.get('model.about'));
+		this.setProperties({
+			'isProfileEditingOnForProfileSetting': true,
+			'isProfEditOnForTypeBlogPost': true,
+			'aboutAdminForTypeBlogPost': this.get('model.about')
+		});
         this.transitionToRoute('typeblogpost');
 	},
 	removeProfPicture: function(){
@@ -583,8 +650,10 @@ actions: {
 	      success: function(msg){
 	      	console.log('Response: '+msg);
 	        alert(msg);
-	        self.set('isRemoved', true);
-	        self.set('isRemovingPicture', false);
+	        self.setProperties({
+	        	'isRemoved': true,
+	        	'isRemovingPicture': false
+	        });
 	      }
 	    });
 	},
@@ -593,6 +662,11 @@ actions: {
 	}
 }
 });
+/*
+ |---------------------------
+ | Toprow Controller
+ |---------------------------
+*/
 Exyht.ToprowController = Ember.ObjectController.extend({
   
   notificationTemplate: function(value1, value2){
@@ -637,6 +711,11 @@ Exyht.ToprowController = Ember.ObjectController.extend({
   }.property('model.flaggedComment'),
 });
 
+/*
+ |---------------------------
+ | Typeblogpost Controller
+ |---------------------------
+*/
 Exyht.TypeblogpostController = Ember.ObjectController.extend({
 
   	needs: ["posttitle", "profilesetting"],
@@ -696,9 +775,11 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 	    		data: {title: blogTitle, body: blogBody},
 	    		success: function(msg){
 	    		  console.log('Response: '+msg);
-	    		  self.set(value1, false);
-	    		  self.set('ntitle', '');
-	    		  self.set('nbody', '');
+	    		  self.setProperties({
+	    		  	value1: false,
+	    		  	'ntitle': '',
+	    		  	'nbody': ''
+	    		  });
 	    		  alert(msg);
 	    		}
 	  		});
@@ -723,12 +804,14 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 		  	});
 		},
 		cancelProfileEditing: function(){
-			this.set('isProfileEditingOn', false);
-			this.set('isEditingOn', false);
-			this.set('ntitle', '');
-			this.set('nbody', '');
-			this.set('postId', '');
-    	    this.set('editOnForProfSetContr', false);
+			this.setProperties({
+				'isProfileEditingOn': false,
+				'isEditingOn': false,
+				'ntitle': '',
+				'nbody': '',
+				'postId': '',
+				'editOnForProfSetContr': false
+			});
 		},
 		saveEdit: function(postId){
 		  	var blogTitle = this.get('ntitle').trim();
@@ -748,10 +831,12 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 		  	});
 		},
 		cancelEditing: function(){
-			this.set('isEditingOn', false);
-			this.set('ntitle', '');
-			this.set('nbody', '');
-			this.set('postId', '');
+			this.setProperties({
+				'isEditingOn': false,
+				'ntitle': '',
+				'nbody': '',
+				'postId': ''
+			});
 		},
 		// Editor tools
 		ctv: function(input){
@@ -849,7 +934,11 @@ Exyht.RadioButton = Ember.Component.extend({
     attributeBindings : [ "name", "type", "value", "style" ],
 });
 Ember.Handlebars.helper('radio-button',Exyht.RadioButton);
-
+/*
+ |---------------------------
+ | Uisettings Controller
+ |---------------------------
+*/
 Exyht.UisettingsController = Ember.ObjectController.extend({
   favcolor: '',
   selectedCategory: '',
@@ -903,6 +992,11 @@ Exyht.UisettingsController = Ember.ObjectController.extend({
 	}
   }
 });
+/*
+ |---------------------------
+ | Comment View
+ |---------------------------
+*/
 Exyht.CommentView = Ember.View.extend({
   
   templateName: "comment",
@@ -911,6 +1005,11 @@ Exyht.CommentView = Ember.View.extend({
     return "http://www.gravatar.com/avatar/"+this.get("controller.gravatarUri") + '?d='+Exyht.gravatarVersion+'&s=30';
   }).property("controller.gravatarUri")
 });
+/*
+ |---------------------------
+ | Imggallery View
+ |---------------------------
+*/
 Exyht.ImggalleryView = Ember.View.extend({
   
   templateName: "imggallery",
@@ -966,6 +1065,11 @@ Exyht.ImggalleryView = Ember.View.extend({
     }
   }
 });
+/*
+ |---------------------------
+ | Index View
+ |---------------------------
+*/
 Exyht.IndexView = Ember.View.extend({
   
   templateName: "index",
