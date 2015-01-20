@@ -1,3 +1,8 @@
+/*
+ |---------------
+ | Exyht Router
+ |---------------
+*/ 
 Exyht.Router.map(function() {
   this.route('index', {path: Exyht.BaseURL});
   this.route('post', {path: Exyht.BaseURL+'post/:post_slug/:post_id'});
@@ -37,7 +42,7 @@ Exyht.PostRoute = Ember.Route.extend({
           Ember.run(function() {
             controller.set('model', data);
           });
-
+          // Update Window title
           $('title').html(data.title);
         });
   },

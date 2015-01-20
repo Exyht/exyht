@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Comments View
+ |---------------------------
+*/
 Exyht.CommentsView = Ember.View.extend({
   
   templateName: "comments",

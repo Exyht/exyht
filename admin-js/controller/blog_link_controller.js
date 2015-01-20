@@ -1,3 +1,8 @@
+/*
+ |----------------------
+ | Blog Link Controller
+ |----------------------
+*/
 Exyht.BloglinkController = Ember.ObjectController.extend({
   actions: {
     removeLink: function(){

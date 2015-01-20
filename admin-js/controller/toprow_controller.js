@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Toprow Controller
+ |---------------------------
+*/
 Exyht.ToprowController = Ember.ObjectController.extend({
   
   notificationTemplate: function(value1, value2){

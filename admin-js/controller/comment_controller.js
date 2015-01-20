@@ -1,8 +1,17 @@
+/*
+ |---------------------
+ | Comments Controller
+ |---------------------
+*/
 Exyht.CommentsController = Ember.ArrayController.extend({
   needs: "posttitle",
   title: '',
 });
-
+/*
+ |--------------------
+ | Comment Controller
+ |--------------------
+*/
 Exyht.CommentController = Ember.ObjectController.extend({
   banLoading: false,
   flagLoading: false,
@@ -30,9 +39,11 @@ Exyht.CommentController = Ember.ObjectController.extend({
           url: Exyht.BaseUrl+"/removeComment/"+commentId,
           success: function(msg){
             console.log(msg);
-            self.set('showLoading', false);
-            self.set('isFlagged', false);
-            self.set('status', false);
+            self.setProperties({
+              'showLoading': false,
+              'isFlagged': false,
+              'status':  false
+            });
             alert(msg);
           }
         });
@@ -51,8 +62,10 @@ Exyht.CommentController = Ember.ObjectController.extend({
           url: Exyht.BaseUrl+"/banIp/"+ipAddress,
           success: function(msg){
             console.log(msg);
-            self.set('banLoading', false);
-            self.set('ip_status', true);
+            self.setProperties({
+              'banLoading': false,
+              'ip_status': true
+            });
             alert(msg);
           }
         });
@@ -71,8 +84,10 @@ Exyht.CommentController = Ember.ObjectController.extend({
           url: Exyht.BaseUrl+"/removeFlag/"+commentId,
           success: function(msg){
             console.log(msg);
-            self.set('flagLoading', false);
-            self.set('isFlagged', false);
+            self.setProperties({
+              'flagLoading': false,
+              'isFlagged': false
+            });
             alert(msg);
           }
         });

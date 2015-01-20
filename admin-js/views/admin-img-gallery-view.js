@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Imggallery View
+ |---------------------------
+*/
 Exyht.ImggalleryView = Ember.View.extend({
   
   templateName: "imggallery",

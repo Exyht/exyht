@@ -5,7 +5,11 @@ Exyht.RadioButton = Ember.Component.extend({
     attributeBindings : [ "name", "type", "value", "style" ],
 });
 Ember.Handlebars.helper('radio-button',Exyht.RadioButton);
-
+/*
+ |---------------------------
+ | Uisettings Controller
+ |---------------------------
+*/
 Exyht.UisettingsController = Ember.ObjectController.extend({
   favcolor: '',
   selectedCategory: '',

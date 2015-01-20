@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Post Controller
+ |---------------------------
+*/
 Exyht.PostController = Ember.ObjectController.extend({
   needs: ["application", "index"],
   postBgColor: Ember.computed.oneWay("controllers.index.postBgColor"),

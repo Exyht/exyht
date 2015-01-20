@@ -1,3 +1,8 @@
+/*
+ |-----------------------
+ | Post title controller
+ |-----------------------
+*/
 Exyht.PosttitleController = Ember.ObjectController.extend({
 
   needs: ["typeblogpost", "comments", "profilesetting"],
@@ -20,12 +25,14 @@ Exyht.PosttitleController = Ember.ObjectController.extend({
 
   actions: {
   	editPostTrue: function(){
-        this.set('isEditingOnForPostTitle', true);
-        this.set('postIdForTypeBlogPost', this.get('model.id'));
-  		  this.set('isEditingOnForTypeBlogPost', true);
-        this.set('isProfileEditingOnForTypeBlogPost', false);
-        this.set('editingOnForProfSetCtlr', false);
-        this.set('titleForTypeBlogPost', this.get('model.title'));
+      this.setProperties({
+        'isEditingOnForPostTitle': true,
+        'postIdForTypeBlogPost': this.get('model.id'),
+        'isEditingOnForTypeBlogPost': true,
+        'isProfileEditingOnForTypeBlogPost': false,
+        'editingOnForProfSetCtlr': false,
+        'titleForTypeBlogPost': this.get('model.title')
+      });
         
         var self = this;
         Ember.$.getJSON(Exyht.currentBaseUri+'/getOnlyPostBody/'+this.get('model.id')).then(function(data) {

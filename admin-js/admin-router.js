@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Router
+ |---------------------------
+*/
 Exyht.Router.map(function() {
     this.route('index',  {path: Exyht.BaseUrl});
     this.route('comments', {path: Exyht.BaseUrl+'/comments/:post_id'});

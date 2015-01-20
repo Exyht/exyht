@@ -63,6 +63,11 @@ Ember.Handlebars.helper('format-archive-date', function(input) {
 Ember.Handlebars.helper('format-comment-number', function(input) {
   return (input == 1)?' Comment':' Comments';
 });
+/*
+ |---------------
+ | Exyht Router
+ |---------------
+*/ 
 Exyht.Router.map(function() {
   this.route('index', {path: Exyht.BaseURL});
   this.route('post', {path: Exyht.BaseURL+'post/:post_slug/:post_id'});
@@ -102,7 +107,7 @@ Exyht.PostRoute = Ember.Route.extend({
           Ember.run(function() {
             controller.set('model', data);
           });
-
+          // Update Window title
           $('title').html(data.title);
         });
   },
@@ -111,6 +116,11 @@ Exyht.PostRoute = Ember.Route.extend({
     return { post_slug: slug, post_id: model.id };
   }  
 });
+/*
+ |---------------------------
+ | TextArea Component
+ |---------------------------
+*/
 Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
   didInsertElement: function(){
  
@@ -185,6 +195,11 @@ Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
   }.bind(this));
 }
 });
+/*
+ |---------------------------
+ | TimeAgo Component
+ |---------------------------
+*/
 Exyht.TimeAgoComponent = Ember.Component.extend({
   timeAgo: '',
   
@@ -197,6 +212,11 @@ Exyht.TimeAgoComponent = Ember.Component.extend({
     Ember.run.later(this, this.clock, 1000 * 60);
   }.on('didInsertElement') 
 });
+/*
+ |---------------------------
+ | Application Controller
+ |---------------------------
+*/
 Exyht.ApplicationController = Ember.ArrayController.extend({
   needs: "post",
   isReplying: false,
@@ -524,6 +544,11 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
     }
   }
 });
+/*
+ |---------------------------
+ | Comments Controller
+ |---------------------------
+*/
 Exyht.CommentsController = Ember.ObjectController.extend({
 
 needs: ["application", "post"],
@@ -584,6 +609,11 @@ flagCmt: function(){
     }
   }
 });
+/*
+ |------------------
+ | Index Controller
+ |------------------
+*/
 Exyht.IndexController = Ember.ObjectController.extend({
     more_post_offset: 8,
     more_post_limit: 8,
@@ -633,6 +663,11 @@ Exyht.IndexController = Ember.ObjectController.extend({
     	}
   	}
 });
+/*
+ |---------------------------
+ | Post Controller
+ |---------------------------
+*/
 Exyht.PostController = Ember.ObjectController.extend({
   needs: ["application", "index"],
   postBgColor: Ember.computed.oneWay("controllers.index.postBgColor"),
@@ -681,6 +716,11 @@ Exyht.PostController = Ember.ObjectController.extend({
     }
   }
 });
+/*
+ |---------------------------
+ | Application View
+ |---------------------------
+*/
 Exyht.ApplicationView = Ember.View.extend({
   
   	templateName: "application",
@@ -689,6 +729,11 @@ Exyht.ApplicationView = Ember.View.extend({
     	return "http://www.gravatar.com/avatar/"+this.get("controller.currentCommenterGravaterToReply") + '?d='+Exyht.gravatarVersion+'&s=20';
   	}).property("controller.currentCommenterGravaterToReply")
 });
+/*
+ |---------------------------
+ | Comments View
+ |---------------------------
+*/
 Exyht.CommentsView = Ember.View.extend({
   
   templateName: "comments",
@@ -701,6 +746,11 @@ Exyht.CommentsView = Ember.View.extend({
     return "http://www.gravatar.com/avatar/"+this.get("controller.replyToComment.email") + '?d='+Exyht.gravatarVersion+'&s=18';
   }).property("controller.replyToComment.email"),
 });
+/*
+ |---------------
+ | Index View
+ |---------------
+*/
 Exyht.IndexView = Ember.View.extend({
 	didInsertElement: function(){
   	$(window).on('scroll', $.proxy(this.didScroll, this));
@@ -721,6 +771,11 @@ Exyht.IndexView = Ember.View.extend({
     }
   }
 });
+/*
+ |---------------------------
+ | Post View
+ |---------------------------
+*/
 Exyht.PostView = Ember.View.extend({
   
   	templateName: "post",

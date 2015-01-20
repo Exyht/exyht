@@ -1,3 +1,8 @@
+/*
+ |----------------
+ | App Controller
+ |----------------
+*/
 Exyht.ApplicationController = Ember.ObjectController.extend({
 	actions: {
 		logOut: function(){

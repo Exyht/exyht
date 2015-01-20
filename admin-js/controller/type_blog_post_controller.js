@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Typeblogpost Controller
+ |---------------------------
+*/
 Exyht.TypeblogpostController = Ember.ObjectController.extend({
 
   	needs: ["posttitle", "profilesetting"],
@@ -57,9 +62,11 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 	    		data: {title: blogTitle, body: blogBody},
 	    		success: function(msg){
 	    		  console.log('Response: '+msg);
-	    		  self.set(value1, false);
-	    		  self.set('ntitle', '');
-	    		  self.set('nbody', '');
+	    		  self.setProperties({
+	    		  	value1: false,
+	    		  	'ntitle': '',
+	    		  	'nbody': ''
+	    		  });
 	    		  alert(msg);
 	    		}
 	  		});
@@ -84,12 +91,14 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 		  	});
 		},
 		cancelProfileEditing: function(){
-			this.set('isProfileEditingOn', false);
-			this.set('isEditingOn', false);
-			this.set('ntitle', '');
-			this.set('nbody', '');
-			this.set('postId', '');
-    	    this.set('editOnForProfSetContr', false);
+			this.setProperties({
+				'isProfileEditingOn': false,
+				'isEditingOn': false,
+				'ntitle': '',
+				'nbody': '',
+				'postId': '',
+				'editOnForProfSetContr': false
+			});
 		},
 		saveEdit: function(postId){
 		  	var blogTitle = this.get('ntitle').trim();
@@ -109,10 +118,12 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 		  	});
 		},
 		cancelEditing: function(){
-			this.set('isEditingOn', false);
-			this.set('ntitle', '');
-			this.set('nbody', '');
-			this.set('postId', '');
+			this.setProperties({
+				'isEditingOn': false,
+				'ntitle': '',
+				'nbody': '',
+				'postId': ''
+			});
 		},
 		// Editor tools
 		ctv: function(input){

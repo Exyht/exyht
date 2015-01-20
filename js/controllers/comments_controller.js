@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Comments Controller
+ |---------------------------
+*/
 Exyht.CommentsController = Ember.ObjectController.extend({
 
 needs: ["application", "post"],

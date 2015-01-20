@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Post View
+ |---------------------------
+*/
 Exyht.PostView = Ember.View.extend({
   
   	templateName: "post",

@@ -1,3 +1,8 @@
+/*
+ |--------------------------
+ | Image Gallery Controller
+ |--------------------------
+*/
 Exyht.ImggalleryController = Ember.ObjectController.extend({
 	img_from: 15, // load more pics offset
 	img_to: 30, // load more pics limit
@@ -40,7 +45,11 @@ Exyht.ImggalleryController = Ember.ObjectController.extend({
 		}
 	}
 });
-
+/*
+ |--------------------------
+ | Gallery Image Controller
+ |--------------------------
+*/
 Exyht.GalleryimageController = Ember.ObjectController.extend({
 	deletingImg: false,
 	srcPath: function(){
@@ -61,9 +70,11 @@ Exyht.GalleryimageController = Ember.ObjectController.extend({
           		url: Exyht.BaseUrl+"/removeGimg",
           		data: {img_path: img_path},
           		success: function(msg){
-          		  self.set('img_visible', false);
-          		  self.set('deletingImg', false);
-          		  alert(msg);
+          			self.setProperties({
+          				'img_visible': false,
+          				'deletingImg': false
+          			});
+          		  	alert(msg);
           		}
         	});
 		}

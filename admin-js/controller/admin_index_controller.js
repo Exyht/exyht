@@ -1,3 +1,8 @@
+/*
+ |------------------
+ | Index Controller
+ |------------------
+*/
 Exyht.IndexController = Ember.ObjectController.extend({
   loadingOn: false,
   actions: {

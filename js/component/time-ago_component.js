@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | TimeAgo Component
+ |---------------------------
+*/
 Exyht.TimeAgoComponent = Ember.Component.extend({
   timeAgo: '',
   

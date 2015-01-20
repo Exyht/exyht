@@ -1,3 +1,8 @@
+/*
+ |--------------------
+ | Textarea Component
+ |--------------------
+*/
 Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
   didInsertElement: function(){
  

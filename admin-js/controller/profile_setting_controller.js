@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Profilesetting Controller
+ |---------------------------
+*/
 Exyht.ProfilesettingController = Ember.ObjectController.extend({
 needs: "typeblogpost",
 admin_token : function(){
@@ -37,16 +42,20 @@ actions: {
 	      success: function(msg){
 	      	console.log('Response: '+msg);
 	        alert(msg);
-	        self.set('old_password', '');
-	        self.set('new_password', '');
-	        self.set('confirm_password', '');
+	        self.setProperties({
+	        	'old_password': '',
+	        	'new_password': '',
+	        	'confirm_password': ''
+	        });
 	      }
 	    });
 	},
 	editProfileTrue: function(){
-		this.set('isProfileEditingOnForProfileSetting', true);
-		this.set('isProfEditOnForTypeBlogPost', true);
-        this.set('aboutAdminForTypeBlogPost', this.get('model.about'));
+		this.setProperties({
+			'isProfileEditingOnForProfileSetting': true,
+			'isProfEditOnForTypeBlogPost': true,
+			'aboutAdminForTypeBlogPost': this.get('model.about')
+		});
         this.transitionToRoute('typeblogpost');
 	},
 	removeProfPicture: function(){
@@ -58,8 +67,10 @@ actions: {
 	      success: function(msg){
 	      	console.log('Response: '+msg);
 	        alert(msg);
-	        self.set('isRemoved', true);
-	        self.set('isRemovingPicture', false);
+	        self.setProperties({
+	        	'isRemoved': true,
+	        	'isRemovingPicture': false
+	        });
 	      }
 	    });
 	},

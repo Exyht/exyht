@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Application Controller
+ |---------------------------
+*/
 Exyht.ApplicationController = Ember.ArrayController.extend({
   needs: "post",
   isReplying: false,

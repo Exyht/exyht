@@ -1,3 +1,8 @@
+/*
+ |------------------
+ | Index Controller
+ |------------------
+*/
 Exyht.IndexController = Ember.ObjectController.extend({
     more_post_offset: 8,
     more_post_limit: 8,

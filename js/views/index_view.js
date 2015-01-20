@@ -1,3 +1,8 @@
+/*
+ |---------------
+ | Index View
+ |---------------
+*/
 Exyht.IndexView = Ember.View.extend({
 	didInsertElement: function(){
   	$(window).on('scroll', $.proxy(this.didScroll, this));

@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | Index View
+ |---------------------------
+*/
 Exyht.IndexView = Ember.View.extend({
   
   templateName: "index",
