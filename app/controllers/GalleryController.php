@@ -37,7 +37,7 @@ class GalleryController extends BaseController {
 	/*
 	| This function removes gallery images
 	*/
-	public function removeGimg(){/*
+	public function removeGimg(){
 		$img_path = strip_tags($_POST['img_path']);
 		$deleteImage = File::delete('upload_dir/'.$img_path);
 
@@ -45,6 +45,6 @@ class GalleryController extends BaseController {
 			return 'yes!';
 		}else{
 			return 'Oops!';
-		}*/return 'yes!';
+		}
 	}
 }
