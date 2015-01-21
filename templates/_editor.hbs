@@ -13,10 +13,10 @@
    &nbsp; 
 
    {{#if isReplying}}
-    <small>Replying to&nbsp;
-      comment 
-      by <img {{bind-attr src=view.ngravatarUrl}}/>
-       <strong>{{currentCommenterNameToReply}}:</strong>
+    <small>
+      <div class="pull-left" style="padding-left:1%;">Replying to&nbsp;comment by&nbsp;</div>
+      <div class="pull-left">{{gravatar-image email=currentCommenterGravaterToReply size="20" notReply=false}}</div>
+      <div class="pull-left">&nbsp;<strong>{{currentCommenterNameToReply}}:</strong></div>
     </small>
    {{else}}
     <small>Commenting to&nbsp;

@@ -1,7 +1,7 @@
 Ember.TEMPLATES["_editor"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var stack1, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var stack1, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -103,15 +103,17 @@ function program3(depth0,data) {
   }
 function program4(depth0,data) {
   
-  var buffer = '', stack1;
-  data.buffer.push("\r\n    <small>Replying to&nbsp;\r\n      comment \r\n      by <img ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'src': ("view.ngravatarUrl")
-  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("/>\r\n       <strong>");
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\r\n    <small>\r\n      <div class=\"pull-left\" style=\"padding-left:1%;\">Replying to&nbsp;comment by&nbsp;</div>\r\n      <div class=\"pull-left\">");
+  data.buffer.push(escapeExpression((helper = helpers['gravatar-image'] || (depth0 && depth0['gravatar-image']),options={hash:{
+    'email': ("currentCommenterGravaterToReply"),
+    'size': ("20"),
+    'notReply': (false)
+  },hashTypes:{'email': "ID",'size': "STRING",'notReply': "BOOLEAN"},hashContexts:{'email': depth0,'size': depth0,'notReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gravatar-image", options))));
+  data.buffer.push("</div>\r\n      <div class=\"pull-left\">&nbsp;<strong>");
   stack1 = helpers._triageMustache.call(depth0, "currentCommenterNameToReply", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(":</strong>\r\n    </small>\r\n   ");
+  data.buffer.push(":</strong></div>\r\n    </small>\r\n   ");
   return buffer;
   }
 
