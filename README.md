@@ -22,13 +22,13 @@ Exyht uses backend Laravel Api with Ember at front end.
 
 ## Mobile & Tablet friendly 
 
-![fullscreen capture 11272014 110833 am bmp](https://cloud.githubusercontent.com/assets/9896315/5212870/1db0c6ce-762c-11e4-9b99-3fd1f0bedac7.jpg)
+![Exyht-1](https://cloud.githubusercontent.com/assets/9896315/5836185/4fc9ef82-a19c-11e4-9191-9ec4cada5eee.jpg)
 ## Text Editor won't interrupt while reading or changing topic.
 
-![fullscreen capture 11272014 101028 am bmp](https://cloud.githubusercontent.com/assets/9896315/5212874/38e89eee-762c-11e4-97ca-e94e1e345ab4.jpg)
+![Exyht-2](https://cloud.githubusercontent.com/assets/9896315/5836201/6c796194-a19c-11e4-9338-dd6444f405e5.jpg)
 ## Customize Colors & Fonts.
 
-![fullscreen capture 11272014 111722 am bmp](https://cloud.githubusercontent.com/assets/9896315/5212878/4d94df1a-762c-11e4-91df-e501f4b76be2.jpg)
+![Exyht-3](https://cloud.githubusercontent.com/assets/9896315/5836204/739bc4a8-a19c-11e4-9b7b-202ce6ea453a.jpg)
 
 
 ## Install Exyht
