@@ -1,13 +1,19 @@
+/*
+ |---------------
+ | Exyht App
+ |---------------
+*/
 window.Exyht = Ember.Application.create({
     currentPath: '',
     BaseURL: '/blog/',
     gravatarVersion: 'identicon'
 });
-
+// Defer Readiness
 Exyht.deferReadiness();
+// Get hostname with protocol and port
 var hostnameWithProtocolPort = window.location.protocol+"//"+window.location.hostname+(window.location.port ? ':' + window.location.port: '');
 Exyht.currentBaseUri = hostnameWithProtocolPort+Exyht.BaseURL;
-
+// this function add css in the dom
 function addCss(cssString) {
   try{
     var head = document.getElementsByTagName('head')[0];
@@ -18,15 +24,16 @@ function addCss(cssString) {
     head.appendChild(newCss);
   } catch(err) { return; }
 } 
-		
+// Get current year	
 var currentDate = new Date();
 Exyht.currentYear = currentDate.getFullYear();
-
+// Add x-csrf-token to all ajax request
 $.ajaxSetup({
     headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     }
 });
+// This helper uses both Markdown and Html sanitizer
 Ember.Handlebars.helper('format-markdown', function(input) {
 
 // Add this part
@@ -46,6 +53,7 @@ var markDownInput = markdown.makeHtml(input);
    return new Ember.Handlebars.SafeString(emoji.replace_colons(html_sanitize(markDownInput, urlX)));
 });
 
+// This helper only use markdown sanitizer
 Ember.Handlebars.helper('format-xmarkdown', function(input) {
 
 // Add this part
@@ -63,6 +71,12 @@ Ember.Handlebars.helper('format-archive-date', function(input) {
 Ember.Handlebars.helper('format-comment-number', function(input) {
   return (input == 1)?' Comment':' Comments';
 });
+Exyht.ResetScroll = Ember.Mixin.create({
+  activate: function() {
+    this._super();
+    window.scrollTo(0,0);
+  }
+});
 /*
  |---------------
  | Exyht Router
@@ -70,19 +84,20 @@ Ember.Handlebars.helper('format-comment-number', function(input) {
 */ 
 Exyht.Router.map(function() {
   this.route('index', {path: Exyht.BaseURL});
-  this.route('post', {path: Exyht.BaseURL+'post/:post_slug/:post_id'});
+  this.route('post', {path: Exyht.BaseURL + 'post/:post_slug/:post_id'});
+  this.route('archive', {path: Exyht.BaseURL + 'archive'});
 });
 
 Exyht.Router.reopen({
   location: 'history'
 });
 
-Exyht.IndexRoute = Ember.Route.extend({
+Exyht.IndexRoute = Ember.Route.extend(Exyht.ResetScroll, {
   init_post_offset: 0,
   init_post_limit: 8,
   model: function()
     {
-      return Ember.$.getJSON(Exyht.currentBaseUri+'getBlogPosts/'+this.init_post_offset+'/'+this.init_post_limit).then(function(data) {
+      return Ember.$.getJSON(Exyht.currentBaseUri + 'getBlogPosts/' + this.init_post_offset + '/' + this.init_post_limit).then(function(data) {
         return {"posts":data};
       });
     },
@@ -92,10 +107,10 @@ Exyht.IndexRoute = Ember.Route.extend({
     }
 });
 
-Exyht.PostRoute = Ember.Route.extend({
+Exyht.PostRoute = Ember.Route.extend(Exyht.ResetScroll, {
   model: function(params)
     {
-      return Ember.$.getJSON(Exyht.currentBaseUri+'getPostTitle/'+params.post_id).then(function(data) {
+      return Ember.$.getJSON(Exyht.currentBaseUri + 'getPostTitle/' + params.post_id).then(function(data) {
 
         $('title').html(data.title);
 
@@ -103,7 +118,7 @@ Exyht.PostRoute = Ember.Route.extend({
       });
     },
     setupController: function (controller, model) {
-        Ember.$.getJSON(Exyht.currentBaseUri+'postComments/'+model.id).then(function(data) {
+        Ember.$.getJSON(Exyht.currentBaseUri + 'postComments/' + model.id).then(function(data) {
           Ember.run(function() {
             controller.set('model', data);
           });
@@ -115,6 +130,14 @@ Exyht.PostRoute = Ember.Route.extend({
     var slug = model.title.substring(0, 60).replace(/[^A-Za-z0-9\s+]/g, '').replace(/\s+/g, '-').toLowerCase();
     return { post_slug: slug, post_id: model.id };
   }  
+});
+
+Exyht.ArchiveRoute = Ember.Route.extend(Exyht.ResetScroll, {
+  model: function(){
+    return Ember.$.getJSON(Exyht.currentBaseUri + 'getAllTitles').then(function(data){
+      return {"archive": data};
+    });
+  }
 });
 /*
  |---------------------------
@@ -686,7 +709,9 @@ Exyht.IndexController = Ember.ObjectController.extend({
  |---------------------------
 */
 Exyht.PostController = Ember.ObjectController.extend({
+
   needs: ["application", "index"],
+
   postBgColor: Ember.computed.oneWay("controllers.index.postBgColor"),
   commentFeature: Ember.computed.oneWay("controllers.application.commentFeature"),
   readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
@@ -700,6 +725,7 @@ Exyht.PostController = Ember.ObjectController.extend({
   setcommentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
   setcommenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
   setcommenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
+
   hasPost: function() {
     var postId = this.get("model.id");
     var response;
@@ -768,12 +794,11 @@ Exyht.PostView = Ember.View.extend({
   	templateName: "post",
 
   	postCreated: (function() {
-  	  return new Ember.Handlebars.SafeString(moment(this.get("controller.created")).format("MMM DD YYYY"));
+  	  	return new Ember.Handlebars.SafeString(moment(this.get("controller.created")).format("MMM DD YYYY"));
   	}).property("controller.created"),
 
   	pageViewCount: (function(){
-  	
   		var pageViews = parseInt(this.get("controller.views"));
   		return new Ember.Handlebars.SafeString((pageViews === 0)?'1 seen' : pageViews + 1 + ' seen');
-  	}).property("controller.views"),
+  	}).property("controller.views")
 });

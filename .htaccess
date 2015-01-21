@@ -12,7 +12,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    RewriteRule ^blog/archive /#archive [L]
     RewriteRule ^blog/([0-9a-z]+)/(.*)/([0-9]+) /?postId=$3#/$1/$2
+
 
     # Admin-page...
     RewriteRule ^admin-page sb-admin.php [L]

@@ -1,0 +1,10 @@
+<div class="col-sm-8 blog-main">
+	<div class="blog-post">
+		<h2>Archive</h2>
+		<ul class="list-group">
+		{{#each topic in archive}}
+			<li class="list-group-item" {{bind-attr title=topic.title}}>{{#link-to 'post' topic}}{{{topic.title}}}{{/link-to}}</li>
+		{{/each}}
+		</ul>
+	</div>
+</div>

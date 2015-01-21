@@ -42,6 +42,22 @@ class Post extends Eloquent {
         return ;
       }
   }
+  /*
+  |--------------------------------------------------------------------------
+  | Get all titles
+  |--------------------------------------------------------------------------
+  */
+  public static function getAllTitles(){
+      $getTitle = Post::select('id', 'title')
+                      ->status()
+                      ->get();
+
+      if(count($getTitle) > 0){
+        return $getTitle;
+      }else{
+        return ;
+      }
+  }
 	/*
   |--------------------------------------------------------------------------
   | Get post body for newly loaded page
@@ -85,7 +101,7 @@ class Post extends Eloquent {
     return Post::select(array('id', 'title', 'created', DB::raw('LEFT(body, 300) AS slicedBody')))
                   ->status()
                   ->orderdesc()
-                  ->skip(0)->take(20)
+                  ->skip(0)->take(10)
                   ->get();
   }
   /*

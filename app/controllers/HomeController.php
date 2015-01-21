@@ -217,7 +217,25 @@ class HomeController extends BaseController {
     }
     /*
     |--------------------------------------------------------------------------
-    | Get archive of all blog posts
+    | Get all blog posts title for archive lists
+    |--------------------------------------------------------------------------
+    */
+    public function getAllTitles(){
+      $titles = Post::getAllTitles();
+
+      if(!$titles->isEmpty()){
+        foreach ($titles as $title) {
+          $quiz[] = array(
+              "id"    => $title->id,
+              "title" => $title->title
+            );
+        }
+        return $quiz;
+      }
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Get archive of all blog posts (sidebar info)
     |--------------------------------------------------------------------------
     */
     public function getArchive(){
@@ -431,6 +449,7 @@ class HomeController extends BaseController {
           );
         }
       }
+      // Merge array
       $p_quiz = array_merge($p_quiz, $q_quiz);
       
       $comments = Comment::findComments($rawPostId);

@@ -18,7 +18,6 @@ Route::group(array('before' => 'csrf'), function()
   Route::post('install/comments', 'InstallerController@createCommentsTable');
   Route::post('install/bloglinks', 'InstallerController@createBloglinksTable');
   Route::post('install/signup', 'InstallerController@createAccount');
-  Route::post('install/resetInstaller', 'InstallerController@resetInstaller');
 });
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +30,10 @@ Route::group(array('before' => 'csrf'), function()
 |
 */
 Route::get('/', 'HomeController@showWelcome');
+
+Route::get('/archive', 'HomeController@showWelcome');
+
+Route::get('/getAllTitles', 'HomeController@getAllTitles');
 
 Route::get('getPostTitle/{postId}', 'HomeController@getPostTitle')->where('postId', '[0-9]+');
 

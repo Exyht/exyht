@@ -4,7 +4,9 @@
  |---------------------------
 */
 Exyht.PostController = Ember.ObjectController.extend({
+
   needs: ["application", "index"],
+
   postBgColor: Ember.computed.oneWay("controllers.index.postBgColor"),
   commentFeature: Ember.computed.oneWay("controllers.application.commentFeature"),
   readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
@@ -18,6 +20,7 @@ Exyht.PostController = Ember.ObjectController.extend({
   setcommentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
   setcommenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
   setcommenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
+
   hasPost: function() {
     var postId = this.get("model.id");
     var response;

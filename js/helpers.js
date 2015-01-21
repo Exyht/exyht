@@ -1,3 +1,4 @@
+// This helper uses both Markdown and Html sanitizer
 Ember.Handlebars.helper('format-markdown', function(input) {
 
 // Add this part
@@ -17,6 +18,7 @@ var markDownInput = markdown.makeHtml(input);
    return new Ember.Handlebars.SafeString(emoji.replace_colons(html_sanitize(markDownInput, urlX)));
 });
 
+// This helper only use markdown sanitizer
 Ember.Handlebars.helper('format-xmarkdown', function(input) {
 
 // Add this part

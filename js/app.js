@@ -1,13 +1,19 @@
+/*
+ |---------------
+ | Exyht App
+ |---------------
+*/
 window.Exyht = Ember.Application.create({
     currentPath: '',
     BaseURL: '/blog/',
     gravatarVersion: 'identicon'
 });
-
+// Defer Readiness
 Exyht.deferReadiness();
+// Get hostname with protocol and port
 var hostnameWithProtocolPort = window.location.protocol+"//"+window.location.hostname+(window.location.port ? ':' + window.location.port: '');
 Exyht.currentBaseUri = hostnameWithProtocolPort+Exyht.BaseURL;
-
+// this function add css in the dom
 function addCss(cssString) {
   try{
     var head = document.getElementsByTagName('head')[0];
@@ -18,10 +24,10 @@ function addCss(cssString) {
     head.appendChild(newCss);
   } catch(err) { return; }
 } 
-		
+// Get current year	
 var currentDate = new Date();
 Exyht.currentYear = currentDate.getFullYear();
-
+// Add x-csrf-token to all ajax request
 $.ajaxSetup({
     headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')

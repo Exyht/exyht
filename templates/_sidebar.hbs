@@ -19,7 +19,7 @@
 {{/with}}
   <div class="row">
   <div class="sidebar-module col-xs-10">
-    <h4>Archives</h4>
+    <h4>Archive</h4>
     <ol class="list-unstyled">
       {{#each sa in sidebarArchive}}
         <li {{bind-attr title=sa.created}} class="sidebar-archive-link">
@@ -35,6 +35,9 @@
         </li>
       {{/each}}
     </ol>
+      {{#link-to 'archive'}}
+        <h3>See all <i class="fa fa-chevron-right"></i></h3>
+      {{/link-to}}
   </div>
   </div>
   <div class="row">
