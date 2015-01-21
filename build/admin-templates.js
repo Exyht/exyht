@@ -396,11 +396,11 @@ function program22(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'title': ("name")
   },hashTypes:{'title': "ID"},hashContexts:{'title': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\r\n        <img ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'src': ("view.cgravatarUrl")
-  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("/>\r\n      </div>\r\n      \r\n      <div class=\"media-body\">\r\n      \r\n        <h5 class=\"media-heading\">\r\n          <div class=\"small pull-right\" ");
+  data.buffer.push(">\r\n        ");
+  data.buffer.push(escapeExpression((helper = helpers['gravatar-image'] || (depth0 && depth0['gravatar-image']),options={hash:{
+    'email': ("g_email")
+  },hashTypes:{'email': "ID"},hashContexts:{'email': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gravatar-image", options))));
+  data.buffer.push("\r\n      </div>\r\n      \r\n      <div class=\"media-body\">\r\n      \r\n        <h5 class=\"media-heading\">\r\n          <div class=\"small pull-right\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'title': ("date")
   },hashTypes:{'title': "ID"},hashContexts:{'title': depth0},contexts:[],types:[],data:data})));
@@ -1145,6 +1145,22 @@ function program1(depth0,data) {
   stack1 = helpers.each.call(depth0, "fstyles", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                             <br>\r\n                            <input type=\"submit\" class=\"btn btn-info\" value=\"Submit\">\r\n                            </form>\r\n                        </div>\r\n                        <!-- /.panel-body -->\r\n                    </div>\r\n                    \r\n                </div>\r\n                <!-- /.col-lg-6 -->\r\n            </div>\r\n            <!-- /.row -->\r\n        </div>\r\n        <!-- /#page-wrapper -->");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["components/gravatar-image"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<img ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("notReply:media-object"),
+    'src': ("gravatarUrl")
+  },hashTypes:{'class': "STRING",'src': "ID"},hashContexts:{'class': depth0,'src': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">");
   return buffer;
   
 });

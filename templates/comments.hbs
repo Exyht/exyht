@@ -2,7 +2,7 @@
   <div class="media">
 
         <div class="pull-left" {{bind-attr title=name}}>
-          <img class="media-object" {{bind-attr src=view.cgravatarUrl}}/>
+          {{gravatar-image email=email}}
         </div>
 
         <div class="media-body">
@@ -13,10 +13,14 @@
               <time>{{time-ago createdAt=cdate}}</time>
              </div>
              {{#if replyToComment.commentHasReply}}
-               <div class="pull-right small" style="padding-right:1%;">
-                 <i class="fa fa-share"></i>&nbsp;
-                  <img {{bind-attr src=view.rgravatarUrl}}>&nbsp;
+               <div class="pull-right">   
                   {{{replyToComment.name}}}
+               </div>
+               <div class="pull-right" style="padding-right:1%;">
+                  {{gravatar-image email=replyToComment.email size="18" notReply=false}}&nbsp;
+               </div>
+               <div class="pull-right">
+                 <i class="fa fa-share"></i>&nbsp;
                </div>
              {{/if}}
          </h5>

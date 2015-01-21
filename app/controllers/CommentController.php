@@ -55,7 +55,7 @@ class CommentController extends BaseController {
                 "id"          => $c->id,
                 "name"        => $c->name,
                 "email"       => $c->email,
-                "gravatarUri" => $HomeController->getGravaterUrl($c->email),
+                "g_email"     => $HomeController->getGravaterUrl($c->email),
                 "comment"     => $comment,
                 "date"        => $c->date,
                 "showLoading" => false,

@@ -115,6 +115,23 @@ model: function()
 }
 });
 /*
+ |---------------------------
+ | GravatarImage Component
+ |---------------------------
+*/
+Exyht.GravatarImageComponent = Ember.Component.extend({
+  size: 30,
+  email: '',
+  notReply: true,
+
+  gravatarUrl: function() {
+    var email = this.get('email'),
+        size = this.get('size');
+
+    return 'http://www.gravatar.com/avatar/' + email + '?d='+Exyht.gravatarVersion+'&s=' + size;
+  }.property('email', 'size')
+});
+/*
  |--------------------
  | Textarea Component
  |--------------------
@@ -991,19 +1008,6 @@ Exyht.UisettingsController = Ember.ObjectController.extend({
 	  });
 	}
   }
-});
-/*
- |---------------------------
- | Comment View
- |---------------------------
-*/
-Exyht.CommentView = Ember.View.extend({
-  
-  templateName: "comment",
-
-  cgravatarUrl: (function() {
-    return "http://www.gravatar.com/avatar/"+this.get("controller.gravatarUri") + '?d='+Exyht.gravatarVersion+'&s=30';
-  }).property("controller.gravatarUri")
 });
 /*
  |---------------------------

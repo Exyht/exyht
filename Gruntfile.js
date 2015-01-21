@@ -4,34 +4,6 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         /*
-        watch: {
-            scripts: {
-                files: ['js/*.js'],
-                tasks: ['concat', 'uglify','jshint', 'qunit'],
-                options: {
-                    spawn: false,
-                },
-            } 
-        },
-        qunit: {
-           files: ['js/*.js']
-        },
-        imagemin: {
-            dynamic: {
-                files: [{
-                    expand: true,
-                    //cwd: 'images/',
-                    src: ['libraries/js/*.{png,jpg,gif}'],
-                    dest: 'libraries/'
-                }]
-            }
-        },
-        // Deletes all .js files
-        clean: {
-            js: ["libraries/js/build"]
-        },*/
-
-        /*
          * Minify css libraries
         */
         cssmin: {
@@ -184,35 +156,20 @@ module.exports = function(grunt) {
                     templateBasePath: /admin-templates/
                 },
                 files: {
-                    "build/admin-templates.js": "admin-templates/*.hbs"
+                    "build/admin-templates.js": ["admin-templates/*.hbs", "admin-templates/**/*.hbs"]
                 }
             }
-        },/*
-        htmlhintplus: {
-            html1: {
-                rules: {
-                    'tag-pair': true
-                },
-                django: false,
-                src: ['app/views/layout/noscript.blade.php']
-            }
-        }*/
+        }
     });
 
     // 3. Where we tell Grunt we plan to use this plug-in.
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    //grunt.loadNpmTasks('grunt-contrib-imagemin');
-    //grunt.loadNpmTasks('grunt-contrib-qunit');
-    //grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ember-templates');
-    //grunt.loadNpmTasks('grunt-htmlhint-plus');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-    // minify emoji image
-    //grunt.registerTask('minify-emoji', ['imagemin']);
     // minify css files
     grunt.registerTask('app-css', ['cssmin:appcss']);
     grunt.registerTask('admin-css', ['cssmin:admincss']);

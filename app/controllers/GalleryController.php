@@ -42,9 +42,9 @@ class GalleryController extends BaseController {
 		$deleteImage = File::delete('upload_dir/'.$img_path);
 
 		if($deleteImage){
-			return 'yes!';
+			return 'Image removed!';
 		}else{
-			return 'Oops!';
+			return 'Oops! Could not remove';
 		}
 	}
 }

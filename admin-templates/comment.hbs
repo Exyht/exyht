@@ -2,7 +2,7 @@
     <div {{bind-attr class=":media isFlagged:bg-warning"}}>
 
       <div class="pull-left" {{bind-attr title=name}}>
-        <img {{bind-attr src=view.cgravatarUrl}}/>
+        {{gravatar-image email=g_email}}
       </div>
       
       <div class="media-body">

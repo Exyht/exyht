@@ -469,7 +469,7 @@ function program5(depth0,data) {
 Ember.TEMPLATES["comments"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var stack1, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var stack1, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
 function program1(depth0,data) {
   
@@ -478,11 +478,11 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'title': ("name")
   },hashTypes:{'title': "ID"},hashContexts:{'title': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\r\n          <img class=\"media-object\" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'src': ("view.cgravatarUrl")
-  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push("/>\r\n        </div>\r\n\r\n        <div class=\"media-body\">\r\n\r\n         <h5 class=\"media-heading\">\r\n             <strong>");
+  data.buffer.push(">\r\n          ");
+  data.buffer.push(escapeExpression((helper = helpers['gravatar-image'] || (depth0 && depth0['gravatar-image']),options={hash:{
+    'email': ("email")
+  },hashTypes:{'email': "ID"},hashContexts:{'email': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gravatar-image", options))));
+  data.buffer.push("\r\n        </div>\r\n\r\n        <div class=\"media-body\">\r\n\r\n         <h5 class=\"media-heading\">\r\n             <strong>");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
@@ -507,16 +507,18 @@ function program1(depth0,data) {
   }
 function program2(depth0,data) {
   
-  var buffer = '';
-  data.buffer.push("\r\n               <div class=\"pull-right small\" style=\"padding-right:1%;\">\r\n                 <i class=\"fa fa-share\"></i>&nbsp;\r\n                  <img ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'src': ("view.rgravatarUrl")
-  },hashTypes:{'src': "ID"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">&nbsp;\r\n                  ");
+  var buffer = '', helper, options;
+  data.buffer.push("\r\n               <div class=\"pull-right\">   \r\n                  ");
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "replyToComment.name", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\r\n               </div>\r\n             ");
+  data.buffer.push("\r\n               </div>\r\n               <div class=\"pull-right\" style=\"padding-right:1%;\">\r\n                  ");
+  data.buffer.push(escapeExpression((helper = helpers['gravatar-image'] || (depth0 && depth0['gravatar-image']),options={hash:{
+    'email': ("replyToComment.email"),
+    'size': ("18"),
+    'notReply': (false)
+  },hashTypes:{'email': "ID",'size': "STRING",'notReply': "BOOLEAN"},hashContexts:{'email': depth0,'size': depth0,'notReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gravatar-image", options))));
+  data.buffer.push("&nbsp;\r\n               </div>\r\n               <div class=\"pull-right\">\r\n                 <i class=\"fa fa-share\"></i>&nbsp;\r\n               </div>\r\n             ");
   return buffer;
   }
 
@@ -790,6 +792,22 @@ function program15(depth0,data) {
   stack1 = helpers['if'].call(depth0, "commentFeature", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n    </div><!-- /.blog-post -->\r\n\r\n</div><!-- /.blog-main -->");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["components/gravatar-image"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<img ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': ("notReply:media-object"),
+    'src': ("gravatarUrl")
+  },hashTypes:{'class': "STRING",'src': "ID"},hashContexts:{'class': depth0,'src': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">");
   return buffer;
   
 });

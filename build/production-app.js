@@ -118,6 +118,23 @@ Exyht.PostRoute = Ember.Route.extend({
 });
 /*
  |---------------------------
+ | GravatarImage Component
+ |---------------------------
+*/
+Exyht.GravatarImageComponent = Ember.Component.extend({
+  size: 40,
+  email: '',
+  notReply: true,
+
+  gravatarUrl: function() {
+    var email = this.get('email'),
+        size = this.get('size');
+
+    return 'http://www.gravatar.com/avatar/' + email + '?d='+Exyht.gravatarVersion+'&s=' + size;
+  }.property('email', 'size')
+});
+/*
+ |---------------------------
  | TextArea Component
  |---------------------------
 */
@@ -728,23 +745,6 @@ Exyht.ApplicationView = Ember.View.extend({
   	ngravatarUrl: (function() {
     	return "http://www.gravatar.com/avatar/"+this.get("controller.currentCommenterGravaterToReply") + '?d='+Exyht.gravatarVersion+'&s=20';
   	}).property("controller.currentCommenterGravaterToReply")
-});
-/*
- |---------------------------
- | Comments View
- |---------------------------
-*/
-Exyht.CommentsView = Ember.View.extend({
-  
-  templateName: "comments",
-
-  cgravatarUrl: (function() {
-    return "http://www.gravatar.com/avatar/"+this.get("controller.email") + '?d='+Exyht.gravatarVersion+'&s=40';
-  }).property("controller.email"),
-
-  rgravatarUrl: (function() {
-    return "http://www.gravatar.com/avatar/"+this.get("controller.replyToComment.email") + '?d='+Exyht.gravatarVersion+'&s=18';
-  }).property("controller.replyToComment.email"),
 });
 /*
  |---------------
