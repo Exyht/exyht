@@ -514,7 +514,7 @@ function program2(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "replyToComment.name", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\r\n               </div>\r\n               <div class=\"pull-right\" style=\"padding-right:1%;\">\r\n                  ");
+  data.buffer.push(" &nbsp;\r\n               </div>\r\n               <div class=\"pull-right\" style=\"padding-right:1%;\">\r\n                  ");
   data.buffer.push(escapeExpression((helper = helpers['gravatar-image'] || (depth0 && depth0['gravatar-image']),options={hash:{
     'email': ("replyToComment.email"),
     'size': ("18"),
