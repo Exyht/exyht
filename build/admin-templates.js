@@ -189,7 +189,10 @@ function program11(depth0,data) {
   data.buffer.push("<i class=\"fa fa-picture-o fa-fw\"></i>\r\n Image Gallery");
   }
 
-  data.buffer.push("<!-- Navigation -->\r\n<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">\r\n    <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n            <span class=\"sr-only\">Toggle navigation</span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"#\">Exyht</a>\r\n    </div>\r\n    <!-- /.navbar-header -->\r\n\r\n    <ul class=\"nav navbar-top-links navbar-right\">\r\n        <li class=\"dropdown\">\r\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\r\n                <i class=\"fa fa-user fa-fw\"></i>  <i class=\"fa fa-caret-down\"></i>\r\n            </a>\r\n            <ul class=\"dropdown-menu dropdown-user\">\r\n                <li>");
+  data.buffer.push("<!-- Navigation -->\r\n<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">\r\n    <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n            <span class=\"sr-only\">Toggle navigation</span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"#\">Exyht</a>\r\n    </div>\r\n    <!-- /.navbar-header -->\r\n\r\n    <ul class=\"nav navbar-top-links navbar-right\">\r\n        <li>");
+  stack1 = helpers._triageMustache.call(depth0, "check-version", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</li>\r\n        <li class=\"dropdown\">\r\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\r\n                <i class=\"fa fa-user fa-fw\"></i>  <i class=\"fa fa-caret-down\"></i>\r\n            </a>\r\n            <ul class=\"dropdown-menu dropdown-user\">\r\n                <li>");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "profilesetting", options) : helperMissing.call(depth0, "link-to", "profilesetting", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                <li ");
@@ -1146,6 +1149,37 @@ function program1(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                             <br>\r\n                            <input type=\"submit\" class=\"btn btn-info\" value=\"Submit\">\r\n                            </form>\r\n                        </div>\r\n                        <!-- /.panel-body -->\r\n                    </div>\r\n                    \r\n                </div>\r\n                <!-- /.col-lg-6 -->\r\n            </div>\r\n            <!-- /.row -->\r\n        </div>\r\n        <!-- /#page-wrapper -->");
   return buffer;
+  
+});
+
+Ember.TEMPLATES["components/check-version"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var stack1, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n	<a href=\"https://github.com/Exyht/exyht\" target=\"_blank\">\r\n		<span class=\"label label-success\">\r\n			New! v");
+  stack1 = helpers._triageMustache.call(depth0, "getVersion", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n		</span>\r\n	</a>\r\n");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n	<span class=\"label label-default\">\r\n		v");
+  stack1 = helpers._triageMustache.call(depth0, "getVersion", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n	</span>\r\n");
+  return buffer;
+  }
+
+  stack1 = helpers['if'].call(depth0, "isNewVersion", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  else { data.buffer.push(''); }
   
 });
 

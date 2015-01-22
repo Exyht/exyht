@@ -1,0 +1,11 @@
+{{#if isNewVersion}}
+	<a href="https://github.com/Exyht/exyht" target="_blank">
+		<span class="label label-success">
+			New! v{{getVersion}}
+		</span>
+	</a>
+{{else}}
+	<span class="label label-default">
+		v{{getVersion}}
+	</span>
+{{/if}}

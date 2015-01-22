@@ -7,7 +7,8 @@ Exyht.deferReadiness();
 Exyht.BaseUrl = '/blog/admin-page';
 Exyht.gravatarVersion = 'identicon';
 Exyht.hostnameWithProtocolPort = window.location.protocol+"//"+window.location.hostname+(window.location.port ? ':' + window.location.port: '');
-Exyht.currentBaseUri = Exyht.hostnameWithProtocolPort+Exyht.BaseUrl;
+Exyht.blogUrl = Exyht.hostnameWithProtocolPort + '/blog';
+Exyht.currentBaseUri = Exyht.hostnameWithProtocolPort + Exyht.BaseUrl;
 
 function showLoading(){
  	var loadingDiv = $('#loadingDiv');
