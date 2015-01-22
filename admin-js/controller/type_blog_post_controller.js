@@ -62,8 +62,8 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 	    		data: {title: blogTitle, body: blogBody},
 	    		success: function(msg){
 	    		  console.log('Response: '+msg);
+	    		  self.set(value1, false);
 	    		  self.setProperties({
-	    		  	value1: false,
 	    		  	'ntitle': '',
 	    		  	'nbody': ''
 	    		  });
