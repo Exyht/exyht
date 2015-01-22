@@ -141,7 +141,7 @@ class Post extends Eloquent {
   |--------------------------------------------------------------------------
   */
   public static function postCommentsFunction($postId){
-    return Post::select(array('id', 'title', 'body', 'created', 'views', DB::raw("(
+    $post = Post::select(array('id', 'title', 'body', 'created', 'views', DB::raw("(
             SELECT id FROM posts WHERE id < $postId AND status = 1 ORDER BY id DESC LIMIT 1
             ) AS previousId,(
             SELECT title FROM posts WHERE id < $postId AND status = 1 ORDER BY id DESC LIMIT 1
@@ -156,6 +156,11 @@ class Post extends Eloquent {
         ->status()
         ->postid($postId)
         ->first();
+    if(count($post) > 0){
+      return $post;
+    }else{
+      return ;
+    }
   }
     /*
     |--------------------------------------------------------------------------

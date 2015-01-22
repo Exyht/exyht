@@ -9,7 +9,6 @@
   {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
   {{ HTML::script('/libraries/js/jquery-1.10.2.min.js') }}
   {{ HTML::script('/libraries/js/bootstrap.min.js') }}
-  {{ HTML::script('https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js') }}
     <?php
     // Change csrf_token in SESSION with each page load
          Session::put('_token', md5(microtime()));
@@ -23,7 +22,6 @@
         });
     </script>
   <script type="text/javascript">
-  $(function () {
     function addTable1(){
       var url = 'install/blog_settings';
       console.log(url);
@@ -33,7 +31,7 @@
         url: url,
         dataType: "json",
         success: function(res){
-          if(res.is_created !== false){
+          if(res.is_created === true){
             $("#installation-progress").css("width", "20%").html('20%');
             $("#installation-progress").attr({
               "aria-valuenow" : 20
@@ -127,10 +125,6 @@
             if(res.is_modified === false){
               $('#signup-form').show();
             }
-            setTimeout(function(){
-              // Redirect to Admin page
-              window.location.href = "admin-page";
-            }, 2000);
             
           }else{
             $('#responseMsgError').append("<p>"+res.msg+"</p>");
@@ -138,8 +132,7 @@
         }
       });
     }
-    // Debounce
-    $("#installBtn").on("click", _.debounce(addTable1, 1000, true));
+    
     // Sign up
     function signup(){
       $('#loadingForSignup').show();
@@ -171,7 +164,6 @@
         }
       });
     }
-  });
   </script>
 </head>
 <style type="text/css">
@@ -196,7 +188,7 @@
   <div class="container" style="padding-bottom:5%;">
     <p class="bg-danger topbar">
       &nbsp; Use this Installation process to Install & Sign up or Update your Database to run Exyht properly.
-      <button type="button" class="btn btn-primary pull-left" id="installBtn">
+      <button type="button" class="btn btn-primary pull-left" id="installBtn" onclick="addTable1();">
         <i class="fa fa-magic"></i> Click to Start Installation Process</button>
     </p>
     <div class="panel panel-default">
