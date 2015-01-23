@@ -1,0 +1,26 @@
+<div class="btn-group btn-group-sm">
+  <button type="button" class="btn btn-default" {{action 'insertBold'}}><i class="fa fa-bold"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertItalic'}}><i class="fa fa-italic"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertLink'}}><i class="fa fa-link"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertQuote'}}><i class="fa fa-comment-o"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertCode'}}><i class="fa fa-code"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertOrderedlist'}}><i class="fa fa-list-ol"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertUnorderedlist'}}><i class="fa fa-list"></i></button>
+    
+  <button type="button" class="btn btn-default" {{action 'insertHorizontalrule'}}><i class="fa fa-minus"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertStrikethrough'}}><i class="fa fa-strikethrough"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertSubscript'}}><i class="fa fa-subscript"></i></button>
+  <button type="button" class="btn btn-default" {{action 'insertSuperscript'}}><i class="fa fa-superscript"></i></button>
+
+  <div class="btn-group btn-group-sm">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <i class="fa fa-header"></i>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation"><a href=""{{action 'insertHeading1'}}>H1</a></li>
+      <li role="presentation"><a href=""{{action 'insertHeading2'}}>H2</a></li>
+      <li role="presentation"><a href=""{{action 'insertHeading3'}}>H3</a></li>
+    </ul>
+  </div>
+</div>

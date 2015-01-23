@@ -1,7 +1,20 @@
-<button class="btn btn-info" {{action 'addCmtAction'}}>
 {{#if notReply}}
+<button class="btn btn-info" {{action 'addCmtAction'}}>
 	<i class="fa fa-plus-circle"></i> Add comment
-{{else}}
-	<i class="fa fa-reply"></i> Reply
-{{/if}}
 </button>
+{{/if}}
+
+{{#if isReply}}
+<button class="btn btn-info" {{action 'addCmtAction'}}>
+	<i class="fa fa-reply"></i> Reply
+</button>
+{{/if}}
+
+{{#if isSending}}
+	{{#if sendingCommentOn}}
+        <button class="btn btn-primary btn-sm">Submitting...</button>
+    {{else}}
+		<button type="button" {{action 'sendCmt'}} class="btn btn-success btn-sm"> Submit</button>
+	{{/if}}
+{{/if}}
+	

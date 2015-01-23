@@ -19,7 +19,7 @@ function program2(depth0,data) {
   stack1 = helpers['if'].call(depth0, "isCommentDivShown", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n\r\n  ");
-  stack1 = helpers['if'].call(depth0, "isHideAddComment", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers['if'].call(depth0, "isHideAddComment", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n");
   return buffer;
@@ -27,42 +27,46 @@ function program2(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = '', stack1, helper, options;
-  data.buffer.push("\r\n  <div class=\"addCommentDiv\">\r\n\r\n   <div id=\"showError\"></div>\r\n\r\n   <h4><span class=\"pull-right\">\r\n\r\n   <button type=\"button\" class=\"btn btn-danger btn-xs\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelAddComment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Cancel</button>\r\n   <button type=\"button\" class=\"btn btn-primary btn-xs\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "hideAddComment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Hide <i class=\"fa fa-chevron-up\"></i></button>\r\n   </span>\r\n   &nbsp; \r\n\r\n   ");
+  data.buffer.push("\r\n  <div class=\"addCommentDiv\">\r\n\r\n   <div id=\"showError\"></div>\r\n\r\n   <h4>\r\n   <span class=\"pull-right\" style=\"padding-left:1%;padding-right:1%;\">\r\n    ");
+  data.buffer.push(escapeExpression((helper = helpers['manage-editor'] || (depth0 && depth0['manage-editor']),options={hash:{
+    'isHiding': (true),
+    'name': ("name"),
+    'email': ("email"),
+    'typeComment': ("typeComment"),
+    'sendingCommentOn': ("sendingCommentOn"),
+    'isCommentDivShown': ("isCommentDivShown"),
+    'isHideAddComment': ("isHideAddComment"),
+    'actualPostId': ("actualPostId"),
+    'actualTitle': ("actualTitle"),
+    'isReplying': ("isReplying"),
+    'currentSlug': ("currentSlug"),
+    'commentIdToReply': ("commentIdToReply"),
+    'commenterNameToReply': ("commenterNameToReply"),
+    'commenterGravaterToReply': ("commenterGravaterToReply")
+  },hashTypes:{'isHiding': "BOOLEAN",'name': "ID",'email': "ID",'typeComment': "ID",'sendingCommentOn': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'actualPostId': "ID",'actualTitle': "ID",'isReplying': "ID",'currentSlug': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'isHiding': depth0,'name': depth0,'email': depth0,'typeComment': depth0,'sendingCommentOn': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'actualPostId': depth0,'actualTitle': depth0,'isReplying': depth0,'currentSlug': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "manage-editor", options))));
+  data.buffer.push("\r\n   \r\n   </span>\r\n   <span class=\"pull-right\">\r\n   ");
+  data.buffer.push(escapeExpression((helper = helpers['manage-editor'] || (depth0 && depth0['manage-editor']),options={hash:{
+    'isCanceling': (true),
+    'name': ("name"),
+    'email': ("email"),
+    'typeComment': ("typeComment"),
+    'sendingCommentOn': ("sendingCommentOn"),
+    'isCommentDivShown': ("isCommentDivShown"),
+    'actualPostId': ("actualPostId"),
+    'actualTitle': ("actualTitle"),
+    'isReplying': ("isReplying"),
+    'currentSlug': ("currentSlug"),
+    'commentIdToReply': ("commentIdToReply"),
+    'commenterNameToReply': ("commenterNameToReply"),
+    'commenterGravaterToReply': ("commenterGravaterToReply")
+  },hashTypes:{'isCanceling': "BOOLEAN",'name': "ID",'email': "ID",'typeComment': "ID",'sendingCommentOn': "ID",'isCommentDivShown': "ID",'actualPostId': "ID",'actualTitle': "ID",'isReplying': "ID",'currentSlug': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'isCanceling': depth0,'name': depth0,'email': depth0,'typeComment': depth0,'sendingCommentOn': depth0,'isCommentDivShown': depth0,'actualPostId': depth0,'actualTitle': depth0,'isReplying': depth0,'currentSlug': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "manage-editor", options))));
+  data.buffer.push("\r\n    </span>\r\n\r\n   &nbsp; \r\n\r\n   ");
   stack1 = helpers['if'].call(depth0, "isReplying", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n     \r\n   </h4>\r\n   <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n\r\n        <div class=\"col-lg-6\">\r\n        \r\n        <div class=\"btn-group btn-group-sm\">\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertBold", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-bold\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertItalic", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-italic\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertLink", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-link\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertQuote", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-comment-o\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertCode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-code\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertOrderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-list-ol\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertUnorderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-list\"></i></button>\r\n    \r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHorizontalrule", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-minus\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertStrikethrough", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-strikethrough\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSubscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-subscript\"></i></button>\r\n          <button type=\"button\" class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSuperscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-superscript\"></i></button>\r\n\r\n          <div class=\"btn-group btn-group-sm\">\r\n            <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">\r\n              <i class=\"fa fa-header\"></i>\r\n              <span class=\"caret\"></span>\r\n            </button>\r\n            <ul class=\"dropdown-menu\" role=\"menu\">\r\n              <li role=\"presentation\"><a href=\"\"");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading1", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">H1</a></li>\r\n              <li role=\"presentation\"><a href=\"\"");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading2", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">H2</a></li>\r\n              <li role=\"presentation\"><a href=\"\"");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading3", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">H3</a></li>\r\n            </ul>\r\n          </div>\r\n        </div>\r\n          ");
+  data.buffer.push("\r\n     \r\n   </h4>\r\n   <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n\r\n        <div class=\"col-lg-6\">\r\n        \r\n        \r\n          ");
+  stack1 = helpers._triageMustache.call(depth0, "editor-tools", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n        \r\n          ");
   data.buffer.push(escapeExpression((helper = helpers['auto-expanding-text-area'] || (depth0 && depth0['auto-expanding-text-area']),options={hash:{
     'class': ("form-control"),
     'maxlength': ("2000"),
@@ -91,12 +95,36 @@ function program3(depth0,data) {
   data.buffer.push("\r\n            </div>\r\n            <div class=\"col-xs-2\">\r\n                ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'type': ("hidden"),
-    'value': ("actualPostIdForAddComment")
+    'value': ("actualPostId")
   },hashTypes:{'type': "STRING",'value': "ID"},hashContexts:{'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\r\n                ");
-  stack1 = helpers['if'].call(depth0, "sendingCommentOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(13, program13, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n            </div>\r\n          </div>\r\n    \r\n      </div>\r\n        <div class=\"col-lg-6\" id=\"typingCommentDiv\" style=\"border:1px dashed #000;background-color:#ffffff;padding:1%;height:115px;overflow:auto;\">\r\n          ");
+  data.buffer.push("\r\n                \r\n                  ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'name': ("spam_bot"),
+    'class': ("hidden"),
+    'value': ("valueForSpam")
+  },hashTypes:{'type': "STRING",'name': "STRING",'class': "STRING",'value': "ID"},hashContexts:{'type': depth0,'name': depth0,'class': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\r\n\r\n                  ");
+  data.buffer.push(escapeExpression((helper = helpers['add-comment'] || (depth0 && depth0['add-comment']),options={hash:{
+    'isSending': (true),
+    'name': ("name"),
+    'email': ("email"),
+    'typeComment': ("typeComment"),
+    'sendingCommentOn': ("sendingCommentOn"),
+    'comments': ("comments"),
+    'isCommentDivShown': ("isCommentDivShown"),
+    'isHideAddComment': ("isHideAddComment"),
+    'commentsArray': ("commentsArray"),
+    'actualPostId': ("actualPostId"),
+    'actualTitle': ("actualTitle"),
+    'isReplying': ("isReplying"),
+    'valueForSpam': ("valueForSpam"),
+    'currentSlug': ("currentSlug"),
+    'commentIdToReply': ("commentIdToReply"),
+    'commenterNameToReply': ("commenterNameToReply"),
+    'commenterGravaterToReply': ("commenterGravaterToReply")
+  },hashTypes:{'isSending': "BOOLEAN",'name': "ID",'email': "ID",'typeComment': "ID",'sendingCommentOn': "ID",'comments': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'commentsArray': "ID",'actualPostId': "ID",'actualTitle': "ID",'isReplying': "ID",'valueForSpam': "ID",'currentSlug': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'isSending': depth0,'name': depth0,'email': depth0,'typeComment': depth0,'sendingCommentOn': depth0,'comments': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'commentsArray': depth0,'actualPostId': depth0,'actualTitle': depth0,'isReplying': depth0,'valueForSpam': depth0,'currentSlug': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "add-comment", options))));
+  data.buffer.push("\r\n                \r\n            </div>\r\n          </div>\r\n    \r\n      </div>\r\n        <div class=\"col-lg-6\" id=\"typingCommentDiv\" style=\"border:1px dashed #000;background-color:#ffffff;padding:1%;height:115px;overflow:auto;\">\r\n          ");
   data.buffer.push(escapeExpression((helper = helpers['format-markdown'] || (depth0 && depth0['format-markdown']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "typeComment", options) : helperMissing.call(depth0, "format-markdown", "typeComment", options))));
   data.buffer.push("\r\n        </div>\r\n     </div>\r\n    </div>\r\n   </div>\r\n  ");
   return buffer;
@@ -106,12 +134,12 @@ function program4(depth0,data) {
   var buffer = '', stack1, helper, options;
   data.buffer.push("\r\n    <small>\r\n      <div class=\"pull-left\" style=\"padding-left:1%;\">Replying to&nbsp;comment by&nbsp;</div>\r\n      <div class=\"pull-left\">");
   data.buffer.push(escapeExpression((helper = helpers['gravatar-image'] || (depth0 && depth0['gravatar-image']),options={hash:{
-    'email': ("currentCommenterGravaterToReply"),
+    'email': ("commenterGravaterToReply"),
     'size': ("20"),
     'notReply': (false)
   },hashTypes:{'email': "ID",'size': "STRING",'notReply': "BOOLEAN"},hashContexts:{'email': depth0,'size': depth0,'notReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gravatar-image", options))));
   data.buffer.push("</div>\r\n      <div class=\"pull-left\">&nbsp;<strong>");
-  stack1 = helpers._triageMustache.call(depth0, "currentCommenterNameToReply", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "commenterNameToReply", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push(":</strong></div>\r\n    </small>\r\n   ");
   return buffer;
@@ -121,7 +149,7 @@ function program6(depth0,data) {
   
   var buffer = '', stack1, helper, options;
   data.buffer.push("\r\n    <small>Commenting to&nbsp;\r\n      ");
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0,depth0],types:["STRING","ID","ID"],data:data},helper ? helper.call(depth0, "post", "actualOnlyCurrentSlug", "actualPostIdForAddComment", options) : helperMissing.call(depth0, "link-to", "post", "actualOnlyCurrentSlug", "actualPostIdForAddComment", options));
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0,depth0,depth0],types:["STRING","ID","ID"],data:data},helper ? helper.call(depth0, "post", "currentSlug", "actualPostId", options) : helperMissing.call(depth0, "link-to", "post", "currentSlug", "actualPostId", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n    </small>\r\n   ");
   return buffer;
@@ -129,7 +157,7 @@ function program6(depth0,data) {
 function program7(depth0,data) {
   
   
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "actualTitleForAddComment", {hash:{
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "actualTitle", {hash:{
     'unescaped': ("true")
   },hashTypes:{'unescaped': "STRING"},hashContexts:{'unescaped': depth0},contexts:[depth0],types:["ID"],data:data})));
   }
@@ -146,32 +174,14 @@ function program9(depth0,data) {
 
 function program11(depth0,data) {
   
-  
-  data.buffer.push("\r\n                  <button class=\"btn btn-primary btn-sm\">Submitting...</button>\r\n                ");
-  }
-
-function program13(depth0,data) {
-  
   var buffer = '', helper, options;
-  data.buffer.push("\r\n                  <button type=\"button\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "addComment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" class=\"btn btn-success btn-sm\">Submit</button>\r\n                  ");
-  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
-    'type': ("text"),
-    'name': ("spam_bot"),
-    'class': ("hidden"),
-    'value': ("valueForSpam")
-  },hashTypes:{'type': "STRING",'name': "STRING",'class': "STRING",'value': "ID"},hashContexts:{'type': depth0,'name': depth0,'class': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\r\n                ");
-  return buffer;
-  }
-
-function program15(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\r\n  <div class=\"addCommentDiv\" style=\"padding:1%;cursor:pointer;text-align:center;\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "showAddComment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">\r\n   Show <i class=\"fa fa-chevron-down\"></i>\r\n  </div>\r\n  ");
+  data.buffer.push("\r\n    ");
+  data.buffer.push(escapeExpression((helper = helpers['manage-editor'] || (depth0 && depth0['manage-editor']),options={hash:{
+    'isShowing': (true),
+    'isCommentDivShown': ("isCommentDivShown"),
+    'isHideAddComment': ("isHideAddComment")
+  },hashTypes:{'isShowing': "BOOLEAN",'isCommentDivShown': "ID",'isHideAddComment': "ID"},hashContexts:{'isShowing': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "manage-editor", options))));
+  data.buffer.push("\r\n  ");
   return buffer;
   }
 
@@ -539,7 +549,7 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression((helper = helpers['time-ago'] || (depth0 && depth0['time-ago']),options={hash:{
     'createdAt': ("cdate")
   },hashTypes:{'createdAt': "ID"},hashContexts:{'createdAt': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "time-ago", options))));
-  data.buffer.push("</time>\r\n             </div>\r\n             ");
+  data.buffer.push("</time>\r\n             </div>\r\n\r\n             ");
   stack1 = helpers['if'].call(depth0, "replyToComment.commentHasReply", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n         </h5>\r\n          ");
@@ -575,20 +585,23 @@ function program4(depth0,data) {
 
 function program6(depth0,data) {
   
-  var buffer = '', stack1, helper, options;
+  var buffer = '', helper, options;
   data.buffer.push("\r\n        <div>\r\n          ");
-  stack1 = helpers['if'].call(depth0, "isFlagged", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(escapeExpression((helper = helpers['flag-comment'] || (depth0 && depth0['flag-comment']),options={hash:{
+    'isFlagged': ("isFlagged"),
+    'id': ("id")
+  },hashTypes:{'isFlagged': "ID",'id': "ID"},hashContexts:{'isFlagged': depth0,'id': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "flag-comment", options))));
   data.buffer.push("\r\n\r\n          ");
   data.buffer.push(escapeExpression((helper = helpers['add-comment'] || (depth0 && depth0['add-comment']),options={hash:{
+    'isReply': (true),
     'notReply': (false),
     'postId': ("postIdFromPostCtlr"),
     'comments': ("getCommentsArrayFromPostCtlr"),
     'isCommentDivShown': ("isCommentDivShown"),
     'isHideAddComment': ("isHideAddComment"),
     'commentsArray': ("commentsArray"),
-    'setPostId': ("setPostId"),
-    'setIsReplying': ("setIsReplying"),
+    'actualPostId': ("actualPostId"),
+    'isReplying': ("isReplying"),
     'actualTitle': ("actualTitle"),
     'currentSlug': ("currentSlug"),
     'cmtId': ("id"),
@@ -597,22 +610,8 @@ function program6(depth0,data) {
     'commentIdToReply': ("commentIdToReply"),
     'commenterNameToReply': ("commenterNameToReply"),
     'commenterGravaterToReply': ("commenterGravaterToReply")
-  },hashTypes:{'notReply': "BOOLEAN",'postId': "ID",'comments': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'commentsArray': "ID",'setPostId': "ID",'setIsReplying': "ID",'actualTitle': "ID",'currentSlug': "ID",'cmtId': "ID",'cmtName': "ID",'cmtEmail': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'notReply': depth0,'postId': depth0,'comments': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'commentsArray': depth0,'setPostId': depth0,'setIsReplying': depth0,'actualTitle': depth0,'currentSlug': depth0,'cmtId': depth0,'cmtName': depth0,'cmtEmail': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "add-comment", options))));
+  },hashTypes:{'isReply': "BOOLEAN",'notReply': "BOOLEAN",'postId': "ID",'comments': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'commentsArray': "ID",'actualPostId': "ID",'isReplying': "ID",'actualTitle': "ID",'currentSlug': "ID",'cmtId': "ID",'cmtName': "ID",'cmtEmail': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'isReply': depth0,'notReply': depth0,'postId': depth0,'comments': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'commentsArray': depth0,'actualPostId': depth0,'isReplying': depth0,'actualTitle': depth0,'currentSlug': depth0,'cmtId': depth0,'cmtName': depth0,'cmtEmail': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "add-comment", options))));
   data.buffer.push("\r\n        </div>\r\n        ");
-  return buffer;
-  }
-function program7(depth0,data) {
-  
-  
-  data.buffer.push("\r\n            <button class=\"btn btn-danger\" title=\"This comment's been flagged\" disabled=\"disabled\"><i class=\"fa fa-flag-o\"></i></button>\r\n          ");
-  }
-
-function program9(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\r\n            <button class=\"btn btn-default\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "flagComment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" title=\"Flag this comment\"><i class=\"fa fa-flag-o\"></i></button>\r\n          ");
   return buffer;
   }
 
@@ -696,12 +695,6 @@ function program8(depth0,data) {
   data.buffer.push("Continue reading...");
   }
 
-function program10(depth0,data) {
-  
-  
-  data.buffer.push("\r\n<div class=\"panel panel-default\">\r\n  <div class=\"panel-body text-center\">\r\n    <i class=\"fa fa-circle-o-notch fa-spin fa-2x\"></i>\r\n  </div>\r\n</div>\r\n");
-  }
-
   data.buffer.push("\r\n<div class=\"col-sm-8 blog-main\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'style': ("postBgColor")
@@ -710,7 +703,7 @@ function program10(depth0,data) {
   stack1 = helpers.each.call(depth0, "posts", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n");
-  stack1 = helpers['if'].call(depth0, "loadingMoreTopics", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
+  stack1 = helpers._triageMustache.call(depth0, "infinite-scroll", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n</div><!-- /.blog-post -->\r\n\r\n</div><!-- /.blog-main -->");
   return buffer;
@@ -843,20 +836,21 @@ function program15(depth0,data) {
   data.buffer.push("\r\n	  			");
   data.buffer.push(escapeExpression((helper = helpers['add-comment'] || (depth0 && depth0['add-comment']),options={hash:{
     'notReply': (true),
+    'isReply': (false),
     'postId': ("id"),
     'title': ("title"),
     'comments': ("comments"),
     'isCommentDivShown': ("isCommentDivShown"),
     'isHideAddComment': ("isHideAddComment"),
     'commentsArray': ("commentsArray"),
-    'setPostId': ("setPostId"),
-    'setIsReplying': ("setIsReplying"),
+    'actualPostId': ("actualPostId"),
+    'isReplying': ("isReplying"),
     'actualTitle': ("actualTitle"),
     'currentSlug': ("currentSlug"),
     'commentIdToReply': ("commentIdToReply"),
     'commenterNameToReply': ("commenterNameToReply"),
     'commenterGravaterToReply': ("commenterGravaterToReply")
-  },hashTypes:{'notReply': "BOOLEAN",'postId': "ID",'title': "ID",'comments': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'commentsArray': "ID",'setPostId': "ID",'setIsReplying': "ID",'actualTitle': "ID",'currentSlug': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'notReply': depth0,'postId': depth0,'title': depth0,'comments': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'commentsArray': depth0,'setPostId': depth0,'setIsReplying': depth0,'actualTitle': depth0,'currentSlug': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "add-comment", options))));
+  },hashTypes:{'notReply': "BOOLEAN",'isReply': "BOOLEAN",'postId': "ID",'title': "ID",'comments': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'commentsArray': "ID",'actualPostId': "ID",'isReplying': "ID",'actualTitle': "ID",'currentSlug': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'notReply': depth0,'isReply': depth0,'postId': depth0,'title': depth0,'comments': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'commentsArray': depth0,'actualPostId': depth0,'isReplying': depth0,'actualTitle': depth0,'currentSlug': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "add-comment", options))));
   data.buffer.push("\r\n	  		");
   return buffer;
   }
@@ -880,22 +874,121 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
 function program1(depth0,data) {
   
-  
-  data.buffer.push("\r\n	<i class=\"fa fa-plus-circle\"></i> Add comment\r\n");
+  var buffer = '';
+  data.buffer.push("\r\n<button class=\"btn btn-info\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "addCmtAction", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\r\n	<i class=\"fa fa-plus-circle\"></i> Add comment\r\n</button>\r\n");
+  return buffer;
   }
 
 function program3(depth0,data) {
   
-  
-  data.buffer.push("\r\n	<i class=\"fa fa-reply\"></i> Reply\r\n");
+  var buffer = '';
+  data.buffer.push("\r\n<button class=\"btn btn-info\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "addCmtAction", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\r\n	<i class=\"fa fa-reply\"></i> Reply\r\n</button>\r\n");
+  return buffer;
   }
 
-  data.buffer.push("<button class=\"btn btn-info\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "addCmtAction", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">\r\n");
-  stack1 = helpers['if'].call(depth0, "notReply", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+function program5(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n	");
+  stack1 = helpers['if'].call(depth0, "sendingCommentOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n</button>");
+  data.buffer.push("\r\n");
+  return buffer;
+  }
+function program6(depth0,data) {
+  
+  
+  data.buffer.push("\r\n        <button class=\"btn btn-primary btn-sm\">Submitting...</button>\r\n    ");
+  }
+
+function program8(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n		<button type=\"button\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "sendCmt", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" class=\"btn btn-success btn-sm\"> Submit</button>\r\n	");
+  return buffer;
+  }
+
+  stack1 = helpers['if'].call(depth0, "notReply", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n");
+  stack1 = helpers['if'].call(depth0, "isReply", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n");
+  stack1 = helpers['if'].call(depth0, "isSending", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n	");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["components/editor-tools"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"btn-group btn-group-sm\">\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertBold", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-bold\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertItalic", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-italic\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertLink", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-link\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertQuote", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-comment-o\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertCode", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-code\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertOrderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-list-ol\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertUnorderedlist", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-list\"></i></button>\r\n    \r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHorizontalrule", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-minus\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertStrikethrough", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-strikethrough\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSubscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-subscript\"></i></button>\r\n  <button type=\"button\" class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertSuperscript", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("><i class=\"fa fa-superscript\"></i></button>\r\n\r\n  <div class=\"btn-group btn-group-sm\">\r\n    <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">\r\n      <i class=\"fa fa-header\"></i>\r\n      <span class=\"caret\"></span>\r\n    </button>\r\n    <ul class=\"dropdown-menu\" role=\"menu\">\r\n      <li role=\"presentation\"><a href=\"\"");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading1", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">H1</a></li>\r\n      <li role=\"presentation\"><a href=\"\"");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading2", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">H2</a></li>\r\n      <li role=\"presentation\"><a href=\"\"");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "insertHeading3", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">H3</a></li>\r\n    </ul>\r\n  </div>\r\n</div>");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["components/flag-comment"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\r\n    <button class=\"btn btn-danger\" title=\"This comment's been flagged\" disabled=\"disabled\"><i class=\"fa fa-flag-o\"></i></button>\r\n");
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n    <button class=\"btn btn-default\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "flagComment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" title=\"Flag this comment\"><i class=\"fa fa-flag-o\"></i></button>\r\n");
+  return buffer;
+  }
+
+  stack1 = helpers['if'].call(depth0, "isFlagged", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n");
   return buffer;
   
 });
@@ -912,6 +1005,67 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'src': ("gravatarUrl")
   },hashTypes:{'class': "STRING",'src': "ID"},hashContexts:{'class': depth0,'src': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(">");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["components/infinite-scroll"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var stack1, self=this;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\r\n<div class=\"panel panel-default\">\r\n  <div class=\"panel-body text-center\">\r\n    <i class=\"fa fa-circle-o-notch fa-spin fa-2x\"></i>\r\n  </div>\r\n</div>\r\n");
+  }
+
+  stack1 = helpers['if'].call(depth0, "loadingMoreTopics", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  else { data.buffer.push(''); }
+  
+});
+
+Ember.TEMPLATES["components/manage-editor"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n	<button type=\"button\" class=\"btn btn-danger btn-xs\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelCmt", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">Cancel</button>\r\n");
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n  <button type=\"button\" class=\"btn btn-primary btn-xs\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "hideCmtBox", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\r\n  	Hide <i class=\"fa fa-chevron-up\"></i>\r\n  </button>\r\n");
+  return buffer;
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n  <div class=\"addCommentDiv\" style=\"padding:1%;cursor:pointer;text-align:center;\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "showCmtBox", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\r\n    Show <i class=\"fa fa-chevron-down\"></i>\r\n  </div>\r\n");
+  return buffer;
+  }
+
+  stack1 = helpers['if'].call(depth0, "isCanceling", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n");
+  stack1 = helpers['if'].call(depth0, "isHiding", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n");
+  stack1 = helpers['if'].call(depth0, "isShowing", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   return buffer;
   
 });

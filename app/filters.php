@@ -122,7 +122,10 @@ Route::filter('csrf', function($route, $request)
     if (Session::token() != $token)
     {
 	//throw new Illuminate\Session\TokenMismatchException;
-    	return 'Oops! CSRF Token Mismatch!';
+    	$err_msg = array(
+                'error_msg' => 'Oops! CSRF Token Mismatch!'
+            );
+        return json_encode($err_msg);
     }
 });
 /*

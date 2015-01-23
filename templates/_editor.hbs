@@ -5,22 +5,51 @@
 
    <div id="showError"></div>
 
-   <h4><span class="pull-right">
-
-   <button type="button" class="btn btn-danger btn-xs" {{action 'cancelAddComment'}}>Cancel</button>
-   <button type="button" class="btn btn-primary btn-xs" {{action 'hideAddComment'}}>Hide <i class="fa fa-chevron-up"></i></button>
+   <h4>
+   <span class="pull-right" style="padding-left:1%;padding-right:1%;">
+    {{manage-editor isHiding=true
+                      name=name
+                      email=email
+                      typeComment=typeComment
+                      sendingCommentOn=sendingCommentOn
+                      isCommentDivShown=isCommentDivShown
+                      isHideAddComment=isHideAddComment
+                      actualPostId=actualPostId
+                      actualTitle=actualTitle
+                      isReplying=isReplying
+                      currentSlug=currentSlug
+                      commentIdToReply=commentIdToReply
+                      commenterNameToReply=commenterNameToReply
+                      commenterGravaterToReply=commenterGravaterToReply}}
+   
    </span>
+   <span class="pull-right">
+   {{manage-editor isCanceling=true
+                      name=name
+                      email=email
+                      typeComment=typeComment
+                      sendingCommentOn=sendingCommentOn
+                      isCommentDivShown=isCommentDivShown
+                      actualPostId=actualPostId
+                      actualTitle=actualTitle
+                      isReplying=isReplying
+                      currentSlug=currentSlug
+                      commentIdToReply=commentIdToReply
+                      commenterNameToReply=commenterNameToReply
+                      commenterGravaterToReply=commenterGravaterToReply}}
+    </span>
+
    &nbsp; 
 
    {{#if isReplying}}
     <small>
       <div class="pull-left" style="padding-left:1%;">Replying to&nbsp;comment by&nbsp;</div>
-      <div class="pull-left">{{gravatar-image email=currentCommenterGravaterToReply size="20" notReply=false}}</div>
-      <div class="pull-left">&nbsp;<strong>{{currentCommenterNameToReply}}:</strong></div>
+      <div class="pull-left">{{gravatar-image email=commenterGravaterToReply size="20" notReply=false}}</div>
+      <div class="pull-left">&nbsp;<strong>{{commenterNameToReply}}:</strong></div>
     </small>
    {{else}}
     <small>Commenting to&nbsp;
-      {{#link-to 'post' actualOnlyCurrentSlug actualPostIdForAddComment}}{{{actualTitleForAddComment}}}{{/link-to}}
+      {{#link-to 'post' currentSlug actualPostId}}{{{actualTitle}}}{{/link-to}}
     </small>
    {{/if}}
      
@@ -30,32 +59,9 @@
 
         <div class="col-lg-6">
         
-        <div class="btn-group btn-group-sm">
-          <button type="button" class="btn btn-default" {{action 'insertBold'}}><i class="fa fa-bold"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertItalic'}}><i class="fa fa-italic"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertLink'}}><i class="fa fa-link"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertQuote'}}><i class="fa fa-comment-o"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertCode'}}><i class="fa fa-code"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertOrderedlist'}}><i class="fa fa-list-ol"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertUnorderedlist'}}><i class="fa fa-list"></i></button>
-    
-          <button type="button" class="btn btn-default" {{action 'insertHorizontalrule'}}><i class="fa fa-minus"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertStrikethrough'}}><i class="fa fa-strikethrough"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertSubscript'}}><i class="fa fa-subscript"></i></button>
-          <button type="button" class="btn btn-default" {{action 'insertSuperscript'}}><i class="fa fa-superscript"></i></button>
-
-          <div class="btn-group btn-group-sm">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-header"></i>
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li role="presentation"><a href=""{{action 'insertHeading1'}}>H1</a></li>
-              <li role="presentation"><a href=""{{action 'insertHeading2'}}>H2</a></li>
-              <li role="presentation"><a href=""{{action 'insertHeading3'}}>H3</a></li>
-            </ul>
-          </div>
-        </div>
+        
+          {{editor-tools}}
+        
           {{auto-expanding-text-area class="form-control" maxlength="2000" row="7" value=typeComment}}
    
           {{#if showNewCommentLength}}
@@ -71,13 +77,28 @@
                 {{input class="form-control input-sm" type="email" id="email" value=email placeholder="Email"}}
             </div>
             <div class="col-xs-2">
-                {{input type="hidden" value=actualPostIdForAddComment}}
-                {{#if sendingCommentOn}}
-                  <button class="btn btn-primary btn-sm">Submitting...</button>
-                {{else}}
-                  <button type="button" {{action "addComment"}} class="btn btn-success btn-sm">Submit</button>
+                {{input type="hidden" value=actualPostId}}
+                
                   {{input type="text" name="spam_bot" class="hidden" value=valueForSpam}}
-                {{/if}}
+
+                  {{add-comment isSending=true
+                      name=name
+                      email=email
+                      typeComment=typeComment
+                      sendingCommentOn=sendingCommentOn
+                      comments=comments
+                      isCommentDivShown=isCommentDivShown
+                      isHideAddComment=isHideAddComment
+                      commentsArray=commentsArray
+                      actualPostId=actualPostId
+                      actualTitle=actualTitle
+                      isReplying=isReplying
+                      valueForSpam=valueForSpam
+                      currentSlug=currentSlug
+                      commentIdToReply=commentIdToReply
+                      commenterNameToReply=commenterNameToReply
+                      commenterGravaterToReply=commenterGravaterToReply}}
+                
             </div>
           </div>
     
@@ -92,9 +113,9 @@
 
 
   {{#if isHideAddComment}}
-  <div class="addCommentDiv" style="padding:1%;cursor:pointer;text-align:center;" {{action 'showAddComment'}}>
-   Show <i class="fa fa-chevron-down"></i>
-  </div>
+    {{manage-editor isShowing=true
+          isCommentDivShown=isCommentDivShown
+          isHideAddComment=isHideAddComment}}
   {{/if}}
 {{/if}}  
 {{/unless}}

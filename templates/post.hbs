@@ -32,15 +32,15 @@
 	  		{{#if readOnlyMode}}
 	    		<button class="btn btn-info pull-right" type="button" disabled="disabled"><i class="fa fa-plus-circle"></i> Add comment</button>
 	  		{{else}}
-	  			{{add-comment notReply=true
+	  			{{add-comment notReply=true isReply=false
 	  				postId=id
 	  				title=title
 	  				comments=comments
 	  				isCommentDivShown=isCommentDivShown
 	  				isHideAddComment=isHideAddComment
 	  				commentsArray=commentsArray
-	  				setPostId=setPostId
-	  				setIsReplying=setIsReplying
+	  				actualPostId=actualPostId
+	  				isReplying=isReplying
 	  				actualTitle=actualTitle
 	  				currentSlug=currentSlug
 	  				commentIdToReply=commentIdToReply

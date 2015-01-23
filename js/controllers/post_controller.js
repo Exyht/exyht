@@ -12,14 +12,14 @@ Exyht.PostController = Ember.ObjectController.extend({
   readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
   isCommentDivShown: Ember.computed.alias("controllers.application.isCommentDivShown"),
   isHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
-  setIsReplying: Ember.computed.alias("controllers.application.isReplying"),
-  actualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
-  setPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
-  currentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
-  commentsArray: Ember.computed.alias("controllers.application.newCurrentComment"),
-  commentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
-  commenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
-  commenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
+  isReplying: Ember.computed.alias("controllers.application.isReplying"),
+  actualTitle: Ember.computed.alias("controllers.application.actualTitle"),
+  actualPostId: Ember.computed.alias("controllers.application.actualPostId"),
+  currentSlug: Ember.computed.alias("controllers.application.currentSlug"),
+  commentsArray: Ember.computed.alias("controllers.application.commentsArray"),
+  commentIdToReply: Ember.computed.alias("controllers.application.commentIdToReply"),
+  commenterNameToReply: Ember.computed.alias("controllers.application.commenterNameToReply"),
+  commenterGravaterToReply: Ember.computed.alias("controllers.application.commenterGravaterToReply"),
 
   hasPost: function() {
     var postId = this.get("model.id");

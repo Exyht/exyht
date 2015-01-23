@@ -1,0 +1,15 @@
+{{#if isCanceling}}
+	<button type="button" class="btn btn-danger btn-xs" {{action 'cancelCmt'}}>Cancel</button>
+{{/if}}
+
+{{#if isHiding}}
+  <button type="button" class="btn btn-primary btn-xs" {{action 'hideCmtBox'}}>
+  	Hide <i class="fa fa-chevron-up"></i>
+  </button>
+{{/if}}
+
+{{#if isShowing}}
+  <div class="addCommentDiv" style="padding:1%;cursor:pointer;text-align:center;" {{action 'showCmtBox'}}>
+    Show <i class="fa fa-chevron-down"></i>
+  </div>
+{{/if}}

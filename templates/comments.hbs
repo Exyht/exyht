@@ -12,6 +12,7 @@
              <div class="pull-right" {{bind-attr title=cdate}}>
               <time>{{time-ago createdAt=cdate}}</time>
              </div>
+
              {{#if replyToComment.commentHasReply}}
                <div class="pull-right">   
                   {{{replyToComment.name}}} &nbsp;
@@ -33,20 +34,16 @@
         </div>
         {{else}}
         <div>
-          {{#if isFlagged}}
-            <button class="btn btn-danger" title="This comment's been flagged" disabled="disabled"><i class="fa fa-flag-o"></i></button>
-          {{else}}
-            <button class="btn btn-default" {{action 'flagComment'}} title="Flag this comment"><i class="fa fa-flag-o"></i></button>
-          {{/if}}
+          {{flag-comment isFlagged=isFlagged id=id}}
 
-          {{add-comment notReply=false
+          {{add-comment isReply=true notReply=false
               postId=postIdFromPostCtlr
               comments=getCommentsArrayFromPostCtlr
               isCommentDivShown=isCommentDivShown
               isHideAddComment=isHideAddComment
               commentsArray=commentsArray
-              setPostId=setPostId
-              setIsReplying=setIsReplying
+              actualPostId=actualPostId
+              isReplying=isReplying
               actualTitle=actualTitle
               currentSlug=currentSlug
               cmtId=id

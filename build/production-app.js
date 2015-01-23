@@ -151,51 +151,248 @@ Exyht.ArchiveRoute = Ember.Route.extend(Exyht.ResetScroll, {
 */
 Exyht.AddCommentComponent = Ember.Component.extend({
   tagName: 'span',
-	actions: {
-		addCmtAction: function(){
-			var postIdForAddCmt = this.get('postId');// post id(required)
-			var getCmtsArray = this.get('comments');// comments array(required)
-			var isAddCmtBtn = true,// boolean(required)
-          hideAddCmtBtn = false;// boolean(required)
+
+  setPropForAddCmt: function(){
+    var postIdForAddCmt = this.get('postId');// post id(required)
+    var getCmtsArray = this.get('comments');// comments array(required)
+    var isAddCmtBtn = true,// boolean(required)
+        hideAddCmtBtn = false;// boolean(required)
+    this.setProperties({
+      'isCommentDivShown': isAddCmtBtn,
+      'isHideAddComment': hideAddCmtBtn,
+      'commentsArray': getCmtsArray,
+      'actualPostId': postIdForAddCmt
+    });
+
+    if(this.get('notReply') === true){
+      var titleForAddCmt = this.get('title');// post title
+              
+      var currentSlug = this.get('title').substring(0, 60).replace(/[^A-Za-z0-9\s+]/g, '').replace(/\s+/g, '-').toLowerCase();//for link
 
       this.setProperties({
-        'isCommentDivShown': isAddCmtBtn,
-        'isHideAddComment': hideAddCmtBtn,
-        'commentsArray': getCmtsArray,
-        'setPostId': postIdForAddCmt
+        'actualTitle': titleForAddCmt,
+        'currentSlug': currentSlug,
+        'isReplying': false,
+        'commentIdToReply': '',
+        'commenterNameToReply': '',
+        'commenterGravaterToReply': ''
       });
+    }
 
-			if(this.get('notReply') === true){
-        var titleForAddCmt = this.get('title');// post title
-          		
-        var currentSlug = this.get('title').substring(0, 60).replace(/[^A-Za-z0-9\s+]/g, '').replace(/\s+/g, '-').toLowerCase();//for link
+    if(this.get('isReply') === true){
+      var getCmtId = this.get('cmtId');// comment id
+      var getCmterName = this.get('cmtName');// reply to name
+      var getCmterEmailForGravater = this.get('cmtEmail');// reply to email
+      this.setProperties({
+        'actualTitle': '',
+        'currentSlug': '',
+        'isReplying': true,
+        'commentIdToReply': getCmtId,
+        'commenterNameToReply': getCmterName,
+        'commenterGravaterToReply': getCmterEmailForGravater
+      });
+    }
+  },
+  addCmt: function(){
+    var name = this.get('name').trim(),
+      addedComment = this.get('typeComment'),
+      postId = this.get('actualPostId'),
+      email = this.get('email').trim(),
+      replyingCommentId = this.get('commentIdToReply'),
+      valueForSpamBot = this.get('valueForSpam');
+      
+    if ((!addedComment || addedComment.length < 20) || !name || !email) {
+      this.set('isCommentDivShown', true);
+      return false;
+    }
 
-        this.setProperties({
-      		'actualTitle': titleForAddCmt,
-      		'currentSlug': currentSlug,
-      		'setIsReplying': false,
-      		'commentIdToReply': '',
-      		'commenterNameToReply': '',
-      		'commenterGravaterToReply': ''
-      	});
-      }
+    if (!addedComment.trim()) { return; }
+      
+    this.set('sendingCommentOn', true);
+      
+    var self = this;
+         
+    $.post(Exyht.BaseURL+"addComment",
+      {
+       postId: postId,
+       comment: addedComment,
+       name: name,
+       email: email,
+       spam_bot: valueForSpamBot,
+       replyToCommentId: replyingCommentId
+      },function(data){
+        // Remove previous meta tag with old csrf-token
+        $('meta[name="csrf-token"]').remove();
+        // Append new meta tag with new csrf-token
+        $('head').append( '<meta name="csrf-token" content="'+data.token+'">' );
+        // Update headers 'X-CSRF-Token' with new csrf-token
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
 
-      if(this.get('notReply') === false){
-        var getCmtId = this.get('cmtId');// comment id
-        var getCmterName = this.get('cmtName');// reply to name
-        var getCmterEmailForGravater = this.get('cmtEmail');// reply to email
+        self.set('sendingCommentOn', false);
 
-        this.setProperties({
-      		'actualTitle': '',
-      		'currentSlug': '',
-      		'setIsReplying': true,
-      		'commentIdToReply': getCmtId,
-      		'commenterNameToReply': getCmterName,
-      		'commenterGravaterToReply': getCmterEmailForGravater
-      	});
-      }
-		}
+        if(data.controller_response == "saved")
+          {
+            //alert("Data: " + data + "\nStatus: " + status);
+            self.set('isCommentDivShown', false);
+          
+            var gravatarEmail = CryptoJS.MD5(self.get('email').trim().toLowerCase());
+            
+            var repliedToCommenterName = self.get('commenterNameToReply');
+            var repliedToCommenterGravater = self.get('commenterGravaterToReply');
+            
+            if(self.get('isReplying') === true){
+              self.get('commentsArray').pushObject({
+                name: name,
+                email: gravatarEmail,
+                comment: addedComment,
+                replyToComment: Ember.Object.create({
+                  commentHasReply: true,
+                  name: repliedToCommenterName,
+                  email: repliedToCommenterGravater
+                })
+              });
+            }
+            else
+            {
+              self.get('commentsArray').pushObject({
+                name: name,
+                email: gravatarEmail,
+                comment: addedComment,
+                replyToComment: []
+              });
+            }
+            self.setProperties({
+              'name': '',
+              'email': '',
+              'typeComment': '',
+              'actualPostId': '',
+              'actualTitle': '',
+              'currentSlug': '',
+              'isReplying': false,
+              'commentIdToReply': '',
+              'commenterNameToReply': '',
+              'commenterGravaterToReply': ''
+            });
+            // Now scroll to bottom
+            window.scrollTo(0, document.body.scrollHeight);
+          }else if(data.read_only_mode === 1){
+            $("#showError").addClass("alert alert-danger");
+            $("#showError").html(data.controller_response);
+          }else
+          {
+            $("#showError").addClass("alert alert-danger");
+            $("#showError").html(data.error_msg);
+          }
+      },"json");
+  },
+
+	actions: {
+		addCmtAction: function(){
+      // Debounce for 0.5 second
+      Ember.run.debounce(this, this.setPropForAddCmt, 500);
+    },
+    // Now send comment to server
+    sendCmt: function(){
+      // Debounce for 1 second
+      Ember.run.debounce(this, this.addCmt, 1000);
+    }
 	}
+});
+/*
+ |---------------------------------
+ | Editor tools Component
+ |---------------------------------
+*/
+Exyht.EditorToolsComponent = Ember.Component.extend({
+	actions: {
+    	// Editor tools
+    	ctv: function(input){
+      		var textarea = $('textarea');
+      		textarea.val(textarea.val() + input);
+    	},
+    	citv: function(input1, input2){
+      		var textarea = $('textarea');
+      		if (textarea.val() === ''){
+        		textarea.val(textarea.val() + input1);
+      		}else{
+        		textarea.val(textarea.val() + input2);
+      		}
+    	},
+    	insertBold: function(){
+      		this.send('ctv', " **bold** ");
+    	},
+    	insertItalic: function(){
+      		this.send('ctv', " *italic* ");
+    	},
+    	insertLink: function(){
+      		this.send('citv', "[Link description](http://example.com)", "\n [Link description](http://example.com)");
+    	},
+    	insertQuote: function(){
+      		this.send('ctv', "\n > your quote here");
+    	},
+    	insertCode: function(){
+      		this.send('citv', "`For inline code` \n\n\tFor pre code", "\n\n`For inline code` \n\n\tFor pre code");
+    	},
+    	insertOrderedlist: function(){
+      		this.send('ctv', "Indent one space after the dot \'.\'\n\n1. Ordered list1\n2. Ordered list2");
+    	},
+    	insertUnorderedlist: function(){
+      		this.send('ctv', "Indent one space after the + or -.\n\n- Unordered list1\n\t+ Nested list");
+    	},
+    	insertHorizontalrule: function(){
+      		this.send('citv', "-----\nNew line", "\n\n-----\nNew line");
+    	},
+    	insertStrikethrough: function(){
+      		this.send('ctv', "<del>Strike through</del>");
+    	},
+    	insertSubscript: function(){
+      		this.send('ctv', "Sub<sub>script</sub>");
+    	},
+    	insertSuperscript: function(){
+      		this.send('ctv', "Sub<sup>script</sup>");
+    	},
+    	insertHeading1: function(){
+      		this.send('citv', "# Heading1\n", "\n# Heading1\n");
+    	},
+    	insertHeading2: function(){
+      		this.send('citv', "# Heading2\n", "\n# Heading2\n");
+    	},
+    	insertHeading3: function(){
+      		this.send('citv', "# Heading3\n", "\n# Heading3\n");
+    	}
+  	}
+});
+/*
+ |---------------------------------
+ | Flag comment Component
+ |---------------------------------
+*/
+Exyht.FlagCommentComponent = Ember.Component.extend({
+  	tagName: 'span',
+
+  	flagCmt: function(){
+  		var commentId = this.get('id');
+  		var self = this;
+  		$.ajax({
+      		type: "POST",
+      		url: Exyht.BaseURL + "flagComment",
+      		data: {commentId: commentId},
+      		success: function(msg){
+        		self.set('isFlagged', true);
+      		}
+  		});
+	},
+
+  	actions: {
+    	flagComment: function(){
+      		// Debounce for 0.5 second
+      		Ember.run.debounce(this, this.flagCmt, 500);
+    	}
+  	}
 });
 /*
  |---------------------------
@@ -214,6 +411,173 @@ Exyht.GravatarImageComponent = Ember.Component.extend({
     return 'http://www.gravatar.com/avatar/' + email + '?d='+Exyht.gravatarVersion+'&s=' + size;
   }.property('email', 'size')
 });
+/*
+ |---------------------------------
+ | Infinite scroll Component
+ |---------------------------------
+*/
+Exyht.InfiniteScrollComponent = Ember.Component.extend({
+
+  more_post_offset: 8,
+  more_post_limit: 8,
+  loadingMoreTopics: false,
+
+  new_limit: function(){
+    return this.get('more_post_limit');
+  }.property('more_post_limit'),
+
+  inInsert: function (argument) {
+    $(window).on('scroll', $.proxy(this.didScroll, this));
+  }.on('didInsertElement'),
+
+  onLeaving: function(){
+    this.setProperties({
+      'more_post_offset': 8,
+      'more_post_limit': 8,
+      'new_limit': 8
+    });
+    $(window).off('scroll', $.proxy(this.didScroll, this));
+  }.on('willDestroyElement'),
+
+  didScroll: function(){
+    if($(window).scrollTop() + $(window).height() == $(document).height()){
+      this.set('loadingMoreTopics', true); // Show loading spinner
+
+      setTimeout(function(){
+        // Wait 0.5 second before make an ajax call
+        // Debounce for 1 second
+        Ember.run.debounce(this, this.loadTopics, 1000);
+          
+      }.bind(this), 500);
+    }
+  },
+
+  loadTopics: function(){
+    var posts = this.get('posts'),
+        self = this;
+          
+    return $.getJSON(Exyht.currentBaseUri+'getBlogPosts/'+this.get('more_post_offset')+'/'+this.get('more_post_limit')).then(function(data) {
+      self.set('loadingMoreTopics', false); // Hide loading spinner
+      $.each(data, function(index){
+        if(data[index].no_post === false){ // no_post === true means there is no post
+          posts.pushObject({
+            id: data[index].id,
+            title: data[index].title,
+            body: data[index].body,
+            created: data[index].created,
+            no_post: data[index].no_post
+          });
+          // Now increment offset by incrementing new_limit property
+          self.set('more_post_offset', self.incrementProperty('new_limit'));
+        }
+      });
+    });
+  }
+});
+/*
+ |---------------------------------
+ | Manage editor Component
+ |---------------------------------
+*/
+Exyht.ManageEditorComponent = Ember.Component.extend({
+  	tagName: 'span',
+
+  	cancelAddComment: function(){
+    	var typedComment = this.get('typeComment');
+    	$("div.container-full").css({"margin-top":"0"});
+    	if(typeof typedComment == 'undefined' || typedComment.length === 0)
+      	{
+        	this.setProperties({
+        	  	'name': '',
+        	  	'email': '',
+        	  	'isCommentDivShown': false,
+          		'actualPostIdForAddComment': '',
+          		'actualTitleForAddComment': '',
+          		'actualOnlyCurrentSlug': '',
+          		'isReplying': false,
+          		'currentCommentIdToReply': '',
+          		'currentCommenterNameToReply': '',
+          		'currentCommenterGravaterToReply': ''
+        	});
+      	}
+      	else
+      	{
+        	var confirmCanceling = confirm("Want to cancel?");
+        	if (confirmCanceling === true) {
+          		this.setProperties({
+            		'name': '',
+            		'email': '',
+            		'typeComment': '',
+            		'isCommentDivShown': false,
+            		'actualPostIdForAddComment': '',
+            		'actualTitleForAddComment': '',
+            		'actualOnlyCurrentSlug': '',
+            		'isReplying': false,
+            		'currentCommentIdToReply': '',
+            		'currentCommenterNameToReply': '',
+            		'currentCommenterGravaterToReply': ''
+          		});
+        	}
+      	}
+    },
+
+    hideAddComment: function(){
+      	var addedComment = this.get('typeComment');
+      
+      	if(typeof addedComment == 'undefined' || addedComment.length === 0)
+      	{
+        	this.setProperties({
+            	'name': '',
+            	'email': '',
+            	'isHideAddComment': false,
+            	'isCommentDivShown': false,
+            	'sendingCommentOn': false,
+            	'actualPostId': '',
+            	'actualTitle': '',
+            	'currentSlug': '',
+            	'isReplying': false,
+            	'commentIdToReply': '',
+            	'commenterNameToReply': '',
+            	'commenterGravaterToReply': ''
+        	});
+        	$("div.container-full").css({"margin-top":"0"});
+      	}
+      	else
+      	{
+        	this.setProperties({
+          		'isCommentDivShown': false,
+          		'isHideAddComment': true
+        	});
+        	$("div.container-full").css({"margin-top":"50px"});
+      	}
+    },
+
+    showAddComment: function(){
+      	this.setProperties({
+          	'isCommentDivShown': true,
+          	'isHideAddComment': false
+      	});
+      	$("div.container-full").css({"margin-top":"0"});
+    },
+
+    actions: {
+    	// Cancel commenting
+    	cancelCmt: function(){
+    	  	// Debounce for 0.5 second
+    	  	Ember.run.debounce(this, this.cancelAddComment, 500);
+    	},
+    	// Hide comment box
+    	hideCmtBox: function(){
+      		// Debounce for 0.5 second
+      		Ember.run.debounce(this, this.hideAddComment, 500);
+    	},
+    	// show comment box
+    	showCmtBox: function(){
+      		// Debounce for 0.5 second
+      		Ember.run.debounce(this, this.showAddComment, 500);
+    	}
+    }
+ });
 /*
  |---------------------------
  | TextArea Component
@@ -321,15 +685,15 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
   isHideAddComment: false,
   isCommentDivShown: false,
   sendingCommentOn: false,
-  actualTitleForAddComment: '',
-  actualPostIdForAddComment: '',
-  actualOnlyCurrentSlug: '',
-  newCurrentComment: '',
+  actualTitle: '',
+  actualPostId: '',
+  currentSlug: '',
+  commentsArray: '',
   newCommentLength: '',
   showNewCommentLength: false,
-  currentCommentIdToReply: '',
-  currentCommenterNameToReply: '',
-  currentCommenterGravaterToReply: '',
+  commentIdToReply: '',
+  commenterNameToReply: '',
+  commenterGravaterToReply: '',
   valueForSpam: '',
   postKey: function(){
   
@@ -411,237 +775,7 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
 
   sidebarArchive: function(){
     return Ember.get('Exyht.SidebarInfo.sidebar_info.archive');
-  }.property('Exyht.SidebarInfo.sidebar_info.archive'),
-
-  addCommentToPost: function(){
-    var name = this.get('name').trim(),
-        addedComment = this.get('typeComment'),
-        postId = this.get('actualPostIdForAddComment'),
-        email = this.get('email').trim(),
-        replyingCommentId = this.get('currentCommentIdToReply'),
-        valueForSpamBot = this.get('valueForSpam');
-      
-    if ((!addedComment || addedComment.length < 20) || !name || !email) {
-       this.set('isCommentDivShown', true);
-       return false;
-    }
-
-    if (!addedComment.trim()) { return; }
-      
-    this.set('sendingCommentOn', true);
-      
-    var self = this;
-         
-    $.post(Exyht.BaseURL+"addComment",
-      {
-       postId: postId,
-       comment: addedComment,
-       name: name,
-       email: email,
-       spam_bot: valueForSpamBot,
-       replyToCommentId: replyingCommentId
-      },function(data){
-        // Remove previous meta tag with old csrf-token
-        $('meta[name="csrf-token"]').remove();
-        // Append new meta tag with new csrf-token
-        $('head').append( '<meta name="csrf-token" content="'+data.token+'">' );
-        // Update headers 'X-CSRF-Token' with new csrf-token
-        $.ajaxSetup({
-          headers: {
-              'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
-
-
-        if(data.controller_response == "saved")
-          {
-            //alert("Data: " + data + "\nStatus: " + status);
-            self.set('isCommentDivShown', false);
-          
-            var gravatarEmail = CryptoJS.MD5(self.get('email').trim().toLowerCase());
-            
-            var repliedToCommenterName = self.get('currentCommenterNameToReply');
-            var repliedToCommenterGravater = self.get('currentCommenterGravaterToReply');
-            
-            if(self.get('isReplying') === true){
-              self.get('newCurrentComment').pushObject({
-                name: name,
-                email: gravatarEmail,
-                comment: addedComment,
-                replyToComment: Ember.Object.create({
-                  commentHasReply: true,
-                  name: repliedToCommenterName,
-                  email: repliedToCommenterGravater
-                })
-              });
-            }
-            else
-            {
-              self.get('newCurrentComment').pushObject({
-                name: name,
-                email: gravatarEmail,
-                comment: addedComment,
-                replyToComment: []
-              });
-            }
-            self.setProperties({
-              'name': '',
-              'email': '',
-              'typeComment': '',
-              'actualPostIdForAddComment': '',
-              'actualTitleForAddComment': '',
-              'actualOnlyCurrentSlug': '',
-              'isReplying': false,
-              'currentCommentIdToReply': '',
-              'currentCommenterNameToReply': '',
-              'currentCommenterGravaterToReply': ''
-            });
-            // Now scroll to bottom
-            window.scrollTo(0, document.body.scrollHeight);
-          }else if(data.read_only_mode === 1){
-            $("#showError").addClass("alert alert-danger");
-            $("#showError").html(data.controller_response);
-          }else
-          {
-            $("#showError").html(data.error_msg);
-          }
-          self.set('sendingCommentOn', false);
-      },"json");
-  },
-  
-  actions: {
-    addComment: function(){
-      // Debounce for 1 second
-      Ember.run.debounce(this, this.addCommentToPost, 1000);
-    },
-    cancelAddComment: function(){
-      var typedComment = this.get('typeComment');
-      
-      if(typeof typedComment == 'undefined' || typedComment.length === 0)
-      {
-        this.setProperties({
-          'name': '',
-          'email': '',
-          'isCommentDivShown': false,
-          'actualPostIdForAddComment': '',
-          'actualTitleForAddComment': '',
-          'actualOnlyCurrentSlug': '',
-          'isReplying': false,
-          'currentCommentIdToReply': '',
-          'currentCommenterNameToReply': '',
-          'currentCommenterGravaterToReply': ''
-        });
-      }
-      else
-      {
-        var confirmCanceling = confirm("Want to cancel?");
-        if (confirmCanceling === true) {
-          this.setProperties({
-            'name': '',
-            'email': '',
-            'typeComment': '',
-            'isCommentDivShown': false,
-            'actualPostIdForAddComment': '',
-            'actualTitleForAddComment': '',
-            'actualOnlyCurrentSlug': '',
-            'isReplying': false,
-            'currentCommentIdToReply': '',
-            'currentCommenterNameToReply': '',
-            'currentCommenterGravaterToReply': ''
-          });
-        }
-      }
-    },
-    hideAddComment: function(){
-      var addedComment = this.get('typeComment');
-      
-      if(typeof addedComment == 'undefined' || addedComment.length === 0)
-      {
-        this.setProperties({
-            'name': '',
-            'email': '',
-            'isHideAddComment': false,
-            'isCommentDivShown': false,
-            'actualPostIdForAddComment': '',
-            'actualTitleForAddComment': '',
-            'actualOnlyCurrentSlug': '',
-            'isReplying': false,
-            'currentCommentIdToReply': '',
-            'currentCommenterNameToReply': '',
-            'currentCommenterGravaterToReply': ''
-        });
-      }
-      else
-      {
-        this.setProperties({
-          'isCommentDivShown': false,
-          'isHideAddComment': true
-        });
-        $("div.container-full").css({"margin-top":"50px"});
-      }
-    },
-    showAddComment: function(){
-      this.set('isCommentDivShown', true);
-      this.set('isHideAddComment', false);
-      $("div.container-full").css({"margin-top":"0"});
-    },
-    
-    // Editor tools
-    ctv: function(input){
-      var textarea = $('textarea');
-      textarea.val(textarea.val() + input);
-    },
-    citv: function(input1, input2){
-      var textarea = $('textarea');
-      if (textarea.val() === ''){
-        textarea.val(textarea.val() + input1);
-      }else{
-        textarea.val(textarea.val() + input2);
-      }
-    },
-    insertBold: function(){
-      this.send('ctv', " **bold** ");
-    },
-    insertItalic: function(){
-      this.send('ctv', " *italic* ");
-    },
-    insertLink: function(){
-      this.send('citv', "[Link description](http://example.com)", "\n [Link description](http://example.com)");
-    },
-    insertQuote: function(){
-      this.send('ctv', "\n > your quote here");
-    },
-    insertCode: function(){
-      this.send('citv', "`For inline code` \n\n\tFor pre code", "\n\n`For inline code` \n\n\tFor pre code");
-    },
-    insertOrderedlist: function(){
-      this.send('ctv', "Indent one space after the dot \'.\'\n\n1. Ordered list1\n2. Ordered list2");
-    },
-    insertUnorderedlist: function(){
-      this.send('ctv', "Indent one space after the + or -.\n\n- Unordered list1\n\t+ Nested list");
-    },
-    insertHorizontalrule: function(){
-      this.send('citv', "-----\nNew line", "\n\n-----\nNew line");
-    },
-    insertStrikethrough: function(){
-      this.send('ctv', "<del>Strike through</del>");
-    },
-    insertSubscript: function(){
-      this.send('ctv', "Sub<sub>script</sub>");
-    },
-    insertSuperscript: function(){
-      this.send('ctv', "Sub<sup>script</sup>");
-    },
-    insertHeading1: function(){
-      this.send('citv', "# Heading1\n", "\n# Heading1\n");
-    },
-    insertHeading2: function(){
-      this.send('citv', "# Heading2\n", "\n# Heading2\n");
-    },
-    insertHeading3: function(){
-      this.send('citv', "# Heading3\n", "\n# Heading3\n");
-    }
-  }
+  }.property('Exyht.SidebarInfo.sidebar_info.archive')
 });
 /*
  |---------------------------
@@ -656,36 +790,16 @@ commentFeature: Ember.computed.oneWay("controllers.application.commentFeature"),
 readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
 isCommentDivShown: Ember.computed.alias("controllers.application.isCommentDivShown"),
 isHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
-setIsReplying: Ember.computed.alias("controllers.application.isReplying"),
-setPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
+isReplying: Ember.computed.alias("controllers.application.isReplying"),
+actualPostId: Ember.computed.alias("controllers.application.actualPostId"),
+actualTitle: Ember.computed.alias("controllers.application.actualTitle"),
 postIdFromPostCtlr: Ember.computed.alias("controllers.post.id"),
-commentsArray: Ember.computed.alias("controllers.application.newCurrentComment"),
+commentsArray: Ember.computed.alias("controllers.application.commentsArray"),
 getCommentsArrayFromPostCtlr: Ember.computed.alias("controllers.post.comments"),
-commentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
-commenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
-commenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
-actualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
-currentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
-
-flagCmt: function(){
-  var commentId = this.get('id');
-  var self = this;
-  $.ajax({
-      type: "POST",
-      url: Exyht.BaseURL+"flagComment",
-      data: {commentId: commentId},
-      success: function(msg){
-        self.set('isFlagged', true);
-      }
-  });
-},
-
-  actions: {
-    flagComment: function(){
-      // Debounce for 0.5 second
-      Ember.run.debounce(this, this.flagCmt, 500);
-    }
-  }
+commentIdToReply: Ember.computed.alias("controllers.application.commentIdToReply"),
+commenterNameToReply: Ember.computed.alias("controllers.application.commenterNameToReply"),
+commenterGravaterToReply: Ember.computed.alias("controllers.application.commenterGravaterToReply"),
+currentSlug: Ember.computed.alias("controllers.application.currentSlug")
 });
 /*
  |------------------
@@ -693,53 +807,12 @@ flagCmt: function(){
  |------------------
 */
 Exyht.IndexController = Ember.ObjectController.extend({
-    more_post_offset: 8,
-    more_post_limit: 8,
-    loadingMoreTopics: false,
-
-    new_limit: function(){
-      return this.get('more_post_limit');
-    }.property('more_post_limit'),
+    
     // Post div background color
   	postBgColor: function(){
   		var bgClr = Ember.get('Exyht.BlogStyle.post_bg_clr');
     	return (bgClr !== "")?"background-color: "+bgClr:"background-color: #ffffff";
-  	}.property('Exyht.BlogStyle.post_bg_clr'),
-
-    loadTopics: function(){
-      var posts = this.get('posts'),
-          self = this;
-          
-      return $.getJSON(Exyht.currentBaseUri+'getBlogPosts/'+this.get('more_post_offset')+'/'+this.get('more_post_limit')).then(function(data) {
-            self.set('loadingMoreTopics', false); // Hide loading spinner
-            $.each(data, function(index){
-              if(data[index].no_post === false){ // no_post === true means there is no post
-                posts.pushObject({
-                  id: data[index].id,
-                  title: data[index].title,
-                  body: data[index].body,
-                  created: data[index].created,
-                  no_post: data[index].no_post
-                });
-                // Now increment offset by incrementing new_limit property
-                self.set('more_post_offset', self.incrementProperty('new_limit'));
-              }
-            });
-      });
-    },
-
-  	actions: {
-    	loadMoreTopics: function(){
-        this.set('loadingMoreTopics', true); // Show loading spinner
-
-        setTimeout(function(){
-          // Wait 0.5 second before make an ajax call
-          // Debounce for 1 second
-          Ember.run.debounce(this, this.loadTopics, 1000);
-      	  
-        }.bind(this), 500);
-    	}
-  	}
+  	}.property('Exyht.BlogStyle.post_bg_clr')
 });
 /*
  |---------------------------
@@ -755,14 +828,14 @@ Exyht.PostController = Ember.ObjectController.extend({
   readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
   isCommentDivShown: Ember.computed.alias("controllers.application.isCommentDivShown"),
   isHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
-  setIsReplying: Ember.computed.alias("controllers.application.isReplying"),
-  actualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
-  setPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
-  currentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
-  commentsArray: Ember.computed.alias("controllers.application.newCurrentComment"),
-  commentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
-  commenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
-  commenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
+  isReplying: Ember.computed.alias("controllers.application.isReplying"),
+  actualTitle: Ember.computed.alias("controllers.application.actualTitle"),
+  actualPostId: Ember.computed.alias("controllers.application.actualPostId"),
+  currentSlug: Ember.computed.alias("controllers.application.currentSlug"),
+  commentsArray: Ember.computed.alias("controllers.application.commentsArray"),
+  commentIdToReply: Ember.computed.alias("controllers.application.commentIdToReply"),
+  commenterNameToReply: Ember.computed.alias("controllers.application.commenterNameToReply"),
+  commenterGravaterToReply: Ember.computed.alias("controllers.application.commenterGravaterToReply"),
 
   hasPost: function() {
     var postId = this.get("model.id");
@@ -774,31 +847,6 @@ Exyht.PostController = Ember.ObjectController.extend({
     }
     return response;
   }.property("model.id")
-});
-/*
- |---------------
- | Index View
- |---------------
-*/
-Exyht.IndexView = Ember.View.extend({
-	didInsertElement: function(){
-  	$(window).on('scroll', $.proxy(this.didScroll, this));
-  },
-
-  willDestroyElement: function(){
-    this.setProperties({
-      'controller.more_post_offset': 8,
-      'controller.more_post_limit': 8,
-      'controller.new_limit': 8
-    });
-  	$(window).off('scroll', $.proxy(this.didScroll, this));
-  },
-
-  didScroll: function(){
-    if($(window).scrollTop() + $(window).height() == $(document).height()){
-      this.get('controller').send('loadMoreTopics');
-    }
-  }
 });
 /*
  |---------------------------

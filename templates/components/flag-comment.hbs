@@ -1,0 +1,5 @@
+{{#if isFlagged}}
+    <button class="btn btn-danger" title="This comment's been flagged" disabled="disabled"><i class="fa fa-flag-o"></i></button>
+{{else}}
+    <button class="btn btn-default" {{action 'flagComment'}} title="Flag this comment"><i class="fa fa-flag-o"></i></button>
+{{/if}}
