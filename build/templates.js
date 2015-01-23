@@ -575,13 +575,30 @@ function program4(depth0,data) {
 
 function program6(depth0,data) {
   
-  var buffer = '', stack1;
+  var buffer = '', stack1, helper, options;
   data.buffer.push("\r\n        <div>\r\n          ");
   stack1 = helpers['if'].call(depth0, "isFlagged", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n          <button class=\"btn btn-info\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "replyToCommentTrue", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" title=\"Reply to comment\"><i class=\"fa fa-reply\"></i> Reply</button>\r\n        </div>\r\n        ");
+  data.buffer.push("\r\n\r\n          ");
+  data.buffer.push(escapeExpression((helper = helpers['add-comment'] || (depth0 && depth0['add-comment']),options={hash:{
+    'notReply': (false),
+    'postId': ("postIdFromPostCtlr"),
+    'comments': ("getCommentsArrayFromPostCtlr"),
+    'isCommentDivShown': ("isCommentDivShown"),
+    'isHideAddComment': ("isHideAddComment"),
+    'commentsArray': ("commentsArray"),
+    'setPostId': ("setPostId"),
+    'setIsReplying': ("setIsReplying"),
+    'actualTitle': ("actualTitle"),
+    'currentSlug': ("currentSlug"),
+    'cmtId': ("id"),
+    'cmtName': ("name"),
+    'cmtEmail': ("email"),
+    'commentIdToReply': ("commentIdToReply"),
+    'commenterNameToReply': ("commenterNameToReply"),
+    'commenterGravaterToReply': ("commenterGravaterToReply")
+  },hashTypes:{'notReply': "BOOLEAN",'postId': "ID",'comments': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'commentsArray': "ID",'setPostId': "ID",'setIsReplying': "ID",'actualTitle': "ID",'currentSlug': "ID",'cmtId': "ID",'cmtName': "ID",'cmtEmail': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'notReply': depth0,'postId': depth0,'comments': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'commentsArray': depth0,'setPostId': depth0,'setIsReplying': depth0,'actualTitle': depth0,'currentSlug': depth0,'cmtId': depth0,'cmtName': depth0,'cmtEmail': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "add-comment", options))));
+  data.buffer.push("\r\n        </div>\r\n        ");
   return buffer;
   }
 function program7(depth0,data) {
@@ -822,10 +839,25 @@ function program13(depth0,data) {
 
 function program15(depth0,data) {
   
-  var buffer = '';
-  data.buffer.push("\r\n	  			<button class=\"btn btn-info pull-right\" ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "addCommentTrue", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><i class=\"fa fa-plus-circle\"></i> Add comment</button>\r\n	  		");
+  var buffer = '', helper, options;
+  data.buffer.push("\r\n	  			");
+  data.buffer.push(escapeExpression((helper = helpers['add-comment'] || (depth0 && depth0['add-comment']),options={hash:{
+    'notReply': (true),
+    'postId': ("id"),
+    'title': ("title"),
+    'comments': ("comments"),
+    'isCommentDivShown': ("isCommentDivShown"),
+    'isHideAddComment': ("isHideAddComment"),
+    'commentsArray': ("commentsArray"),
+    'setPostId': ("setPostId"),
+    'setIsReplying': ("setIsReplying"),
+    'actualTitle': ("actualTitle"),
+    'currentSlug': ("currentSlug"),
+    'commentIdToReply': ("commentIdToReply"),
+    'commenterNameToReply': ("commenterNameToReply"),
+    'commenterGravaterToReply': ("commenterGravaterToReply")
+  },hashTypes:{'notReply': "BOOLEAN",'postId': "ID",'title': "ID",'comments': "ID",'isCommentDivShown': "ID",'isHideAddComment': "ID",'commentsArray': "ID",'setPostId': "ID",'setIsReplying': "ID",'actualTitle': "ID",'currentSlug': "ID",'commentIdToReply': "ID",'commenterNameToReply': "ID",'commenterGravaterToReply': "ID"},hashContexts:{'notReply': depth0,'postId': depth0,'title': depth0,'comments': depth0,'isCommentDivShown': depth0,'isHideAddComment': depth0,'commentsArray': depth0,'setPostId': depth0,'setIsReplying': depth0,'actualTitle': depth0,'currentSlug': depth0,'commentIdToReply': depth0,'commenterNameToReply': depth0,'commenterGravaterToReply': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "add-comment", options))));
+  data.buffer.push("\r\n	  		");
   return buffer;
   }
 
@@ -837,6 +869,33 @@ function program15(depth0,data) {
   stack1 = helpers['if'].call(depth0, "hasPost", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n    </div><!-- /.blog-post -->\r\n\r\n</div><!-- /.blog-main -->");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["components/add-comment"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\r\n	<i class=\"fa fa-plus-circle\"></i> Add comment\r\n");
+  }
+
+function program3(depth0,data) {
+  
+  
+  data.buffer.push("\r\n	<i class=\"fa fa-reply\"></i> Reply\r\n");
+  }
+
+  data.buffer.push("<button class=\"btn btn-info\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "addCmtAction", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\r\n");
+  stack1 = helpers['if'].call(depth0, "notReply", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n</button>");
   return buffer;
   
 });

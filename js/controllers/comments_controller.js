@@ -9,18 +9,18 @@ needs: ["application", "post"],
 
 commentFeature: Ember.computed.oneWay("controllers.application.commentFeature"),
 readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
-addReplyCommentBtn: Ember.computed.alias("controllers.application.isCommentDivShown"),
-getIsHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
+isCommentDivShown: Ember.computed.alias("controllers.application.isCommentDivShown"),
+isHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
 setIsReplying: Ember.computed.alias("controllers.application.isReplying"),
-actualPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
-actualPostIdFromPostController: Ember.computed.alias("controllers.post.id"),
-newComment: Ember.computed.alias("controllers.application.newCurrentComment"),
-getCommentsArrayFromPostController: Ember.computed.alias("controllers.post.comments"),
-setcommentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
-setcommenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
-setcommenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
-addActualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
-addOnlyCurrentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
+setPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
+postIdFromPostCtlr: Ember.computed.alias("controllers.post.id"),
+commentsArray: Ember.computed.alias("controllers.application.newCurrentComment"),
+getCommentsArrayFromPostCtlr: Ember.computed.alias("controllers.post.comments"),
+commentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
+commenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
+commenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
+actualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
+currentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
 
 flagCmt: function(){
   var commentId = this.get('id');
@@ -36,27 +36,6 @@ flagCmt: function(){
 },
 
   actions: {
-    replyToCommentTrue: function(){
-      
-      var actualPostIdForReplyCommmentHere = this.get('actualPostIdFromPostController'),
-          getCommentsArrayFromPost = this.get('getCommentsArrayFromPostController'),
-          getCommentId = this.get('id'),
-          getCommenterName = this.get('name'),
-          getCommenterGravater = this.get('email');
-
-      this.setProperties({
-        'addReplyCommentBtn': true,
-        'getIsHideAddComment': false,
-        'setIsReplying': true,
-        'actualPostId': actualPostIdForReplyCommmentHere,
-        'newComment': getCommentsArrayFromPost,
-        'setcommentIdToReply': getCommentId,
-        'setcommenterNameToReply': getCommenterName,
-        'setcommenterGravaterToReply': getCommenterGravater,
-        'addActualTitle': '',
-        'addOnlyCurrentSlug': ''
-      });
-    },
     flagComment: function(){
       // Debounce for 0.5 second
       Ember.run.debounce(this, this.flagCmt, 500);

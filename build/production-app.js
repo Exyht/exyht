@@ -145,6 +145,59 @@ Exyht.ArchiveRoute = Ember.Route.extend(Exyht.ResetScroll, {
   }
 });
 /*
+ |---------------------------------
+ | Data for comment Component
+ |---------------------------------
+*/
+Exyht.AddCommentComponent = Ember.Component.extend({
+  tagName: 'span',
+	actions: {
+		addCmtAction: function(){
+			var postIdForAddCmt = this.get('postId');// post id(required)
+			var getCmtsArray = this.get('comments');// comments array(required)
+			var isAddCmtBtn = true,// boolean(required)
+          hideAddCmtBtn = false;// boolean(required)
+
+      this.setProperties({
+        'isCommentDivShown': isAddCmtBtn,
+        'isHideAddComment': hideAddCmtBtn,
+        'commentsArray': getCmtsArray,
+        'setPostId': postIdForAddCmt
+      });
+
+			if(this.get('notReply') === true){
+        var titleForAddCmt = this.get('title');// post title
+          		
+        var currentSlug = this.get('title').substring(0, 60).replace(/[^A-Za-z0-9\s+]/g, '').replace(/\s+/g, '-').toLowerCase();//for link
+
+        this.setProperties({
+      		'actualTitle': titleForAddCmt,
+      		'currentSlug': currentSlug,
+      		'setIsReplying': false,
+      		'commentIdToReply': '',
+      		'commenterNameToReply': '',
+      		'commenterGravaterToReply': ''
+      	});
+      }
+
+      if(this.get('notReply') === false){
+        var getCmtId = this.get('cmtId');// comment id
+        var getCmterName = this.get('cmtName');// reply to name
+        var getCmterEmailForGravater = this.get('cmtEmail');// reply to email
+
+        this.setProperties({
+      		'actualTitle': '',
+      		'currentSlug': '',
+      		'setIsReplying': true,
+      		'commentIdToReply': getCmtId,
+      		'commenterNameToReply': getCmterName,
+      		'commenterGravaterToReply': getCmterEmailForGravater
+      	});
+      }
+		}
+	}
+});
+/*
  |---------------------------
  | GravatarImage Component
  |---------------------------
@@ -601,18 +654,18 @@ needs: ["application", "post"],
 
 commentFeature: Ember.computed.oneWay("controllers.application.commentFeature"),
 readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
-addReplyCommentBtn: Ember.computed.alias("controllers.application.isCommentDivShown"),
-getIsHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
+isCommentDivShown: Ember.computed.alias("controllers.application.isCommentDivShown"),
+isHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
 setIsReplying: Ember.computed.alias("controllers.application.isReplying"),
-actualPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
-actualPostIdFromPostController: Ember.computed.alias("controllers.post.id"),
-newComment: Ember.computed.alias("controllers.application.newCurrentComment"),
-getCommentsArrayFromPostController: Ember.computed.alias("controllers.post.comments"),
-setcommentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
-setcommenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
-setcommenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
-addActualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
-addOnlyCurrentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
+setPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
+postIdFromPostCtlr: Ember.computed.alias("controllers.post.id"),
+commentsArray: Ember.computed.alias("controllers.application.newCurrentComment"),
+getCommentsArrayFromPostCtlr: Ember.computed.alias("controllers.post.comments"),
+commentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
+commenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
+commenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
+actualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
+currentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
 
 flagCmt: function(){
   var commentId = this.get('id');
@@ -628,27 +681,6 @@ flagCmt: function(){
 },
 
   actions: {
-    replyToCommentTrue: function(){
-      
-      var actualPostIdForReplyCommmentHere = this.get('actualPostIdFromPostController'),
-          getCommentsArrayFromPost = this.get('getCommentsArrayFromPostController'),
-          getCommentId = this.get('id'),
-          getCommenterName = this.get('name'),
-          getCommenterGravater = this.get('email');
-
-      this.setProperties({
-        'addReplyCommentBtn': true,
-        'getIsHideAddComment': false,
-        'setIsReplying': true,
-        'actualPostId': actualPostIdForReplyCommmentHere,
-        'newComment': getCommentsArrayFromPost,
-        'setcommentIdToReply': getCommentId,
-        'setcommenterNameToReply': getCommenterName,
-        'setcommenterGravaterToReply': getCommenterGravater,
-        'addActualTitle': '',
-        'addOnlyCurrentSlug': ''
-      });
-    },
     flagComment: function(){
       // Debounce for 0.5 second
       Ember.run.debounce(this, this.flagCmt, 500);
@@ -721,16 +753,16 @@ Exyht.PostController = Ember.ObjectController.extend({
   postBgColor: Ember.computed.oneWay("controllers.index.postBgColor"),
   commentFeature: Ember.computed.oneWay("controllers.application.commentFeature"),
   readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
-  addCommentBtn: Ember.computed.alias("controllers.application.isCommentDivShown"),
-  getIsHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
-  getIsReplying: Ember.computed.alias("controllers.application.isReplying"),
-  addActualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
-  addActualPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
-  addOnlyCurrentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
-  newComment: Ember.computed.alias("controllers.application.newCurrentComment"),
-  setcommentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
-  setcommenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
-  setcommenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
+  isCommentDivShown: Ember.computed.alias("controllers.application.isCommentDivShown"),
+  isHideAddComment: Ember.computed.alias("controllers.application.isHideAddComment"),
+  setIsReplying: Ember.computed.alias("controllers.application.isReplying"),
+  actualTitle: Ember.computed.alias("controllers.application.actualTitleForAddComment"),
+  setPostId: Ember.computed.alias("controllers.application.actualPostIdForAddComment"),
+  currentSlug: Ember.computed.alias("controllers.application.actualOnlyCurrentSlug"),
+  commentsArray: Ember.computed.alias("controllers.application.newCurrentComment"),
+  commentIdToReply: Ember.computed.alias("controllers.application.currentCommentIdToReply"),
+  commenterNameToReply: Ember.computed.alias("controllers.application.currentCommenterNameToReply"),
+  commenterGravaterToReply: Ember.computed.alias("controllers.application.currentCommenterGravaterToReply"),
 
   hasPost: function() {
     var postId = this.get("model.id");
@@ -741,29 +773,7 @@ Exyht.PostController = Ember.ObjectController.extend({
       response = true; 
     }
     return response;
-  }.property("model.id"),
-  actions: {
-    addCommentTrue: function(){
-      
-      var actualPostIdForAddCommmentHere = this.get('model.id'),
-          actualTitleForAddCommmentHere = this.get('model.title').substring(0, 60),
-          currentSlug = this.get('model.title').substring(0, 60).replace(/[^A-Za-z0-9\s+]/g, '').replace(/\s+/g, '-').toLowerCase(),
-          getCommentsArray = this.get('model.comments');
-
-      this.setProperties({
-        'addCommentBtn': true,
-        'getIsHideAddComment': false,
-        'getIsReplying': false,
-        'addActualTitle': actualTitleForAddCommmentHere,
-        'addActualPostId': actualPostIdForAddCommmentHere,
-        'addOnlyCurrentSlug': currentSlug,
-        'newComment': getCommentsArray,
-        'setcommentIdToReply': '',
-        'setcommenterNameToReply': '',
-        'setcommenterGravaterToReply': ''
-      });
-    }
-  }
+  }.property("model.id")
 });
 /*
  |---------------

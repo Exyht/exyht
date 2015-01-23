@@ -1,3 +1,8 @@
+/*
+ |---------------------------
+ | ResetScroll Mixin
+ |---------------------------
+*/
 Exyht.ResetScroll = Ember.Mixin.create({
   activate: function() {
     this._super();

@@ -102,19 +102,18 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
   }.property('Exyht.SidebarInfo.sidebar_info.archive'),
 
   addCommentToPost: function(){
-    var name = this.get('name').trim();
-      
-    var addedComment = this.get('typeComment');
-      
-    var postId = this.get('actualPostIdForAddComment');
-    var email = this.get('email').trim();
-    var replyingCommentId = this.get('currentCommentIdToReply');
-    var valueForSpamBot = this.get('valueForSpam');
+    var name = this.get('name').trim(),
+        addedComment = this.get('typeComment'),
+        postId = this.get('actualPostIdForAddComment'),
+        email = this.get('email').trim(),
+        replyingCommentId = this.get('currentCommentIdToReply'),
+        valueForSpamBot = this.get('valueForSpam');
       
     if ((!addedComment || addedComment.length < 20) || !name || !email) {
        this.set('isCommentDivShown', true);
        return false;
     }
+
     if (!addedComment.trim()) { return; }
       
     this.set('sendingCommentOn', true);
@@ -185,6 +184,8 @@ Exyht.ApplicationController = Ember.ArrayController.extend({
               'currentCommenterNameToReply': '',
               'currentCommenterGravaterToReply': ''
             });
+            // Now scroll to bottom
+            window.scrollTo(0, document.body.scrollHeight);
           }else if(data.read_only_mode === 1){
             $("#showError").addClass("alert alert-danger");
             $("#showError").html(data.controller_response);
