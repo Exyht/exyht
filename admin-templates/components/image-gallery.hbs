@@ -1,0 +1,9 @@
+<div id="page-wrapper">
+	<h2>Image Gallery! ({{totalImgs}}) Images</h2>
+	<hr />
+  <div id="galleryContainer">
+  {{#each img in images}}
+    {{manage-image img=img}}
+  {{/each}}
+  </div>
+</div>

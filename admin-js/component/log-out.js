@@ -1,9 +1,9 @@
 /*
- |----------------
- | App Controller
- |----------------
+ |---------------------------
+ | Log out Component
+ |---------------------------
 */
-Exyht.ApplicationController = Ember.ObjectController.extend({
+Exyht.LogOutComponent = Ember.Component.extend({
 	actions: {
 		logOut: function(){
 			$.post( Exyht.BaseUrl+"/logout", function( data ) {
@@ -12,5 +12,5 @@ Exyht.ApplicationController = Ember.ObjectController.extend({
 				}
 			});
 		}
-	},
+	}
 });

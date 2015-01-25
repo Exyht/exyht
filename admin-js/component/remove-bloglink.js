@@ -1,12 +1,12 @@
 /*
- |----------------------
- | Blog Link Controller
- |----------------------
+ |----------------------------
+ | Remove blog link Component
+ |----------------------------
 */
-Exyht.BloglinkController = Ember.ObjectController.extend({
+Exyht.RemoveBloglinkComponent = Ember.Component.extend({
   actions: {
     removeLink: function(){
-      var linkId = this.get('id');
+      var linkId = this.get('link.id');
 
       this.set('loadingOn', true);
 
@@ -17,7 +17,7 @@ Exyht.BloglinkController = Ember.ObjectController.extend({
           data: { link_id: linkId},
           success: function(msg){
             self.set('loadingOn', false);
-            self.set('status', false);
+            self.set('link.status', false);
             console.log(msg);
             alert(msg);
           }

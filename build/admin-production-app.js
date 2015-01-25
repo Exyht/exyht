@@ -63,7 +63,7 @@ Ember.Handlebars.helper('format-xmarkdown', function(input) {
 */
 Exyht.Router.map(function() {
     this.route('index',  {path: Exyht.BaseUrl});
-    this.route('comments', {path: Exyht.BaseUrl+'/comments/:post_id'});
+    this.route('comment', {path: Exyht.BaseUrl+'/comment/:post_id'});
     this.route('typeblogpost', {path: Exyht.BaseUrl+'/typeblogpost'});
     this.route('profilesetting', {path: Exyht.BaseUrl+'/profilesetting'});
     this.route('uisettings', {path: Exyht.BaseUrl+'/uisettings'});
@@ -87,11 +87,11 @@ model: function()
   }
 });
 
-Exyht.CommentsRoute = Ember.Route.extend({
+Exyht.CommentRoute = Ember.Route.extend({
 model: function(params)
   {
   return Ember.$.getJSON(Exyht.currentBaseUri+'/getComments/'+params.post_id).then(function(data) {
-    return data;
+    return {"comments":data};
   });
 }
 });
@@ -159,665 +159,41 @@ Exyht.CheckVersionComponent = Ember.Component.extend({
   	}.property('version')
 });
 /*
- |---------------------------
- | GravatarImage Component
- |---------------------------
+ |-------------------------
+ | Count posts Component
+ |-------------------------
 */
-Exyht.GravatarImageComponent = Ember.Component.extend({
-  size: 30,
-  email: '',
-  notReply: true,
+Exyht.CountPostsComponent = Ember.Component.extend({
+  numberOfPost: function() {
+    var response,
+        NoOfPost = this.get("posts").get('length');
 
-  gravatarUrl: function() {
-    var email = this.get('email'),
-        size = this.get('size');
-
-    return 'http://www.gravatar.com/avatar/' + email + '?d='+Exyht.gravatarVersion+'&s=' + size;
-  }.property('email', 'size')
-});
-/*
- |--------------------
- | Textarea Component
- |--------------------
-*/
-Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
-  didInsertElement: function(){
- 
-    Ember.run.next(function() {
-      var isInCode = false;
-      function check(text) {
-          var match;
-          match = text.match(/`{3,}/g);
-          if (match && match.length % 2) {
-              isInCode = true;
-          } else {
-              match = text.match(/`/g);
-              if (match && match.length % 2) {
-                  isInCode = true;
-              } else {
-                  isInCode = false;
-              }
-          }
-      }
-      // Focus the text area
-      this.$().focus();
-        
-      this.$().textcomplete([
-          { // emoji strategy
-        match: /\B:([\-+\w]*)$/,
-        search: function (term, callback) {
-            callback($.map(emojies, function (emoji) {
-                return emoji.indexOf(term) === 0 ? emoji : null;
-            }));
-        },
-        template: function (value) {
-            return new Ember.Handlebars.SafeString(emoji.replace_colons(':'+value.toLowerCase()+':') +' :'+ value+':');
-        },
-        replace: function (value) {
-            return ':' + value + ': ';
-        },
-        index: 1,
-        context: function (text) {
-            check(text);
-            return !isInCode;
-        }
-    },
-        {// words strategy
-        match: /\b(\w{2,})$/,
-        search: function (term, callback) {
-            callback($.map(words, function (word) {
-                return word.indexOf(term) === 0 ? word : null;
-            }));
-        },
-        index: 1,
-        replace: function (word) {
-            return word + ' ';
-        },
-        context: function () { return isInCode; }
-    }
-]);
-
-  this.$().scroll(function() {
-
-      var scroll = $(this).scrollTop();
-
-      if(scroll === 0){
-        scroll  = scroll;
-      }else{
-        scroll += 10; 
-      }
-
-      $('div#postBodyDiv').stop().animate({ scrollTop: scroll }, 500);
-  });
-
-  }.bind(this));
-}
-});
-
-/*
- |------------------
- | Index Controller
- |------------------
-*/
-Exyht.IndexController = Ember.ObjectController.extend({
-  loadingOn: false,
-  actions: {
-      changeNameSubtitle: function(value1, value2){
-        var sdata = {};
-        if (value1 === 1)
-        {
-          var blogName = this.get('blog_name');
-          sdata = { blog_name: blogName };
-        }
-        else if(value1 === 2)
-        {
-          var blogSubtitle = this.get('blog_subtitle');
-          sdata = { blog_subtitle: blogSubtitle };
-        }
-        
-        this.set('loadingOn', true);
-        
-        var self = this;
-        return $.ajax({
-          type: "POST",
-          url: Exyht.BaseUrl+"/"+value2,
-          data: sdata,
-          success: function(msg){
-            self.set('loadingOn', false);
-            console.log(msg);
-            alert(msg);
-          }
-        });
-      },
-      changeBlogName: function(){
-        this.send('changeNameSubtitle', 1, 'changeBlogName');
-      },
-      changeSubtitle: function(){
-        this.send('changeNameSubtitle', 2, 'changeSubtitle');
-      },
-      changeModeFeature: function(value1, value2, value3){
-        this.set(value1, value2);
-        return $.ajax({
-          type: "POST",
-          url: Exyht.BaseUrl+"/"+value3,
-          success: function(msg){
-            console.log(msg);
-            alert(msg);
-          }
-        });
-      },
-      turnReadOnlyModeOn: function(){
-        this.send('changeModeFeature', 'read_only_mode', true, 'turnReadOnlyModeOn');
-      },
-      turnReadOnlyModeOff: function(){
-        this.send('changeModeFeature', 'read_only_mode', false, 'turnReadOnlyModeOff');
-      },
-      turnCommentFeatureOn: function(){
-        this.send('changeModeFeature', 'has_cmnt_feature', true, 'turnCommentFeatureOn');
-      },
-      turnCommentFeatureOff: function(){
-        this.send('changeModeFeature', 'has_cmnt_feature', false, 'turnCommentFeatureOff');
-      },
-      turnNavbarOn: function(){
-        this.send('changeModeFeature', 'has_navbar', true, 'turnNavbarOn');
-      },
-      turnNavbarOff: function(){
-        this.send('changeModeFeature', 'has_navbar', false, 'turnNavbarOff');
-      },
-      addNewLink: function(value){
-        var linkName = this.get('link_name');
-        var linkUrl  = this.get('link_url');
-
-        if(!linkName || !linkUrl)
-        {
-          return false;
-        }
-
-        this.set('loadingOn', true);
-
-        var self = this;
-
-        return $.ajax({
-          type: "POST",
-          url: Exyht.BaseUrl+"/"+value,
-          data: { link_name: linkName, link_url: linkUrl},
-          dataType: "json",
-          success: function(msg){
-            self.set('loadingOn', false);
-            if(msg.has_error === false)
-            {
-              self.set('link_name', '');
-              self.set('link_url', '');
-              self.get('blog_links').pushObject({
-                link_name: linkName,
-                link_url: linkUrl,
-                status: true,
-                is_blog_url: true
-              });
-            }
-            console.log(msg.message);
-            alert(msg.message);
-          }
-        });
-      },
-      addNavLink: function(){
-        this.send('addNewLink', 'addNavLink');
-      },
-      addElseLink: function(){
-        this.send('addNewLink', 'addElseLink');
-      }
-  }
-});
-/*
- |----------------
- | App Controller
- |----------------
-*/
-Exyht.ApplicationController = Ember.ObjectController.extend({
-	actions: {
-		logOut: function(){
-			$.post( Exyht.BaseUrl+"/logout", function( data ) {
-				if(data === 'true'){
-					window.location.replace(Exyht.BaseUrl+'/login');
-				}
-			});
-		}
-	},
-});
-/*
- |----------------------
- | Blog Link Controller
- |----------------------
-*/
-Exyht.BloglinkController = Ember.ObjectController.extend({
-  actions: {
-    removeLink: function(){
-      var linkId = this.get('id');
-
-      this.set('loadingOn', true);
-
-      var self = this;
-      $.ajax({
-          type: "POST",
-          url: Exyht.BaseUrl+"/removeLink",
-          data: { link_id: linkId},
-          success: function(msg){
-            self.set('loadingOn', false);
-            self.set('status', false);
-            console.log(msg);
-            alert(msg);
-          }
-      });
-    }
-  }
-});
-/*
- |---------------------
- | Comments Controller
- |---------------------
-*/
-Exyht.CommentsController = Ember.ArrayController.extend({
-  needs: "posttitle",
-  title: '',
-});
-/*
- |--------------------
- | Comment Controller
- |--------------------
-*/
-Exyht.CommentController = Ember.ObjectController.extend({
-  banLoading: false,
-  flagLoading: false,
-  actions: {
-    markAsSeen: function(){
-      var commentId = this.get('model.id');
-      this.set('isSeen', true);
-      $.ajax({
-        type: "POST",
-        url: Exyht.BaseUrl+"/markAsSeen/"+commentId,
-        success: function(msg){
-          console.log('Marked as seen!');
-          alert(msg);
-        }
-      });
-    },
-    removeComment: function(){
-      this.set('showLoading', true);
-      var confirmCanceling = confirm("Want to remove?");
-      if (confirmCanceling === true) {
-        var commentId = this.get('model.id');
-        var self = this;
-        $.ajax({
-          type: "POST",
-          url: Exyht.BaseUrl+"/removeComment/"+commentId,
-          success: function(msg){
-            console.log(msg);
-            self.setProperties({
-              'showLoading': false,
-              'isFlagged': false,
-              'status':  false
-            });
-            alert(msg);
-          }
-        });
-      }else{
-        this.set('showLoading', false);
-      }
-    },
-    banIp: function(){
-      this.set('banLoading', true);
-      var confirmCanceling = confirm("Want to ban this Ip address?");
-      if (confirmCanceling === true) {
-        var ipAddress = this.get('ip_address');
-        var self = this;
-        $.ajax({
-          type: "POST",
-          url: Exyht.BaseUrl+"/banIp/"+ipAddress,
-          success: function(msg){
-            console.log(msg);
-            self.setProperties({
-              'banLoading': false,
-              'ip_status': true
-            });
-            alert(msg);
-          }
-        });
-      }else{
-        this.set('banLoading', false);
-      }
-    },
-    removeFlag: function(){
-      this.set('flagLoading', true);
-      var confirmCanceling = confirm("Want to remove flag?");
-      if (confirmCanceling === true) {
-        var commentId = this.get('id');
-        var self = this;
-        $.ajax({
-          type: "POST",
-          url: Exyht.BaseUrl+"/removeFlag/"+commentId,
-          success: function(msg){
-            console.log(msg);
-            self.setProperties({
-              'flagLoading': false,
-              'isFlagged': false
-            });
-            alert(msg);
-          }
-        });
-      }else{
-        this.set('flagLoading', false);
-      }
-    }
-  }
-});
-/*
- |--------------------------
- | Image Gallery Controller
- |--------------------------
-*/
-Exyht.ImggalleryController = Ember.ObjectController.extend({
-	img_from: 15, // load more pics offset
-	img_to: 30, // load more pics limit
-	totalImgs: function(){
-		var galryLen = this.get('images').filterBy('img_visible', true).get('length');
-    	return (galryLen > 0)?galryLen : 0;
-  	}.property('model.images.@each.img_visible'),
-
-  	loadPics: function(){
-  		// Request for more 15 imgs
-		// Request for large number of imgs will make the App slow
-		var g_imgs = this.get('images'),
-			self = this,
-			g_img_from = this.get('img_from'),
-			g_img_to = this.get('img_to');
-		// Make the request to the server for more imgs
-		$.getJSON(Exyht.currentBaseUri+'/getGalleryImg/'+g_img_from+'/'+g_img_to).then(function(data) {
-			// Set new offset & limit, to load next imgs
-			self.set('img_from', self.get('img_to'));
-      		var moreImgTo = parseInt(self.get('img_from')) + 15;
-      		self.set('img_to', moreImgTo);
-      		// Iterate responsed data
-      		$.each(data, function(index){
-      			// Don't push if responsed img id matches with the already pushed last img's id
-      			if(data[index].id != (g_img_to + 1)){
-      				g_imgs.pushObject({
-      					id: data[index].id,
-						src_path: data[index].src_path,
-						img_visible: data[index].img_visible
-					});
-      			}
-      		});
-    	});
-  	},
-
-	actions: {
-		loadMoreGalleryPics: function(){
-			// Debounce for 1 second
-          	Ember.run.debounce(this, this.loadPics, 1000);
-		}
-	}
-});
-/*
- |--------------------------
- | Gallery Image Controller
- |--------------------------
-*/
-Exyht.GalleryimageController = Ember.ObjectController.extend({
-	deletingImg: false,
-	srcPath: function(){
-		var galleryImagePath = this.get('model.src_path'),
-			img_visible = this.get('model.img_visible');
-		if(img_visible === true){
-			return Ember.get('Exyht.hostnameWithProtocolPort')+"/blog/upload_dir/"+galleryImagePath;
-		}
-	}.property('Exyht.hostnameWithProtocolPort','model'),
-	actions: {
-		// This action will remove single gallery img for each call
-		removeGimg: function(){
-			var self = this;
-			this.set('deletingImg', true);
-			var img_path = this.get('src_path');
-			$.ajax({
-          		type: "POST",
-          		url: Exyht.BaseUrl+"/removeGimg",
-          		data: {img_path: img_path},
-          		success: function(msg){
-          			self.setProperties({
-          				'img_visible': false,
-          				'deletingImg': false
-          			});
-          		  	alert(msg);
-          		}
-        	});
-		}
-	}
-});
-/*
- |-----------------------
- | Post title controller
- |-----------------------
-*/
-Exyht.PosttitleController = Ember.ObjectController.extend({
-
-  needs: ["typeblogpost", "comments", "profilesetting"],
-
-  isEditingOnForPostTitle: false,
-
-  editingOnForProfSetCtlr: Ember.computed.alias("controllers.profilesetting.isProfileEditingOnForProfileSetting"),
-
-  titleForCommentsController: Ember.computed.alias("controllers.comments.title"),
-
-  isEditingOnForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.isEditingOn"),
-
-  isProfileEditingOnForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.isProfileEditingOn"),
-
-  postIdForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.postId"),
-
-  titleForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.ntitle"),
-
-  postBodyForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.nbody"),
-
-  actions: {
-  	editPostTrue: function(){
-      this.setProperties({
-        'isEditingOnForPostTitle': true,
-        'postIdForTypeBlogPost': this.get('model.id'),
-        'isEditingOnForTypeBlogPost': true,
-        'isProfileEditingOnForTypeBlogPost': false,
-        'editingOnForProfSetCtlr': false,
-        'titleForTypeBlogPost': this.get('model.title')
-      });
-        
-        var self = this;
-        Ember.$.getJSON(Exyht.currentBaseUri+'/getOnlyPostBody/'+this.get('model.id')).then(function(data) {
-          Ember.run(function() {
-            self.set('postBodyForTypeBlogPost', data.body);
-            self.transitionToRoute('typeblogpost');
-          });
-        }); 
-  	},
-    viewComments: function(){
-      this.set('titleForCommentsController', this.get('model.title'));
-      this.transitionToRoute('comments', this.get('model.id'));
-    }
-  }
-});
-/*
- |---------------------------
- | Profilesetting Controller
- |---------------------------
-*/
-Exyht.ProfilesettingController = Ember.ObjectController.extend({
-needs: "typeblogpost",
-admin_token : function(){
-  return Ember.get('Exyht.adminToken.token');
-}.property('Exyht.adminToken.token'),
-isProfileEditingOnForProfileSetting: false,
-isRemovingPicture: false,
-isRemoved: false,
-pwd_match: true,
-too_small: false,
-isProfEditOnForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.isProfileEditingOn"),
-aboutAdminForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.nbody"),
-actions: {
-	changePassword: function(){
-	    var oldPassword = this.get('old_password');
-	    var newPassword = this.get('new_password');
-	    var confirmPasswsord = this.get('confirm_password');
-
-	    if(oldPassword.length < 5 || newPassword.length < 5 || confirmPasswsord.length < 5){
-            this.set('too_small', true);
-            return false;
-	    }else{
-	        this.set('too_small', false);
-	    }
-
-	    if(newPassword != confirmPasswsord){
-	    	this.set('pwd_match', false);
-	    	return false;
-	    }else{
-	    	this.set('pwd_match', true);
-	    }
-	    var self = this;
-	    $.ajax({
-	      type: "POST",
-	      url: Exyht.BaseUrl+"/changePassword",
-	      data: {old_password: oldPassword, new_password: newPassword},
-	      success: function(msg){
-	      	console.log('Response: '+msg);
-	        alert(msg);
-	        self.setProperties({
-	        	'old_password': '',
-	        	'new_password': '',
-	        	'confirm_password': ''
-	        });
-	      }
-	    });
-	},
-	editProfileTrue: function(){
-		this.setProperties({
-			'isProfileEditingOnForProfileSetting': true,
-			'isProfEditOnForTypeBlogPost': true,
-			'aboutAdminForTypeBlogPost': this.get('model.about')
-		});
-        this.transitionToRoute('typeblogpost');
-	},
-	removeProfPicture: function(){
-		this.set('isRemovingPicture', true);
-		var self = this;
-		$.ajax({
-	      type: "POST",
-	      url: Exyht.BaseUrl+"/removeProfileImage",
-	      success: function(msg){
-	      	console.log('Response: '+msg);
-	        alert(msg);
-	        self.setProperties({
-	        	'isRemoved': true,
-	        	'isRemovingPicture': false
-	        });
-	      }
-	    });
-	},
-	cancelUploadingImage: function(){
-		$("#imgLoadingDiv").hide();
-	}
-}
-});
-/*
- |---------------------------
- | Toprow Controller
- |---------------------------
-*/
-Exyht.ToprowController = Ember.ObjectController.extend({
-  
-  notificationTemplate: function(value1, value2){
-    if( value1 === 0){
-      return '<div class="huge">No</div><div>'+value2+'</div>';
-    }else if(value1 > 1){
-      return '<div class="huge">'+value1+'</div><div>'+value2+'s</div>';
+    if(NoOfPost === 1){
+      response = "1 Post";
+    }else if(NoOfPost > 1){
+      response = NoOfPost+" Posts";
     }else{
-      return '<div class="huge">1</div><div>'+value2+'</div>';
+      response = "No Post";
     }
-  },
-
-  newCommentCount: function(){
-
-    var newCommentCount = this.get('model.newComment');
-    var response = this.notificationTemplate(newCommentCount, 'New Comment');
-
-    return new Ember.Handlebars.SafeString(response);
-
-  }.property('model.newComment'),
-
-  totalDraft: function(){
-
-      var model = this.get('model.posts');
-      var response;
-      if(typeof model !== 'undefined'){
-        response = this.notificationTemplate(model.filterBy('isDraft', true).get('length'), 'Draft');
-      }else{
-        response = this.notificationTemplate(0, 'Draft');
-      }
-      return new Ember.Handlebars.SafeString(response);
-
-    }.property('model.posts.@each.isDraft'),
-
-    flaggedCommentCount: function(){
-
-    var flaggedCommentCount = this.get('model.flaggedComment');
-    var response = this.notificationTemplate(flaggedCommentCount, 'Flagged Comment');
-
-    return new Ember.Handlebars.SafeString(response);
-
-  }.property('model.flaggedComment'),
+    return response;
+  }.property("posts")
 });
-
 /*
  |---------------------------
- | Typeblogpost Controller
+ | Editor action Component
  |---------------------------
 */
-Exyht.TypeblogpostController = Ember.ObjectController.extend({
-
-  	needs: ["posttitle", "profilesetting"],
-    
-    isImageTab: true,
-    admin_token: Ember.computed.oneWay("controllers.profilesetting.admin_token"),
-  	editOnForProfSetContr : Ember.computed.alias("controllers.profilesetting.isProfileEditingOnForProfileSetting"),
-  	isProfileEditingOn: false,
-  	isEditingOn: false,
+Exyht.EditorActionComponent = Ember.Component.extend({
   	isSavingAsDraft: false,
   	isPublishing: false,
-  	postId: '',
-  	ntitle: '',
-  	nbody: '',
-  	showNbodyLength: false,
-  	newBodyLength: '',
-   	status: [
+	status: [
        	{postStatus: "Publish", id: 1},
       	{postStatus: "Draft",  id: 0}
    	],
     currentStatus: {
         id: 1
     },
-    postKey: function(){
-  
-    	var nbodyLength = this.get('nbody').length;
-    	var leastNewBodyLength = Math.abs(20 - nbodyLength);
-  
-    	if(nbodyLength === 0 || nbodyLength < 20){
-  
-    	  	this.set('showNbodyLength', true);
-
-    	}else{
-  
-     	 	this.set('showNbodyLength', false);
-    	}
-  		
-   	 	this.set('newBodyLength', leastNewBodyLength);
-
-  	}.observes('nbody'),
-    actions: {
+	actions: {
     	createPost: function(value1, value2){
         	var blogTitle = this.get('ntitle').trim();
 	    	var blogBody = this.get('nbody').trim();
@@ -898,7 +274,33 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 				'nbody': '',
 				'postId': ''
 			});
-		},
+		}
+	}
+});
+/*
+ |---------------------------
+ | Editor tools Component
+ |---------------------------
+*/
+Exyht.EditorToolsComponent = Ember.Component.extend({
+	postKey: function(){
+  
+    	var nbodyLength = this.get('nbody').length;
+    	var leastNewBodyLength = Math.abs(20 - nbodyLength);
+  
+    	if(nbodyLength === 0 || nbodyLength < 20){
+  
+    	  	this.set('showNbodyLength', true);
+
+    	}else{
+  
+     	 	this.set('showNbodyLength', false);
+    	}
+  		
+   	 	this.set('newBodyLength', leastNewBodyLength);
+
+  	}.observes('nbody'),
+	actions: {
 		// Editor tools
 		ctv: function(input){
 			var textarea = $('textarea');
@@ -986,7 +388,637 @@ Exyht.TypeblogpostController = Ember.ObjectController.extend({
 		 	var textarea = $('textarea');
 		 	textarea.val("");
 		}
-   }
+   	}
+});
+/*
+ |---------------------------
+ | GravatarImage Component
+ |---------------------------
+*/
+Exyht.GravatarImageComponent = Ember.Component.extend({
+  size: 30,
+  email: '',
+  notReply: true,
+
+  gravatarUrl: function() {
+    var email = this.get('email'),
+        size = this.get('size');
+
+    return 'http://www.gravatar.com/avatar/' + email + '?d='+Exyht.gravatarVersion+'&s=' + size;
+  }.property('email', 'size')
+});
+/*
+ |---------------------------
+ | Image gallery Component
+ |---------------------------
+*/
+Exyht.ImageGalleryComponent = Ember.Component.extend({
+	img_from: 15, // load more pics offset
+	img_to: 30, // load more pics limit
+	totalImgs: function(){
+		var galryLen = this.get('images').filterBy('img_visible', true).get('length');
+    	return (galryLen > 0)?galryLen : 0;
+  	}.property('images.@each.img_visible'),
+
+  	inInsert: function(){
+    	this.scheduleMasonry();
+    	$(window).on('scroll', $.proxy(this.didScroll, this));
+  	}.on('didInsertElement'),
+
+  	onLeaving: function(){
+    	this.destroyMasonry();
+    	this.setProperties({
+    	  	'img_from': 15,
+      		'img_to': 30
+    	});
+    	$(window).off('scroll', $.proxy(this.didScroll, this));
+  	}.on('willDestroyElement'),
+
+  	scheduleMasonry: function(){
+    	Ember.run.scheduleOnce('afterRender', this, this.applyMasonry);
+  	}.observes('images.@each'),
+
+  	applyMasonry: function(){
+    	var $galleryContainer = $('#galleryContainer');
+    	// initialize
+    	$galleryContainer.imagesLoaded(function() {
+      		// check if masonry is initialized
+      		var msnry = $galleryContainer.data('masonry');
+      		if ( msnry ) {
+        		msnry.reloadItems();
+        		// disable transition
+        		var transitionDuration = msnry.options.transitionDuration;
+        		msnry.options.transitionDuration = 0;
+        		msnry.layout();
+        		// reset transition
+        		msnry.options.transitionDuration = transitionDuration;
+      		} else {
+        		// init masonry
+        		$galleryContainer.masonry({
+          			itemSelector: '.item',
+          			columnWidth: 150
+        		});
+      		}
+    	});
+  	},
+  	
+  	destroyMasonry: function(){
+    	$('#galleryContainer').masonry('destroy');
+  	},
+
+  	didScroll: function(){
+    	if($(window).scrollTop() + $(window).height() == $(document).height()){
+      		// Debounce for 1 second
+          	Ember.run.debounce(this, this.loadPics, 1000);
+    	}
+  	},
+
+  	loadPics: function(){
+  		// Request for more 15 imgs
+		// Request for large number of imgs will make the App slow
+		var g_imgs = this.get('images'),
+			self = this,
+			g_img_from = this.get('img_from'),
+			g_img_to = this.get('img_to');
+
+		if(g_img_from <= (this.get('totalImgs') + 15)){
+			// Make the request to the server for more imgs
+			$.getJSON(Exyht.currentBaseUri+'/getGalleryImg/'+g_img_from+'/'+g_img_to).then(function(data) {
+				// Set new offset & limit, to load next imgs
+				self.set('img_from', self.get('img_to'));
+      			var moreImgTo = parseInt(self.get('img_from')) + 15;
+      			self.set('img_to', moreImgTo);
+      			// Iterate responsed data
+      			$.each(data, function(index){
+      				// Don't push if responsed img id matches with the already pushed last img's id
+      				if(data[index].id != (g_img_to + 1)){
+      					g_imgs.pushObject({
+      						id: data[index].id,
+							src_path: data[index].src_path,
+							img_visible: data[index].img_visible
+						});
+      				}
+      			});
+    		});
+		}
+  	}
+});
+/*
+ |---------------------------
+ | Log out Component
+ |---------------------------
+*/
+Exyht.LogOutComponent = Ember.Component.extend({
+	actions: {
+		logOut: function(){
+			$.post( Exyht.BaseUrl+"/logout", function( data ) {
+				if(data === 'true'){
+					window.location.replace(Exyht.BaseUrl+'/login');
+				}
+			});
+		}
+	}
+});
+/*
+ |----------------------------
+ | Manage comment Component
+ |----------------------------
+*/
+Exyht.ManageCommentComponent = Ember.Component.extend({
+  banLoading: false,
+  flagLoading: false,
+  actions: {
+    markAsSeen: function(){
+      var commentId = this.get('cmt.id');
+      this.set('cmt.isSeen', true);
+      $.ajax({
+        type: "POST",
+        url: Exyht.BaseUrl+"/markAsSeen/"+commentId,
+        success: function(msg){
+          console.log('Marked as seen!');
+          alert(msg);
+        }
+      });
+    },
+    removeComment: function(){
+      this.set('cmt.showLoading', true);
+      var confirmCanceling = confirm("Want to remove?");
+      if (confirmCanceling === true) {
+        var commentId = this.get('cmt.id');
+        var self = this;
+        $.ajax({
+          type: "POST",
+          url: Exyht.BaseUrl+"/removeComment/"+commentId,
+          success: function(msg){
+            console.log(msg);
+            self.setProperties({
+              'cmt.showLoading': false,
+              'cmt.isFlagged': false,
+              'cmt.status':  false
+            });
+            alert(msg);
+          }
+        });
+      }else{
+        this.set('comment.showLoading', false);
+      }
+    },
+    banIp: function(){
+      this.set('banLoading', true);
+      var confirmCanceling = confirm("Want to ban this Ip address?");
+      if (confirmCanceling === true) {
+        var ipAddress = this.get('cmt.ip_address');
+        var self = this;
+        $.ajax({
+          type: "POST",
+          url: Exyht.BaseUrl+"/banIp/"+ipAddress,
+          success: function(msg){
+            console.log(msg);
+            self.setProperties({
+              'banLoading': false,
+              'cmt.ip_status': true
+            });
+            alert(msg);
+          }
+        });
+      }else{
+        this.set('banLoading', false);
+      }
+    },
+    removeFlag: function(){
+      this.set('flagLoading', true);
+      var confirmCanceling = confirm("Want to remove flag?");
+      if (confirmCanceling === true) {
+        var commentId = this.get('cmt.id');
+        var self = this;
+        $.ajax({
+          type: "POST",
+          url: Exyht.BaseUrl+"/removeFlag/"+commentId,
+          success: function(msg){
+            console.log(msg);
+            self.setProperties({
+              'flagLoading': false,
+              'cmt.isFlagged': false
+            });
+            alert(msg);
+          }
+        });
+      }else{
+        this.set('flagLoading', false);
+      }
+    }
+  }
+});
+/*
+ |--------------------------------
+ | Manage gallery image Component
+ |--------------------------------
+*/
+Exyht.ManageImageComponent = Ember.Component.extend({
+	deletingImg: false,
+	srcPath: function(){
+		var galleryImagePath = this.get('img.src_path'),
+			img_visible = this.get('img.img_visible');
+		if(img_visible === true){
+			return Ember.get('Exyht.hostnameWithProtocolPort')+"/blog/upload_dir/"+galleryImagePath;
+		}
+	}.property('Exyht.hostnameWithProtocolPort','img'),
+	actions: {
+		// This action will remove single gallery img for each call
+		removeGimg: function(){
+			var self = this;
+			this.set('deletingImg', true);
+			var img_path = this.get('img.src_path');
+			$.ajax({
+          		type: "POST",
+          		url: Exyht.BaseUrl+"/removeGimg",
+          		data: {img_path: img_path},
+          		success: function(msg){
+          			self.setProperties({
+          				'img.img_visible': false,
+          				'deletingImg': false
+          			});
+          		  	alert(msg);
+          		}
+        	});
+		}
+	}
+});
+/*
+ |-----------------------------
+ | Manage post title Component
+ |-----------------------------
+*/
+Exyht.ManagePostComponent = Ember.Component.extend({
+	actions: {
+  		editPostTrue: function(){
+    	  	this.setProperties({
+    	    	'isEditingOnForPostTitle': true,
+    	    	'postIdForTypeBlogPost': this.get('id'),
+    	    	'isEditingOnForTypeBlogPost': true,
+    	    	'isProfileEditingOnForTypeBlogPost': false,
+    	    	'editingOnForProfSetCtlr': false,
+    	    	'titleForTypeBlogPost': this.get('title')
+    	  	});
+    	    
+    	    var self = this;
+    	    Ember.$.getJSON(Exyht.currentBaseUri+'/getOnlyPostBody/'+this.get('id')).then(function(data) {
+    	      	Ember.run(function() {
+    	        	self.set('postBodyForTypeBlogPost', data.body);
+    	        	self.transitionToRoute('typeblogpost');
+    	      	});
+    	    }); 
+  		},
+    	viewComments: function(){
+    	  	this.set('titleForCommentsController', this.get('title'));
+    	  	this.transitionToRoute('comment', this.get('id'));
+    	}
+  	}
+});
+/*
+ |-------------------------
+ | Manage status Component
+ |-------------------------
+*/
+Exyht.ManageStatusComponent = Ember.Component.extend({
+	loadingOn: false,
+  	actions: {
+      	changeNameSubtitle: function(value1, value2){
+        	var sdata = {};
+        	if (value1 === 1)
+        	{
+          		var blogName = this.get('blog_name');
+          		sdata = { blog_name: blogName };
+        	}
+        	else if(value1 === 2)
+        	{
+          		var blogSubtitle = this.get('blog_subtitle');
+          		sdata = { blog_subtitle: blogSubtitle };
+        	}
+        
+        	this.set('loadingOn', true);
+        
+        	var self = this;
+        	return $.ajax({
+          		type: "POST",
+          		url: Exyht.BaseUrl+"/"+value2,
+          		data: sdata,
+          		success: function(msg){
+            		self.set('loadingOn', false);
+            		console.log(msg);
+            		alert(msg);
+          		}
+        	});
+      	},
+      	changeBlogName: function(){
+        	this.send('changeNameSubtitle', 1, 'changeBlogName');
+      	},
+      	changeSubtitle: function(){
+        	this.send('changeNameSubtitle', 2, 'changeSubtitle');
+      	},
+      	changeModeFeature: function(value1, value2, value3){
+        	this.set(value1, value2);
+        	return $.ajax({
+          		type: "POST",
+          		url: Exyht.BaseUrl+"/"+value3,
+          		success: function(msg){
+            		console.log(msg);
+            		alert(msg);
+          		}
+        	});
+      	},
+      	turnReadOnlyModeOn: function(){
+        	this.send('changeModeFeature', 'read_only_mode', true, 'turnReadOnlyModeOn');
+      	},
+      	turnReadOnlyModeOff: function(){
+        	this.send('changeModeFeature', 'read_only_mode', false, 'turnReadOnlyModeOff');
+      	},
+      	turnCommentFeatureOn: function(){
+        	this.send('changeModeFeature', 'has_cmnt_feature', true, 'turnCommentFeatureOn');
+      	},
+      	turnCommentFeatureOff: function(){
+        	this.send('changeModeFeature', 'has_cmnt_feature', false, 'turnCommentFeatureOff');
+      	},
+      	turnNavbarOn: function(){
+        	this.send('changeModeFeature', 'has_navbar', true, 'turnNavbarOn');
+      	},
+      	turnNavbarOff: function(){
+        	this.send('changeModeFeature', 'has_navbar', false, 'turnNavbarOff');
+      	},
+      	addNewLink: function(value){
+        	var linkName = this.get('link_name');
+        	var linkUrl  = this.get('link_url');
+
+        	if(!linkName || !linkUrl)
+        	{
+          		return false;
+        	}
+
+        	this.set('loadingOn', true);
+
+        	var self = this;
+
+        	return $.ajax({
+          		type: "POST",
+          		url: Exyht.BaseUrl+"/"+value,
+          		data: { link_name: linkName, link_url: linkUrl},
+          		dataType: "json",
+          		success: function(msg){
+            		self.set('loadingOn', false);
+            		if(msg.has_error === false)
+            		{
+              			self.set('link_name', '');
+              			self.set('link_url', '');
+              			self.get('blog_links').pushObject({
+                			link_name: linkName,
+                			link_url: linkUrl,
+                			status: true,
+                			is_blog_url: true
+              			});
+            		}
+            		console.log(msg.message);
+            		alert(msg.message);
+          		}
+        	});
+      	},
+      	addNavLink: function(){
+        	this.send('addNewLink', 'addNavLink');
+      	},
+      	addElseLink: function(){
+        	this.send('addNewLink', 'addElseLink');
+      	}
+  	}
+});
+/*
+ |----------------------------
+ | Profile setting Component
+ |----------------------------
+*/
+Exyht.ProfSettingComponent = Ember.Component.extend({
+	isRemoved: false,
+	pwd_match: true,
+	too_small: false,
+	isRemovingPicture: false,
+	isProfileEditingOnForProfileSetting: false,
+	admin_token : function(){
+	  return Ember.get('Exyht.adminToken.token');
+	}.property('Exyht.adminToken.token'),
+	actions: {
+		changePassword: function(){
+	    	var oldPassword = this.get('old_password');
+	    	var newPassword = this.get('new_password');
+	    	var confirmPasswsord = this.get('confirm_password');
+
+	    	if(oldPassword.length < 5 || newPassword.length < 5 || confirmPasswsord.length < 5){
+            	this.set('too_small', true);
+            	return false;
+	    	}else{
+	        	this.set('too_small', false);
+	    	}
+
+	    	if(newPassword != confirmPasswsord){
+	    		this.set('pwd_match', false);
+	    		return false;
+	    	}else{
+	    		this.set('pwd_match', true);
+	    	}
+	    	var self = this;
+	    	$.ajax({
+	      		type: "POST",
+	      		url: Exyht.BaseUrl+"/changePassword",
+	      		data: {old_password: oldPassword, new_password: newPassword},
+	      		success: function(msg){
+	      			console.log('Response: '+msg);
+	        		alert(msg);
+	        		self.setProperties({
+	        			'old_password': '',
+	        			'new_password': '',
+	        			'confirm_password': ''
+	        		});
+	      		}
+	    	});
+		},
+		editProfileTrue: function(){
+			this.setProperties({
+				'isProfileEditingOnForProfileSetting': true,
+				'isProfEditOnForTypeBlogPost': true,
+				'aboutAdminForTypeBlogPost': this.get('about')
+			});
+        	this.transitionToRoute('typeblogpost');
+		},
+		removeProfPicture: function(){
+			this.set('isRemovingPicture', true);
+			var self = this;
+			$.ajax({
+	      		type: "POST",
+	      		url: Exyht.BaseUrl+"/removeProfileImage",
+	      		success: function(msg){
+	      		console.log('Response: '+msg);
+	        		alert(msg);
+	        		self.setProperties({
+	        			'isRemoved': true,
+	        			'isRemovingPicture': false
+	        		});
+	      		}
+	    	});
+		},
+		cancelUploadingImage: function(){
+			$("#imgLoadingDiv").hide();
+		}
+	}
+});
+/*
+ |----------------------------
+ | Remove blog link Component
+ |----------------------------
+*/
+Exyht.RemoveBloglinkComponent = Ember.Component.extend({
+  actions: {
+    removeLink: function(){
+      var linkId = this.get('link.id');
+
+      this.set('loadingOn', true);
+
+      var self = this;
+      $.ajax({
+          type: "POST",
+          url: Exyht.BaseUrl+"/removeLink",
+          data: { link_id: linkId},
+          success: function(msg){
+            self.set('loadingOn', false);
+            self.set('link.status', false);
+            console.log(msg);
+            alert(msg);
+          }
+      });
+    }
+  }
+});
+/*
+ |--------------------
+ | Textarea Component
+ |--------------------
+*/
+Exyht.AutoExpandingTextAreaComponent = Ember.TextArea.extend({
+  didInsertElement: function(){
+ 
+    Ember.run.next(function() {
+      var isInCode = false;
+      function check(text) {
+          var match;
+          match = text.match(/`{3,}/g);
+          if (match && match.length % 2) {
+              isInCode = true;
+          } else {
+              match = text.match(/`/g);
+              if (match && match.length % 2) {
+                  isInCode = true;
+              } else {
+                  isInCode = false;
+              }
+          }
+      }
+      // Focus the text area
+      this.$().focus();
+        
+      this.$().textcomplete([
+          { // emoji strategy
+        match: /\B:([\-+\w]*)$/,
+        search: function (term, callback) {
+            callback($.map(emojies, function (emoji) {
+                return emoji.indexOf(term) === 0 ? emoji : null;
+            }));
+        },
+        template: function (value) {
+            return new Ember.Handlebars.SafeString(emoji.replace_colons(':'+value.toLowerCase()+':') +' :'+ value+':');
+        },
+        replace: function (value) {
+            return ':' + value + ': ';
+        },
+        index: 1,
+        context: function (text) {
+            check(text);
+            return !isInCode;
+        }
+    },
+        {// words strategy
+        match: /\b(\w{2,})$/,
+        search: function (term, callback) {
+            callback($.map(words, function (word) {
+                return word.indexOf(term) === 0 ? word : null;
+            }));
+        },
+        index: 1,
+        replace: function (word) {
+            return word + ' ';
+        },
+        context: function () { return isInCode; }
+    }
+]);
+
+  this.$().scroll(function() {
+
+      var scroll = $(this).scrollTop();
+
+      if(scroll === 0){
+        scroll  = scroll;
+      }else{
+        scroll += 10; 
+      }
+
+      $('div#postBodyDiv').stop().animate({ scrollTop: scroll }, 500);
+  });
+
+  }.bind(this));
+}
+});
+
+/*
+ |--------------------------------
+ | Top row notification Component
+ |--------------------------------
+*/
+Exyht.ToprowNotificationComponent = Ember.Component.extend({
+  notificationTemplate: function(value1, value2){
+    if( value1 === 0){
+      return '<div class="huge">No</div><div>'+value2+'</div>';
+    }else if(value1 > 1){
+      return '<div class="huge">'+value1+'</div><div>'+value2+'s</div>';
+    }else{
+      return '<div class="huge">1</div><div>'+value2+'</div>';
+    }
+  },
+
+  newCommentCount: function(){
+
+    var newCommentCount = this.get('newComment');
+    var response = this.notificationTemplate(newCommentCount, 'New Comment');
+
+    return new Ember.Handlebars.SafeString(response);
+
+  }.property('newComment'),
+
+  totalDraft: function(){
+
+      var model = this.get('posts');
+      var response;
+      if(typeof model !== 'undefined'){
+        response = this.notificationTemplate(model.filterBy('isDraft', true).get('length'), 'Draft');
+      }else{
+        response = this.notificationTemplate(0, 'Draft');
+      }
+      return new Ember.Handlebars.SafeString(response);
+
+    }.property('posts.@each.isDraft'),
+
+    flaggedCommentCount: function(){
+
+    var flaggedCommentCount = this.get('flaggedComment');
+    var response = this.notificationTemplate(flaggedCommentCount, 'Flagged Comment');
+
+    return new Ember.Handlebars.SafeString(response);
+
+  }.property('flaggedComment')
 });
 // Radio Button Component
 Exyht.RadioButton = Ember.Component.extend({
@@ -997,22 +1029,22 @@ Exyht.RadioButton = Ember.Component.extend({
 Ember.Handlebars.helper('radio-button',Exyht.RadioButton);
 /*
  |---------------------------
- | Uisettings Controller
+ | UI settings Component
  |---------------------------
 */
-Exyht.UisettingsController = Ember.ObjectController.extend({
-  favcolor: '',
-  selectedCategory: '',
-  selectedfs: '',
-  categories: [
-    {color: "Background Color", domArea: 1},
-    {color: "Navbar Color", domArea: 2},
-    {color: "Post Body Color", domArea: 3},
-    {color: "Sidebar Color", domArea: 4},
-    {color: "Footer Color", domArea: 5},
-    {color: "Link Color", domArea: 6}
-  ],
-  fstyles: [
+Exyht.UiSettingsComponent = Ember.Component.extend({
+	favcolor: '',
+  	selectedCategory: '',
+  	selectedfs: '',
+  	categories: [
+    	{color: "Background Color", domArea: 1},
+    	{color: "Navbar Color", domArea: 2},
+    	{color: "Post Body Color", domArea: 3},
+    	{color: "Sidebar Color", domArea: 4},
+    	{color: "Footer Color", domArea: 5},
+    	{color: "Link Color", domArea: 6}
+  	],
+  	fstyles: [
   	    {'name':'Serif', 'font_family':'font-family:serif'},
   	    {'name':'Sans Serif', 'font_family':'font-family:sans-serif'},
   	    {'name':'Rockwell','font_family':'font-family:Rockwell'},
@@ -1025,112 +1057,95 @@ Exyht.UisettingsController = Ember.ObjectController.extend({
   	    {'name':'Calibri', 'font_family':'font-family:Calibri'},
   	    {'name':'Times New Roman', 'font_family':'font-family:Times New Roman'},
   	],
-  actions: {
-    changeColor: function(){
-	  var favColor = this.get('favcolor');
-	  var category = this.get('selectedCategory');
+  	actions: {
+    	changeColor: function(){
+	  		var favColor = this.get('favcolor');
+	  		var category = this.get('selectedCategory');
 	  
-	  $.ajax({
-	    type: "POST",
-	    url: Exyht.BaseUrl+"/changeColor",
-	    data: {favcolor: favColor, category: category},
-	    success: function(msg){
-	      alert(msg);
-	    }
-	  });
-	},
-	changeFontStyle: function(){
-	  var selectedfs = $('input:radio[name=fontType]:checked').val();
-	  console.log(selectedfs);
-	  $.ajax({
-	    type: "POST",
-	    url: Exyht.BaseUrl+"/changeFontFamily",
-	    data: {selectedFont: selectedfs},
-	    success: function(msg){
-	      alert(msg);
-	    }
-	  });
-	}
-  }
-});
-/*
- |---------------------------
- | Imggallery View
- |---------------------------
-*/
-Exyht.ImggalleryView = Ember.View.extend({
-  
-  templateName: "imggallery",
-
- 	didInsertElement: function(){
-    this.scheduleMasonry();
-    $(window).on('scroll', $.proxy(this.didScroll, this));
-  },
-
-  willDestroyElement: function(){
-    this.destroyMasonry();
-    this.setProperties({
-      'controller.img_from': 15,
-      'controller.img_to': 30
-    });
-    $(window).off('scroll', $.proxy(this.didScroll, this));
-  },
-
-  scheduleMasonry: (function(){
-    Ember.run.scheduleOnce('afterRender', this, this.applyMasonry);
-  }).observes('controller.images.@each'),
-
-  applyMasonry: function(){
-    var $galleryContainer = $('#galleryContainer');
-    // initialize
-    $galleryContainer.imagesLoaded(function() {
-      // check if masonry is initialized
-      var msnry = $galleryContainer.data('masonry');
-      if ( msnry ) {
-        msnry.reloadItems();
-        // disable transition
-        var transitionDuration = msnry.options.transitionDuration;
-        msnry.options.transitionDuration = 0;
-        msnry.layout();
-        // reset transition
-        msnry.options.transitionDuration = transitionDuration;
-      } else {
-        // init masonry
-        $galleryContainer.masonry({
-          itemSelector: '.item',
-          columnWidth: 150
-        });
-      }
-    });
-  },
-  destroyMasonry: function(){
-    $('#galleryContainer').masonry('destroy');
-  },
-
-  didScroll: function(){
-    if($(window).scrollTop() + $(window).height() == $(document).height()){
-      this.get('controller').send('loadMoreGalleryPics');
-    }
-  }
-});
-/*
- |---------------------------
- | Index View
- |---------------------------
-*/
-Exyht.IndexView = Ember.View.extend({
-  
-  templateName: "index",
-
-  numberOfPost: (function() {
-  	var response, NoOfPost = this.get("controller.posts.length");
-  	if(NoOfPost === 1){
-  		response = "1 Post";
-  	}else if(NoOfPost > 1){
-  		response = NoOfPost+" Posts";
-  	}else{
-  		response = "No Post";
+	  		$.ajax({
+	    		type: "POST",
+	    		url: Exyht.BaseUrl+"/changeColor",
+	    		data: {favcolor: favColor, category: category},
+	    		success: function(msg){
+	      			alert(msg);
+	    		}
+	  		});
+		},
+		changeFontStyle: function(){
+	  		var selectedfs = $('input:radio[name=fontType]:checked').val();
+	  		console.log(selectedfs);
+	  		$.ajax({
+	    		type: "POST",
+	    		url: Exyht.BaseUrl+"/changeFontFamily",
+	    		data: {selectedFont: selectedfs},
+	    		success: function(msg){
+	     			alert(msg);
+	    		}
+	  		});
+		}
   	}
-    return response;
-  }).property("controller.posts.length")
+});
+/*
+ |---------------------
+ | Comment Controller
+ |---------------------
+*/
+Exyht.CommentController = Ember.ObjectController.extend({
+  needs: "posttitle",
+  title: ''
+});
+/*
+ |-----------------------
+ | Post title controller
+ |-----------------------
+*/
+Exyht.PosttitleController = Ember.ObjectController.extend({
+
+  needs: ["typeblogpost", "comment", "profilesetting"],
+
+  isEditingOnForPostTitle: false,
+
+  editingOnForProfSetCtlr: Ember.computed.alias("controllers.profilesetting.isProfileEditingOnForProfileSetting"),
+
+  titleForCommentsController: Ember.computed.alias("controllers.comment.title"),
+
+  isEditingOnForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.isEditingOn"),
+
+  isProfileEditingOnForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.isProfileEditingOn"),
+
+  postIdForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.postId"),
+
+  titleForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.ntitle"),
+
+  postBodyForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.nbody")
+});
+/*
+ |---------------------------
+ | Profilesetting Controller
+ |---------------------------
+*/
+Exyht.ProfilesettingController = Ember.ObjectController.extend({
+	needs: "typeblogpost",
+	isProfEditOnForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.isProfileEditingOn"),
+	aboutAdminForTypeBlogPost: Ember.computed.alias("controllers.typeblogpost.nbody")
+});
+/*
+ |---------------------------
+ | Typeblogpost Controller
+ |---------------------------
+*/
+Exyht.TypeblogpostController = Ember.ObjectController.extend({
+
+  	needs: ["posttitle", "profilesetting"],
+    
+    isImageTab: true,
+    admin_token: Ember.computed.oneWay("controllers.profilesetting.admin_token"),
+  	editOnForProfSetContr : Ember.computed.alias("controllers.profilesetting.isProfileEditingOnForProfileSetting"),
+  	isProfileEditingOn: false,
+  	isEditingOn: false,
+  	postId: '',
+  	ntitle: '',
+  	nbody: '',
+  	showNbodyLength: false,
+  	newBodyLength: ''
 });

@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Change Color
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <form {{action 'changeColor' on="submit"}}>
+					{{view Ember.Select
+						class="form-control"
+                        content=categories
+                        optionValuePath="content.domArea"
+                        optionLabelPath="content.color"
+                        value=selectedCategory
+                        prompt="Please select a category"
+                    }}
+                    Select your favorite color: {{input type="color" class="form-control" valueBinding="favcolor"}}<br>
+                    <input type="submit" class="btn btn-info" value="Submit">
+                </form>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+                    
+    </div>
+    <!-- /.col-lg-6 -->
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Change Font Style
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <form {{action 'changeFontStyle' on="submit"}}>
+                    {{#each fs in fstyles}}
+                        <div class="radio">
+                            <label {{bind-attr style="fs.font_family"}}>
+                            {{radio-button value=fs.name name="fontType"}}
+                            {{fs.name}}
+                            </label>
+                        </div>
+                    {{/each}}
+                    <br>
+                    <input type="submit" class="btn btn-info" value="Submit">
+                </form>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+                    
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+<!-- /.row -->

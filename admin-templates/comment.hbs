@@ -1,89 +1,31 @@
-<div class="list-group-item">
-    <div {{bind-attr class=":media isFlagged:bg-warning"}}>
-
-      <div class="pull-left" {{bind-attr title=name}}>
-        {{gravatar-image email=g_email}}
-      </div>
-      
-      <div class="media-body">
-      
-        <h5 class="media-heading">
-          <div class="small pull-right" {{bind-attr title=date}}>{{date}}</div>
-          <strong>{{name}}</strong>&nbsp;
-        </h5>
-        <p class="bg-info">
-          &nbsp;Email: <strong>{{email}}</strong>&nbsp;
-          IP: <strong>{{ip_address}}</strong>&nbsp;
-          Browser: <strong>{{browser}}</strong>&nbsp;
-          OS: <strong>{{os}}</strong>&nbsp;
-        </p>
-        {{format-markdown comment}}
-      </div>
-
-      
-        <div class="row">
-          <div class="col-lg-3">
-            {{#if isSeen}}
-             <button type="button" class="btn btn-success btn-xs" disabled="disabled">
-               <i class="fa fa-check"></i>&nbsp;<i class="fa fa-eye"></i>
-             </button>
-            {{else}}
-             <button {{action 'markAsSeen'}} type="button" class="btn btn-primary btn-xs">
-               Mark as seen
-             </button>
-            {{/if}}
-          </div>
-          <div class="col-lg-3">
-            {{#if status}}
-              {{#if showLoading}}
-               <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
-                <i class="fa fa-trash-o"></i> Removing...
-               </button>
-              {{else}}
-               <button {{action 'removeComment'}} type="button" class="btn btn-primary btn-xs">
-                <i class="fa fa-trash-o"></i> Remove
-               </button>
-              {{/if}}
-            {{else}} 
-             <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
-               <i class="fa fa-trash-o"></i> Removed
-             </button>
-            {{/if}}
-
-          </div>
-          <div class="col-lg-3">
-            {{#unless ip_status}}
-              {{#if banLoading}}
-               <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
-                <i class="fa fa-ban"></i> Banning...
-               </button>
-              {{else}}
-               <button {{action 'banIp'}} type="button" class="btn btn-primary btn-xs">
-                <i class="fa fa-ban"></i> Ban this IP
-               </button>
-              {{/if}}
-            {{else}} 
-             <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
-               <i class="fa fa-ban"></i> IP banned
-             </button>
-            {{/unless}}
-
-          </div>
-
-          <div class="col-lg-3">
-            {{#if isFlagged}}
-              {{#if flagLoading}}
-               <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
-                <i class="fa fa-flag"></i> Removing...
-               </button>
-              {{else}}
-               <button {{action 'removeFlag'}} type="button" class="btn btn-primary btn-xs">
-                <i class="fa fa-flag"></i> Remove flag
-               </button>
-              {{/if}}
-            {{/if}}
-
-          </div>
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{#link-to 'index'}}<i class="fa fa-angle-double-left"></i> Back to Posts{{/link-to}}
+                &nbsp;&nbsp;Comments for <strong>{{title}}</strong>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                  {{#each comment in comments}}
+                    {{manage-comment cmt=comment}}
+                  {{/each}}
+                </div>
+                <!-- /.list-group -->
+            </div>
+            <!-- /.panel-body -->
+            <div class="panel-footer">
+              {{#link-to 'index'}}<i class="fa fa-angle-double-left"></i> Back to Posts{{/link-to}}
+                 &nbsp;&nbsp;Comments for <strong>{{title}}</strong>
+            </div>
         </div>
+                <!-- /.panel -->
     </div>
+            <!-- /.col-lg-12 -->
+
+   </div>
+   <!-- /.row -->
 </div>
+<!-- /#page-wrapper -->

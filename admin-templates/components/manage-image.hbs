@@ -1,0 +1,16 @@
+<div class="item thumb">
+  {{#if img.img_visible}}
+    <img {{bind-attr src=srcPath}} class="img-thumbnail img-responsive"/>
+    <span class="bg-primary" style="position:absolute;top:0;left:86%;z-index:1;padding:1%;">
+    {{#if deletingImg}}
+      <span>Removing...</span>
+    {{else}}
+      <span {{action "removeGimg"}} style="cursor:pointer;"><i class="fa fa-times fa-lg"></i></span>
+    {{/if}}
+    </span>
+    <p>
+      <label class="sr-only" for="inputHelpBlock">Image Link:</label>
+      {{input type="text" id="inputHelpBlock" class="form-control" aria-describedby="helpBlock" value=srcPath}}
+    </p>
+  {{/if}}
+</div>

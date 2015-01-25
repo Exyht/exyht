@@ -1,0 +1,89 @@
+<div class="list-group-item">
+    <div {{bind-attr class=":media cmt.isFlagged:bg-warning"}}>
+
+      <div class="pull-left" {{bind-attr title=cmt.name}}>
+        {{gravatar-image email=cmt.g_email}}
+      </div>
+      
+      <div class="media-body">
+      
+        <h5 class="media-heading">
+          <div class="small pull-right" {{bind-attr title=cmt.date}}>{{cmt.date}}</div>
+          <strong>{{cmt.name}}</strong>&nbsp;
+        </h5>
+        <p class="bg-info">
+          &nbsp;Email: <strong>{{cmt.email}}</strong>&nbsp;
+          IP: <strong>{{cmt.ip_address}}</strong>&nbsp;
+          Browser: <strong>{{cmt.browser}}</strong>&nbsp;
+          OS: <strong>{{cmt.os}}</strong>&nbsp;
+        </p>
+        {{format-markdown cmt.comment}}
+      </div>
+
+      
+        <div class="row">
+          <div class="col-lg-3">
+            {{#if cmt.isSeen}}
+             <button type="button" class="btn btn-success btn-xs" disabled="disabled">
+               <i class="fa fa-check"></i>&nbsp;<i class="fa fa-eye"></i>
+             </button>
+            {{else}}
+             <button {{action 'markAsSeen'}} type="button" class="btn btn-primary btn-xs">
+               Mark as seen
+             </button>
+            {{/if}}
+          </div>
+          <div class="col-lg-3">
+            {{#if cmt.status}}
+              {{#if cmt.showLoading}}
+               <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
+                <i class="fa fa-trash-o"></i> Removing...
+               </button>
+              {{else}}
+               <button {{action 'removeComment'}} type="button" class="btn btn-primary btn-xs">
+                <i class="fa fa-trash-o"></i> Remove
+               </button>
+              {{/if}}
+            {{else}} 
+             <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
+               <i class="fa fa-trash-o"></i> Removed
+             </button>
+            {{/if}}
+
+          </div>
+          <div class="col-lg-3">
+            {{#unless cmt.ip_status}}
+              {{#if banLoading}}
+               <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
+                <i class="fa fa-ban"></i> Banning...
+               </button>
+              {{else}}
+               <button {{action 'banIp'}} type="button" class="btn btn-primary btn-xs">
+                <i class="fa fa-ban"></i> Ban this IP
+               </button>
+              {{/if}}
+            {{else}} 
+             <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
+               <i class="fa fa-ban"></i> IP banned
+             </button>
+            {{/unless}}
+
+          </div>
+
+          <div class="col-lg-3">
+            {{#if cmt.isFlagged}}
+              {{#if flagLoading}}
+               <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
+                <i class="fa fa-flag"></i> Removing...
+               </button>
+              {{else}}
+               <button {{action 'removeFlag'}} type="button" class="btn btn-primary btn-xs">
+                <i class="fa fa-flag"></i> Remove flag
+               </button>
+              {{/if}}
+            {{/if}}
+
+          </div>
+        </div>
+    </div>
+</div>

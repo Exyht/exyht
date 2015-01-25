@@ -1,17 +1,17 @@
-{{#if status}}
+{{#if link.status}}
 <div class="list-group">
    	<div class="input-group">
   		<span class="input-group-addon">
-  			{{#if is_nav_link}}
+  			{{#if link.is_nav_link}}
   			    Nav:
   			{{/if}}
-  			{{#if is_else_link}}
+  			{{#if link.is_else_link}}
   			    Else:
   			{{/if}}
-  			{{link_name}}
+  			{{link.link_name}}
   		</span>
-  		<input class="form-control" type="text" {{bind-attr placeholder=link_url}} readonly>
-  		{{#unless is_blog_url}}
+  		<input class="form-control" type="text" {{bind-attr placeholder=link.link_url}} readonly>
+  		{{#unless link.is_blog_url}}
   		<span class="input-group-btn">
     		<button {{action "removeLink"}} class="btn btn-default" title="Remove" type="button"><i class="fa fa-times"></i></button>
   		</span>

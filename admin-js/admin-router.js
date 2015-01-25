@@ -5,7 +5,7 @@
 */
 Exyht.Router.map(function() {
     this.route('index',  {path: Exyht.BaseUrl});
-    this.route('comments', {path: Exyht.BaseUrl+'/comments/:post_id'});
+    this.route('comment', {path: Exyht.BaseUrl+'/comment/:post_id'});
     this.route('typeblogpost', {path: Exyht.BaseUrl+'/typeblogpost'});
     this.route('profilesetting', {path: Exyht.BaseUrl+'/profilesetting'});
     this.route('uisettings', {path: Exyht.BaseUrl+'/uisettings'});
@@ -29,11 +29,11 @@ model: function()
   }
 });
 
-Exyht.CommentsRoute = Ember.Route.extend({
+Exyht.CommentRoute = Ember.Route.extend({
 model: function(params)
   {
   return Ember.$.getJSON(Exyht.currentBaseUri+'/getComments/'+params.post_id).then(function(data) {
-    return data;
+    return {"comments":data};
   });
 }
 });

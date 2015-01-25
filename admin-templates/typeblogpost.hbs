@@ -22,7 +22,10 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-lg-6">
-                {{partial "editortools"}}
+                {{editor-tools
+                      nbody=nbody
+                      showNbodyLength=showNbodyLength
+                      newBodyLength=newBodyLength}}
                 <br /><br />               
                 <form id="createNewNoteForm">
 				
@@ -35,7 +38,13 @@
                 {{/if}}
 				  
                 {{auto-expanding-text-area class="form-control" id="newBody" name="body" rows="14" value=nbody}}<br />
-                {{partial "editoractionbutton"}}
+                {{editor-action
+                      postId=postId
+                      ntitle=ntitle
+                      nbody=nbody
+                      isProfileEditingOn=isProfileEditingOn
+                      isEditingOn=isEditingOn
+                      editOnForProfSetContr=editOnForProfSetContr}}
                 </form>
               </div>
               <!-- /.col-lg-6 (nested) -->

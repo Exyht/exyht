@@ -1,10 +1,9 @@
 /*
- |---------------------------
- | Toprow Controller
- |---------------------------
+ |--------------------------------
+ | Top row notification Component
+ |--------------------------------
 */
-Exyht.ToprowController = Ember.ObjectController.extend({
-  
+Exyht.ToprowNotificationComponent = Ember.Component.extend({
   notificationTemplate: function(value1, value2){
     if( value1 === 0){
       return '<div class="huge">No</div><div>'+value2+'</div>';
@@ -17,16 +16,16 @@ Exyht.ToprowController = Ember.ObjectController.extend({
 
   newCommentCount: function(){
 
-    var newCommentCount = this.get('model.newComment');
+    var newCommentCount = this.get('newComment');
     var response = this.notificationTemplate(newCommentCount, 'New Comment');
 
     return new Ember.Handlebars.SafeString(response);
 
-  }.property('model.newComment'),
+  }.property('newComment'),
 
   totalDraft: function(){
 
-      var model = this.get('model.posts');
+      var model = this.get('posts');
       var response;
       if(typeof model !== 'undefined'){
         response = this.notificationTemplate(model.filterBy('isDraft', true).get('length'), 'Draft');
@@ -35,14 +34,14 @@ Exyht.ToprowController = Ember.ObjectController.extend({
       }
       return new Ember.Handlebars.SafeString(response);
 
-    }.property('model.posts.@each.isDraft'),
+    }.property('posts.@each.isDraft'),
 
     flaggedCommentCount: function(){
 
-    var flaggedCommentCount = this.get('model.flaggedComment');
+    var flaggedCommentCount = this.get('flaggedComment');
     var response = this.notificationTemplate(flaggedCommentCount, 'Flagged Comment');
 
     return new Ember.Handlebars.SafeString(response);
 
-  }.property('model.flaggedComment'),
+  }.property('flaggedComment')
 });
