@@ -172,9 +172,10 @@ function program5(depth0,data) {
     'blog_name': ("blog_name"),
     'blog_subtitle': ("blog_subtitle"),
     'read_only_mode': ("read_only_mode"),
+    'has_navbar': ("has_navbar"),
     'has_cmnt_feature': ("has_cmnt_feature"),
     'blog_links': ("blog_links")
-  },hashTypes:{'blog_name': "ID",'blog_subtitle': "ID",'read_only_mode': "ID",'has_cmnt_feature': "ID",'blog_links': "ID"},hashContexts:{'blog_name': depth0,'blog_subtitle': depth0,'read_only_mode': depth0,'has_cmnt_feature': depth0,'blog_links': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "manage-status", options))));
+  },hashTypes:{'blog_name': "ID",'blog_subtitle': "ID",'read_only_mode': "ID",'has_navbar': "ID",'has_cmnt_feature': "ID",'blog_links': "ID"},hashContexts:{'blog_name': depth0,'blog_subtitle': depth0,'read_only_mode': depth0,'has_navbar': depth0,'has_cmnt_feature': depth0,'blog_links': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "manage-status", options))));
   data.buffer.push("\r\n                  </div>\r\n                  <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\r\n                  ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "typeblogpost", options) : helperMissing.call(depth0, "link-to", "typeblogpost", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -536,7 +537,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "imgTabStatus", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push("><a href=\"#imgTab\" aria-controls=\"imgTab\" role=\"tab\" data-toggle=\"tab\">Insert Image</a></li>\r\n                <li role=\"presentation\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "vidTabStatus", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><a href=\"#videoTab\" aria-controls=\"videoTab\" role=\"tab\" data-toggle=\"tab\">Insert Video</a></li>\r\n              </ul>\r\n\r\n              <!-- Tab panes -->\r\n              <div class=\"tab-content\">\r\n                <div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"imgTab\">\r\n                  <div id=\"feedback\"></div>\r\n                  <div id=\"loadingDiv\" style=\"display:none;text-align:center;\"><i class=\"fa fa-spinner fa-spin\"></i> Uploading...</div>\r\n                  <label for=\"imageUrlTextField\">Type URL / Upload from my Computer: </label>\r\n                  <input type=\"text\" id=\"imageUrlTextField\" value=\"\" placeholder=\"http://example.com/image.jpg\" class=\"form-control\">\r\n         \r\n                  <br />\r\n                  <iframe name=\"upload_iframe\" src=\"\" style=\"display:none;\"></iframe>\r\n          \r\n                  <form method=\"POST\" action=\"uploadImage\" accept-charset=\"UTF-8\" target=\"upload_iframe\" enctype=\"multipart/form-data\">\r\n                    ");
+  data.buffer.push("><a href=\"#videoTab\" aria-controls=\"videoTab\" role=\"tab\" data-toggle=\"tab\">Insert Video</a></li>\r\n              </ul>\r\n\r\n              <!-- Tab panes -->\r\n              <div class=\"tab-content\">\r\n                <div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"imgTab\">\r\n                  <div id=\"feedback\"></div>\r\n                  <div id=\"loadingDiv\" class=\"bg-danger\" style=\"display:none;text-align:center;\"><i class=\"fa fa-spinner fa-spin\"></i> Uploading...</div>\r\n                  <label for=\"imageUrlTextField\">Type URL / Upload from my Computer: </label>\r\n                  <input type=\"text\" id=\"imageUrlTextField\" value=\"\" placeholder=\"http://example.com/image.jpg\" class=\"form-control\">\r\n         \r\n                  <br />\r\n                  <iframe name=\"upload_iframe\" src=\"\" style=\"display:none;\"></iframe>\r\n          \r\n                  <form method=\"POST\" action=\"uploadImage\" accept-charset=\"UTF-8\" target=\"upload_iframe\" enctype=\"multipart/form-data\">\r\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'type': ("hidden"),
     'name': ("non_ajax_token"),
@@ -934,24 +935,24 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("\r\n                  <button type=\"button\" class=\"btn btn-primary disabled\">Submit</button>\r\n                ");
+  data.buffer.push("\r\n                <button type=\"button\" class=\"btn btn-primary disabled\">Submit</button>\r\n              ");
   }
 
 function program3(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\r\n                  <button ");
+  data.buffer.push("\r\n                <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "changeBlogName", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" type=\"button\" class=\"btn btn-primary\">Submit</button>\r\n                ");
+  data.buffer.push(" type=\"button\" class=\"btn btn-primary\">Submit</button>\r\n              ");
   return buffer;
   }
 
 function program5(depth0,data) {
   
   var buffer = '';
-  data.buffer.push("\r\n                  <button ");
+  data.buffer.push("\r\n                <button ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "changeSubtitle", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" type=\"button\" class=\"btn btn-primary\">Submit</button>\r\n                ");
+  data.buffer.push(" type=\"button\" class=\"btn btn-primary\">Submit</button>\r\n              ");
   return buffer;
   }
 
@@ -1027,27 +1028,27 @@ function program21(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<button class=\"btn btn-success\" data-toggle=\"modal\" data-target=\"#blog_setting_modal\"><i class=\"fa fa-magic\"></i> Manage Blog Settings</button>\r\n  <!-- Button trigger modal -->\r\n  <!-- Modal -->\r\n    <div class=\"modal fade\" id=\"blog_setting_modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\r\n      <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n          <div class=\"modal-header\">\r\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\r\n            <h4 class=\"modal-title\" id=\"myModalLabel\"><i class=\"fa fa-magic\"></i> Manage Blog Settings</h4>\r\n          </div>\r\n          <div class=\"modal-body\" style=\"font-size:18px;\">\r\n            <div class=\"form-group\">\r\n              <div class=\"input-group\">\r\n                ");
+  data.buffer.push("<button class=\"btn btn-success\" data-toggle=\"modal\" data-target=\"#blog_setting_modal\"><i class=\"fa fa-magic\"></i> Manage Blog Settings</button>\r\n  <!-- Button trigger modal -->\r\n  <!-- Modal -->\r\n    <div class=\"modal fade\" id=\"blog_setting_modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\r\n      <div class=\"modal-dialog\">\r\n        <div class=\"modal-content\">\r\n          <div class=\"modal-header\">\r\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\r\n            <h4 class=\"modal-title\" id=\"myModalLabel\"><i class=\"fa fa-magic\"></i> Manage Blog Settings</h4>\r\n          </div>\r\n          <div class=\"modal-body\" style=\"font-size:18px;\">\r\n            <form class=\"form-inline\">\r\n              <div class=\"form-group\">\r\n                ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("text"),
     'value': ("blog_name"),
     'placeholder': ("Blog name")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'class': depth0,'type': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\r\n                <span class=\"input-group-btn\">\r\n                ");
+  data.buffer.push("\r\n              </div>\r\n              ");
   stack1 = helpers['if'].call(depth0, "loadingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("  \r\n                </span>\r\n              </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <div class=\"input-group\">\r\n                ");
+  data.buffer.push("\r\n              <div class=\"form-group\">\r\n                ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'class': ("form-control"),
     'type': ("text"),
     'value': ("blog_subtitle"),
     'placeholder': ("Blog subtitle")
   },hashTypes:{'class': "STRING",'type': "STRING",'value': "ID",'placeholder': "STRING"},hashContexts:{'class': depth0,'type': depth0,'value': depth0,'placeholder': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\r\n                <span class=\"input-group-btn\">\r\n                ");
+  data.buffer.push("\r\n              </div>\r\n              ");
   stack1 = helpers['if'].call(depth0, "loadingOn", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(5, program5, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n                </span>\r\n              </div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-lg-6\">\r\n                <div class=\"form-group\">\r\n                  Read Only Mode: \r\n                  ");
+  data.buffer.push("\r\n            </form>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-lg-6\">\r\n                <div class=\"form-group\">\r\n                  Read Only Mode: \r\n                  ");
   stack1 = helpers.unless.call(depth0, "read_only_mode", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                </div>\r\n                <div class=\"form-group\">\r\n                  Has Comment Feature: \r\n                  ");

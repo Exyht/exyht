@@ -9,30 +9,25 @@
             <h4 class="modal-title" id="myModalLabel"><i class="fa fa-magic"></i> Manage Blog Settings</h4>
           </div>
           <div class="modal-body" style="font-size:18px;">
-            <div class="form-group">
-              <div class="input-group">
+            <form class="form-inline">
+              <div class="form-group">
                 {{input class="form-control" type="text" value=blog_name placeholder="Blog name"}}
-                <span class="input-group-btn">
-                {{#if loadingOn}}
-                  <button type="button" class="btn btn-primary disabled">Submit</button>
-                {{else}}
-                  <button {{action 'changeBlogName'}} type="button" class="btn btn-primary">Submit</button>
-                {{/if}}  
-                </span>
               </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
+              {{#if loadingOn}}
+                <button type="button" class="btn btn-primary disabled">Submit</button>
+              {{else}}
+                <button {{action 'changeBlogName'}} type="button" class="btn btn-primary">Submit</button>
+              {{/if}}
+              <div class="form-group">
                 {{input class="form-control" type="text" value=blog_subtitle placeholder="Blog subtitle"}}
-                <span class="input-group-btn">
-                {{#if loadingOn}}
-                  <button type="button" class="btn btn-primary disabled">Submit</button>
-                {{else}}
-                  <button {{action 'changeSubtitle'}} type="button" class="btn btn-primary">Submit</button>
-                {{/if}}
-                </span>
               </div>
-            </div>
+              {{#if loadingOn}}
+                <button type="button" class="btn btn-primary disabled">Submit</button>
+              {{else}}
+                <button {{action 'changeSubtitle'}} type="button" class="btn btn-primary">Submit</button>
+              {{/if}}
+            </form>
+
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
