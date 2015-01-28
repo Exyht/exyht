@@ -26,6 +26,14 @@ model: function()
   redirect: function() {
         // this redirects / to /index
         this.transitionTo('index');
+  },
+  actions: {
+    editPostTrue: function(){
+      this.transitionTo('typeblogpost');
+    },
+    viewComments: function(post){
+      this.transitionTo('comment', post.id);
+    }
   }
 });
 
