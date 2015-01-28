@@ -35,14 +35,12 @@
   <script type="text/x-handlebars" data-template-name="index">
     <div id="galleryContainer">
     {{#each img in images}}
-      <div class="item thumb" data-toggle="modal" data-target="#myModal">
+      <div class="item thumb">
       {{#if img.img_visible}}
         <div style="padding:1%;"><strong>{{img.name}}</strong></div>
-        <img {{bind-attr src=img.src_path}} class="img-thumbnail"/>
-      {{/if}}
-      </div>
-      <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <img {{bind-attr src=img.src_path}} class="img-thumbnail" data-toggle="modal" data-target=".bs-example-modal-lg" style="pointer: cursor;"/>
+        <!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -50,7 +48,7 @@
         <h4 class="modal-title" id="myModalLabel">{{img.name}}</h4>
       </div>
       <div class="modal-body">
-        <img {{bind-attr src=img.src_path}} class="img-thumbnail"/>
+        <img {{bind-attr src=img.src_path}}/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -59,6 +57,8 @@
     </div>
   </div>
 </div>
+      {{/if}}
+      </div>
     {{/each}}
     </div>
   </script>
