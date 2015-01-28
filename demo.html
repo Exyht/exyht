@@ -37,8 +37,8 @@
     {{#each img in images}}
       <div class="item thumb">
       {{#if img.img_visible}}
-        <img {{bind-attr src=img.src_path}} class="img-thumbnail"/>
         <div style="padding:1%;"><strong>{{img.name}}</strong></div>
+        <img {{bind-attr src=img.src_path}} class="img-thumbnail"/>
       {{/if}}
       </div>
     {{/each}}
@@ -129,7 +129,7 @@ App.IndexView = Ember.View.extend({
           // init masonry
           $galleryContainer.masonry({
             itemSelector: '.item',
-            columnWidth: 200
+            columnWidth: 170
           });
         }
     });
