@@ -38,10 +38,10 @@
       <div class="item thumb">
       {{#if img.img_visible}}
         <div style="padding:1%;"><strong>{{img.name}}</strong></div>
-        <img {{bind-attr src=img.src_path}} class="img-thumbnail" data-toggle="modal" data-target=".bs-example-modal-lg" style="pointer: cursor;"/>
+        <img {{bind-attr src=img.src_path}} class="img-thumbnail" data-toggle="modal" {{bind-attr data-target=img.name}} style="pointer: cursor;"/>
         <!-- Modal -->
-<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" {{bind-attr id=img.name}} tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
