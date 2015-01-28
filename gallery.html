@@ -38,9 +38,9 @@
       <div class="item thumb">
       {{#if img.img_visible}}
         <div style="padding:1%;"><strong>{{img.name}}</strong></div>
-        <img {{bind-attr src=img.src_path}} class="img-thumbnail" data-toggle="modal" {{bind-attr data-target=img.name}} style="pointer: cursor;"/>
+        <img {{bind-attr src=img.src_path}} class="img-thumbnail" data-toggle="modal" {{bind-attr data-target=img.id}} style="cursor: pointer;"/>
         <!-- Modal -->
-<div class="modal fade" {{bind-attr id=img.name}} tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" {{bind-attr id=img.id}} tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -52,7 +52,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -70,41 +69,49 @@ App.IndexRoute = Ember.Route.extend({
     return {
      images: [
       {
+       id: "id1",
        name: "Installer",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5938710/d8e239b0-a727-11e4-819e-c4c4e97db940.jpg",
        img_visible: true
       },
       {
+       id: "id2",
        name: "During Installing process",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5938726/e9af04e4-a727-11e4-8374-8a9062d1d837.jpg",
        img_visible: true
       },
       {
+       id: "id3",
        name: "Read only mode on",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5836185/4fc9ef82-a19c-11e4-9191-9ec4cada5eee.jpg",
        img_visible: true
       },
       {
+       id: "id4",
        name: "Awesome editor",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5836201/6c796194-a19c-11e4-9338-dd6444f405e5.jpg",
        img_visible: true
       },
       {
+       id: "id5",
        name: "Customize color & font",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5836204/739bc4a8-a19c-11e4-9b7b-202ce6ea453a.jpg",
        img_visible: true
       },
       {
+       id: "id6",
        name: "Manage blog status",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5938685/a3d9caf8-a727-11e4-9726-d22ae1eabdb1.jpg",
        img_visible: true
       },
       {
+       id: "id7",
        name: "Upload image & Insert video",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5938695/bd8b0796-a727-11e4-9d84-b6fed214dfea.jpg",
        img_visible: true
       },
       {
+       id: "id8",
        name: "Notification",
        src_path: "https://cloud.githubusercontent.com/assets/9896315/5938701/ca6f177c-a727-11e4-88fc-98298a5b7f47.jpg",
        img_visible: true
