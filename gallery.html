@@ -35,12 +35,30 @@
   <script type="text/x-handlebars" data-template-name="index">
     <div id="galleryContainer">
     {{#each img in images}}
-      <div class="item thumb">
+      <div class="item thumb" data-toggle="modal" data-target="#myModal">
       {{#if img.img_visible}}
         <div style="padding:1%;"><strong>{{img.name}}</strong></div>
         <img {{bind-attr src=img.src_path}} class="img-thumbnail"/>
       {{/if}}
       </div>
+      <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{img.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <img {{bind-attr src=img.src_path}} class="img-thumbnail"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
     {{/each}}
     </div>
   </script>
