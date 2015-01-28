@@ -39,10 +39,10 @@ function program11(depth0,data) {
   data.buffer.push("<i class=\"fa fa-picture-o fa-fw\"></i>\r\n Image Gallery");
   }
 
-  data.buffer.push("<!-- Navigation -->\r\n<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">\r\n    <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n            <span class=\"sr-only\">Toggle navigation</span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"#\">Exyht</a>\r\n    </div>\r\n    <!-- /.navbar-header -->\r\n\r\n    <ul class=\"nav navbar-top-links navbar-right\">\r\n        <li>");
+  data.buffer.push("<!-- Navigation -->\r\n<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">\r\n    <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n            <span class=\"sr-only\">Toggle navigation</span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n            <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"#\">Exyht</a>\r\n    </div>\r\n    <!-- /.navbar-header -->\r\n\r\n    <ul class=\"nav navbar-top-links navbar-right\">\r\n        <li>\r\n            ");
   stack1 = helpers._triageMustache.call(depth0, "check-version", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</li>\r\n        <li class=\"dropdown\">\r\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\r\n                <i class=\"fa fa-user fa-fw\"></i>  <i class=\"fa fa-caret-down\"></i>\r\n            </a>\r\n            <ul class=\"dropdown-menu dropdown-user\">\r\n                <li>");
+  data.buffer.push("\r\n        </li>\r\n        <li class=\"dropdown\">\r\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\r\n                <i class=\"fa fa-user fa-fw\"></i>  <i class=\"fa fa-caret-down\"></i>\r\n            </a>\r\n            <ul class=\"dropdown-menu dropdown-user\">\r\n                <li>");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "profilesetting", options) : helperMissing.call(depth0, "link-to", "profilesetting", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n                </li>\r\n                <li class=\"divider\"></li>\r\n                ");
@@ -210,28 +210,95 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["posttitle"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-danger btn-xs\" disabled=\"disabled\">\r\n         Draft\r\n        </button>\r\n        ");
+  }
 
-  data.buffer.push(escapeExpression((helper = helpers['manage-post'] || (depth0 && depth0['manage-post']),options={hash:{
-    'id': ("id"),
-    'title': ("title"),
-    'isDraft': ("isDraft"),
-    'created': ("created"),
-    'modified': ("modified"),
-    'isEditingOnForPostTitle': ("isEditingOnForPostTitle"),
-    'hasComment': ("hasComment"),
-    'hasFlaggedComment': ("hasFlaggedComment"),
-    'total_comment': ("total_comment"),
-    'hasNewComment': ("hasNewComment"),
-    'postIdForTypeBlogPost': ("postIdForTypeBlogPost"),
-    'postBodyForTypeBlogPost': ("postBodyForTypeBlogPost"),
-    'isEditingOnForTypeBlogPost': ("isEditingOnForTypeBlogPost"),
-    'isProfileEditingOnForTypeBlogPost': ("isProfileEditingOnForTypeBlogPost"),
-    'editingOnForProfSetCtlr': ("editingOnForProfSetCtlr"),
-    'titleForTypeBlogPost': ("titleForTypeBlogPost"),
-    'titleForCommentsController': ("titleForCommentsController")
-  },hashTypes:{'id': "ID",'title': "ID",'isDraft': "ID",'created': "ID",'modified': "ID",'isEditingOnForPostTitle': "ID",'hasComment': "ID",'hasFlaggedComment': "ID",'total_comment': "ID",'hasNewComment': "ID",'postIdForTypeBlogPost': "ID",'postBodyForTypeBlogPost': "ID",'isEditingOnForTypeBlogPost': "ID",'isProfileEditingOnForTypeBlogPost': "ID",'editingOnForProfSetCtlr': "ID",'titleForTypeBlogPost': "ID",'titleForCommentsController': "ID"},hashContexts:{'id': depth0,'title': depth0,'isDraft': depth0,'created': depth0,'modified': depth0,'isEditingOnForPostTitle': depth0,'hasComment': depth0,'hasFlaggedComment': depth0,'total_comment': depth0,'hasNewComment': depth0,'postIdForTypeBlogPost': depth0,'postBodyForTypeBlogPost': depth0,'isEditingOnForTypeBlogPost': depth0,'isProfileEditingOnForTypeBlogPost': depth0,'editingOnForProfSetCtlr': depth0,'titleForTypeBlogPost': depth0,'titleForCommentsController': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "manage-post", options))));
+function program3(depth0,data) {
+  
+  
+  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-success btn-xs\" disabled=\"disabled\">\r\n         Published\r\n        </button>\r\n        ");
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n         <em title=\"Edited\"><i class=\"fa fa-pencil\"></i>");
+  stack1 = helpers._triageMustache.call(depth0, "modified", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</em>\r\n        ");
+  return buffer;
+  }
+
+function program7(depth0,data) {
+  
+  
+  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-success btn-xs\">\r\n         <i class=\"fa fa-pencil\"></i> Editing On\r\n        </button>\r\n        ");
+  }
+
+function program9(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n        <button ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "editPostTrue", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" type=\"button\" class=\"btn btn-primary btn-xs\">\r\n         <i class=\"fa fa-pencil\"></i> Edit\r\n        </button>\r\n        ");
+  return buffer;
+  }
+
+function program11(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n        <button ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "viewComments", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(" type=\"button\" ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":btn :btn-xs hasFlaggedComment:btn-warning:btn-primary")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\r\n         ");
+  stack1 = helpers._triageMustache.call(depth0, "total_comment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" <i class=\"fa fa-chevron-right\"></i>\r\n         ");
+  stack1 = helpers['if'].call(depth0, "hasNewComment", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n        </button>\r\n        ");
+  return buffer;
+  }
+function program12(depth0,data) {
+  
+  
+  data.buffer.push("\r\n           <span class=\"badge\" title=\"This post has new comment\">new!</span>\r\n         ");
+  }
+
+function program14(depth0,data) {
+  
+  
+  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-danger btn-xs\" disabled=\"disabled\">\r\n         No <i class=\"fa fa-comment-o\"></i>\r\n        </button>\r\n        ");
+  }
+
+  data.buffer.push("<div class=\"list-group\">\r\n    <div class=\"list-group-item\">\r\n      <div class=\"row\">\r\n       <div class=\"col-md-6\">\r\n        ");
+  stack1 = helpers['if'].call(depth0, "isDraft", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n         ");
+  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n       </div>\r\n       <div class=\"col-md-6\">\r\n        <span class=\"pull-right text-muted small\"><em title=\"Created\">");
+  stack1 = helpers._triageMustache.call(depth0, "created", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</em>\r\n        &nbsp;\r\n        ");
+  stack1 = helpers['if'].call(depth0, "modified", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("&nbsp;\r\n        ");
+  stack1 = helpers['if'].call(depth0, "isEditingOnForPostTitle", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("&nbsp;\r\n        ");
+  stack1 = helpers['if'].call(depth0, "hasComment", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(14, program14, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n        </span>\r\n       </div>\r\n      </div>\r\n    </div>\r\n</div>\r\n<!-- /.list-group -->");
+  return buffer;
   
 });
 
@@ -828,101 +895,6 @@ function program4(depth0,data) {
   stack1 = helpers['if'].call(depth0, "img.img_visible", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n</div>");
-  return buffer;
-  
-});
-
-Ember.TEMPLATES["components/manage-post"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
-
-function program1(depth0,data) {
-  
-  
-  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-danger btn-xs\" disabled=\"disabled\">\r\n         Draft\r\n        </button>\r\n        ");
-  }
-
-function program3(depth0,data) {
-  
-  
-  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-success btn-xs\" disabled=\"disabled\">\r\n         Published\r\n        </button>\r\n        ");
-  }
-
-function program5(depth0,data) {
-  
-  var buffer = '', stack1;
-  data.buffer.push("\r\n         <em title=\"Edited\"><i class=\"fa fa-pencil\"></i>");
-  stack1 = helpers._triageMustache.call(depth0, "modified", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</em>\r\n        ");
-  return buffer;
-  }
-
-function program7(depth0,data) {
-  
-  
-  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-success btn-xs\">\r\n         <i class=\"fa fa-pencil\"></i> Editing On\r\n        </button>\r\n        ");
-  }
-
-function program9(depth0,data) {
-  
-  var buffer = '';
-  data.buffer.push("\r\n        <button ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "editPostTrue", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" type=\"button\" class=\"btn btn-primary btn-xs\">\r\n         <i class=\"fa fa-pencil\"></i> Edit\r\n        </button>\r\n        ");
-  return buffer;
-  }
-
-function program11(depth0,data) {
-  
-  var buffer = '', stack1;
-  data.buffer.push("\r\n        <button ");
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "viewComments", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(" type=\"button\" ");
-  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'class': (":btn :btn-xs hasFlaggedComment:btn-warning:btn-primary")
-  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(">\r\n         ");
-  stack1 = helpers._triageMustache.call(depth0, "total_comment", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push(" <i class=\"fa fa-chevron-right\"></i>\r\n         ");
-  stack1 = helpers['if'].call(depth0, "hasNewComment", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n        </button>\r\n        ");
-  return buffer;
-  }
-function program12(depth0,data) {
-  
-  
-  data.buffer.push("\r\n           <span class=\"badge\" title=\"This post has new comment\">new!</span>\r\n         ");
-  }
-
-function program14(depth0,data) {
-  
-  
-  data.buffer.push("\r\n        <button type=\"button\" class=\"btn btn-danger btn-xs\" disabled=\"disabled\">\r\n         No <i class=\"fa fa-comment-o\"></i>\r\n        </button>\r\n        ");
-  }
-
-  data.buffer.push("<div class=\"list-group\">\r\n    <div class=\"list-group-item\">\r\n      <div class=\"row\">\r\n       <div class=\"col-md-6\">\r\n        ");
-  stack1 = helpers['if'].call(depth0, "isDraft", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n         ");
-  stack1 = helpers._triageMustache.call(depth0, "title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n       </div>\r\n       <div class=\"col-md-6\">\r\n        <span class=\"pull-right text-muted small\"><em title=\"Created\">");
-  stack1 = helpers._triageMustache.call(depth0, "created", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</em>\r\n        &nbsp;\r\n        ");
-  stack1 = helpers['if'].call(depth0, "modified", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("&nbsp;\r\n        ");
-  stack1 = helpers['if'].call(depth0, "isEditingOnForPostTitle", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("&nbsp;\r\n        ");
-  stack1 = helpers['if'].call(depth0, "hasComment", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(14, program14, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n        </span>\r\n       </div>\r\n      </div>\r\n    </div>\r\n</div>\r\n<!-- /.list-group -->");
   return buffer;
   
 });

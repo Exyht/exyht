@@ -1,19 +1,48 @@
-{{manage-post
-        id=id
-        title=title
-        isDraft=isDraft
-        created=created
-        modified=modified
-        isEditingOnForPostTitle=isEditingOnForPostTitle
-        hasComment=hasComment
-        hasFlaggedComment=hasFlaggedComment
-        total_comment=total_comment
-        hasNewComment=hasNewComment
-        postIdForTypeBlogPost=postIdForTypeBlogPost
-        postBodyForTypeBlogPost=postBodyForTypeBlogPost
-        isEditingOnForTypeBlogPost=isEditingOnForTypeBlogPost
-        isProfileEditingOnForTypeBlogPost=isProfileEditingOnForTypeBlogPost
-        editingOnForProfSetCtlr=editingOnForProfSetCtlr
-        titleForTypeBlogPost=titleForTypeBlogPost
-        titleForCommentsController=titleForCommentsController
-        }}
+<div class="list-group">
+    <div class="list-group-item">
+      <div class="row">
+       <div class="col-md-6">
+        {{#if isDraft}}
+        <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
+         Draft
+        </button>
+        {{else}}
+        <button type="button" class="btn btn-success btn-xs" disabled="disabled">
+         Published
+        </button>
+        {{/if}}
+         {{title}}
+       </div>
+       <div class="col-md-6">
+        <span class="pull-right text-muted small"><em title="Created">{{created}}</em>
+        &nbsp;
+        {{#if modified}}
+         <em title="Edited"><i class="fa fa-pencil"></i>{{modified}}</em>
+        {{/if}}&nbsp;
+        {{#if isEditingOnForPostTitle}}
+        <button type="button" class="btn btn-success btn-xs">
+         <i class="fa fa-pencil"></i> Editing On
+        </button>
+        {{else}}
+        <button {{action "editPostTrue"}} type="button" class="btn btn-primary btn-xs">
+         <i class="fa fa-pencil"></i> Edit
+        </button>
+        {{/if}}&nbsp;
+        {{#if hasComment}}
+        <button {{action "viewComments"}} type="button" {{bind-attr class=":btn :btn-xs hasFlaggedComment:btn-warning:btn-primary"}}>
+         {{total_comment}} <i class="fa fa-chevron-right"></i>
+         {{#if hasNewComment}}
+           <span class="badge" title="This post has new comment">new!</span>
+         {{/if}}
+        </button>
+        {{else}}
+        <button type="button" class="btn btn-danger btn-xs" disabled="disabled">
+         No <i class="fa fa-comment-o"></i>
+        </button>
+        {{/if}}
+        </span>
+       </div>
+      </div>
+    </div>
+</div>
+<!-- /.list-group -->

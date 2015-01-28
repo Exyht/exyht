@@ -30,8 +30,9 @@ Exyht.CheckVersionComponent = Ember.Component.extend({
   	    		} 
   	  		}
   	  	});
-  	  	}, 1000);
+  	  	}, 1500);
   	  	
+
   	  
   	}.on('didInsertElement'),
 
