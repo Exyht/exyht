@@ -5,7 +5,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <meta charset="utf-8">
-  <title>Ember Starter Kit</title>
+  <title>Exyht</title>
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.2.2/masonry.pkgd.min.js"></script>
@@ -26,8 +26,10 @@
 <body>
 
   <script type="text/x-handlebars" data-template-name="application">
+  <div class="container">
     <h2>Welcome to Exyht</h2>
     {{outlet}}
+  </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
@@ -36,6 +38,7 @@
       <div class="item thumb">
       {{#if img.img_visible}}
         <img {{bind-attr src=img.src_path}} class="img-thumbnail"/>
+        <div style="padding:1%;"><strong>{{img.name}}</strong></div>
       {{/if}}
       </div>
     {{/each}}
