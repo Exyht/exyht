@@ -2,6 +2,8 @@
 
 Exyht is a fully open source & free blogging software. This is a very light weight and easy to use one page web App.
 
+<strong>[View more images](https://github.com/Exyht/exyht/issues/1)</strong>
+
 ## Built with
 
 + [EmberJS](http://emberjs.com/) 1.8.1
