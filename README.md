@@ -1,5 +1,7 @@
 ## Exyht (Express your thought)
 
+[![Build Status](https://travis-ci.org/Exyht/exyht.svg?branch=master)](https://travis-ci.org/Exyht/exyht)
+
 Exyht is a fully open source & free blogging software. This is a very light weight and easy to use one page web App.
 
 <strong>[View more images](https://github.com/Exyht/exyht/issues/1)</strong>
