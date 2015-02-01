@@ -320,7 +320,7 @@ class AdminController extends BaseController {
     public function uploadImage(){
       $response = self::uploadImageFunction('upload_dir', 0);
         
-      echo '<script src="'.URL::to('libraries/js/jquery-1.10.2.min.js').'"></script><script>$("#loadingDiv", window.parent.document).hide();$("#feedback", window.parent.document).html("'.addslashes($response['message']).'");$("#imageUrlTextField", window.parent.document).empty().val("'.addslashes($response['imgUrl']).'");</script>';
+      echo '<script src="'.URL::to('libraries/js/jquery-2.0.0.min.js').'"></script><script>$("#loadingDiv", window.parent.document).hide();$("#feedback", window.parent.document).html("'.addslashes($response['message']).'");$("#imageUrlTextField", window.parent.document).empty().val("'.addslashes($response['imgUrl']).'");</script>';
     }
     /*
     |--------------------------------------------------------------------------

@@ -54,11 +54,11 @@ class ProfileController extends BaseController {
         $response = $AdminController->uploadImageFunction('prof_img_dir', 1);
         if(isset($_POST['picType']) && $_POST['picType'] == 1)
         {
-            echo '<script src="'.URL::to('libraries/js/jquery-1.10.2.min.js').'"></script><script>$("#imgLoadingDiv", window.parent.document).hide();$("#imgFeedback", window.parent.document).html("'.addslashes($response['message']).'");$("#profileImageDiv", window.parent.document).attr("src","'.addslashes($response['imgUrl']).'");</script>';
+            echo '<script src="'.URL::to('libraries/js/jquery-2.0.0.min.js').'"></script><script>$("#imgLoadingDiv", window.parent.document).hide();$("#imgFeedback", window.parent.document).html("'.addslashes($response['message']).'");$("#profileImageDiv", window.parent.document).attr("src","'.addslashes($response['imgUrl']).'");</script>';
         }
         else
         {
-            echo '<script src="'.URL::to('libraries/js/jquery-1.10.2.min.js').'"></script><script>$("#imgLoadingDiv", window.parent.document).hide();$("#imgFeedback", window.parent.document).html("'.addslashes($response['message']).'");</script>';
+            echo '<script src="'.URL::to('libraries/js/jquery-2.0.0.min.js').'"></script><script>$("#imgLoadingDiv", window.parent.document).hide();$("#imgFeedback", window.parent.document).html("'.addslashes($response['message']).'");</script>';
         }    
     }
     /*

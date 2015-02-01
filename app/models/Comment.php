@@ -34,9 +34,9 @@ class Comment extends Eloquent {
 
 	public static function findReplyToComment($id)
     {
-		return Comment::select('id','name','email')
+		return Comment::select('id','name','email', 'status')
                         ->where('id', $id)
-                        ->whereIn('status', array(1, 2))
+                        ->whereIn('status', array(0, 1, 2))
                         ->first();
 	}
     // Count total `new` comments for a single `post`

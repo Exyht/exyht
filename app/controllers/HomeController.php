@@ -471,13 +471,14 @@ class HomeController extends BaseController {
           if($c->reply_to_id > 0){
 
             $getReplyToComment = Comment::findReplyToComment($c->reply_to_id);
-
-            $p_quiz['comments'][$commentkey]['replyToComment'] =  array(
-               "commentHasReply" => true,
-               "id"              => $c->reply_to_id,
-               "name"            => $getReplyToComment->name,
-               "email"           => self::getGravaterUrl($getReplyToComment->email)
-            );
+            if($getReplyToComment->status !== 0){
+              $p_quiz['comments'][$commentkey]['replyToComment'] =  array(
+                "commentHasReply" => true,
+                "id"              => $c->reply_to_id,
+                "name"            => $getReplyToComment->name,
+                "email"           => self::getGravaterUrl($getReplyToComment->email)
+              );
+            }
           }
         }
       }

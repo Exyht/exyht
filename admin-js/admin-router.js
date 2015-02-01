@@ -31,8 +31,8 @@ model: function()
     editPostTrue: function(){
       this.transitionTo('typeblogpost');
     },
-    viewComments: function(post){
-      this.transitionTo('comment', post.id);
+    viewComments: function(postId){
+      this.transitionTo('comment', postId);
     }
   }
 });

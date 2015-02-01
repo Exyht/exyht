@@ -40,7 +40,7 @@ class GalleryController extends BaseController {
 	public function removeGimg(){
 		$img_path = strip_tags($_POST['img_path']);
 		$deleteImage = File::delete('upload_dir/'.$img_path);
-
+		
 		if($deleteImage){
 			return 'Image removed!';
 		}else{
