@@ -1,11 +1,11 @@
 {
     "name": "exyht/blogging-software",
-    "type": "blogging web application",
+    "type": "blogging-web-application",
     "description": "An awesome blogging software.",
-    "homepage": "exyht.github.io/exyht",
+    "homepage": "http://exyht.github.io/exyht/",
     "keywords": ["blogging-software"],
   	"author": "Hasib Mahmud",
-    "license": "GNU GENERAL PUBLIC LICENSE Version 2, June 1991",
+    "license": "GNU GENERAL PUBLIC LICENSE Version 2. June 1991",
     "require": {
         "php": ">=5.3.3"
     }
