@@ -8,6 +8,9 @@ Exyht.PostController = Ember.ObjectController.extend({
   needs: ["application", "index"],
 
   postBgColor: Ember.computed.oneWay("controllers.index.postBgColor"),
+  is_loggedin: Ember.computed.alias("controllers.application.is_loggedin"),
+  user_name: Ember.computed.alias("controllers.application.user_name"),
+  user_email: Ember.computed.alias("controllers.application.user_email"),
   commentFeature: Ember.computed.oneWay("controllers.application.commentFeature"),
   readOnlyMode: Ember.computed.oneWay("controllers.application.readOnlyMode"),
   isCommentDivShown: Ember.computed.alias("controllers.application.isCommentDivShown"),
@@ -22,7 +25,7 @@ Exyht.PostController = Ember.ObjectController.extend({
   commenterGravaterToReply: Ember.computed.alias("controllers.application.commenterGravaterToReply"),
 
   hasPost: function() {
-    var postId = this.get("model.id");
+    var postId = this.get("id");
     var response;
     if(typeof postId == 'undefined' || postId === 0){
       response = false;
@@ -30,5 +33,5 @@ Exyht.PostController = Ember.ObjectController.extend({
       response = true; 
     }
     return response;
-  }.property("model.id")
+  }.property("id")
 });

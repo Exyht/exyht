@@ -37,6 +37,9 @@
           {{flag-comment isFlagged=isFlagged id=id}}
 
           {{add-comment isReply=true notReply=false
+              is_loggedin=is_loggedin
+              user_name=user_name
+              user_email=user_email
               postId=postIdFromPostCtlr
               comments=getCommentsArrayFromPostCtlr
               isCommentDivShown=isCommentDivShown

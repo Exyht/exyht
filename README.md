@@ -12,6 +12,10 @@ Exyht is a fully open source & free blogging software. This is a very light weig
 + [Laravel](http://laravel.com/) 4.2.*
 + [Twitter Bootstrap](http://getbootstrap.com/) 3.2.0
 
+## Facebook Login
+
+Exyht uses **Facebook** login system. This makes Exyht more User friendly and helps to stop spamming.
+
 ## Feature
 
 Exyht has *Read only Mode* feature & though it is mainly a JavaScript based App, it's SEO friendly & works also if Javascript is disabled.
@@ -37,9 +41,13 @@ Exyht uses backend Laravel Api with Ember at front end.
 
 ## Install Exyht
 
-Installation of Exyht is very easy. Follow the below steps:
+Installation of Exyht is very easy. Please **carefully** follow the below steps:
 + Download **Exyht** zip from github and extract it in a folder `blog`(recommended) in `public_html` or `htdocs`.
 + Save your **username** & **password** for `mysql` in `app/config/database.php`.
++ In `app/views/layout/main.blade.php` place your **Facebook Login App ID**.
+    
+    appId      : 'your-app-id',
+
 + Now run Exyht installer by browsing `http://yourdomain/blog/installer` & follow the instructions. It will take not more than 30 seconds.
 + Congrates, installation is complete. Now go to **Admin panel** by browsing `http://yourdomain/blog/admin-page`.
 + Your blog path `http://yourdomain/blog/`.

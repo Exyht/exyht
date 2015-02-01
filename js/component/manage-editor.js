@@ -12,8 +12,6 @@ Exyht.ManageEditorComponent = Ember.Component.extend({
     	if(typeof typedComment == 'undefined' || typedComment.length === 0)
       	{
         	this.setProperties({
-        	  	'name': '',
-        	  	'email': '',
         	  	'isCommentDivShown': false,
           		'actualPostIdForAddComment': '',
           		'actualTitleForAddComment': '',
@@ -29,8 +27,6 @@ Exyht.ManageEditorComponent = Ember.Component.extend({
         	var confirmCanceling = confirm("Want to cancel?");
         	if (confirmCanceling === true) {
           		this.setProperties({
-            		'name': '',
-            		'email': '',
             		'typeComment': '',
             		'isCommentDivShown': false,
             		'actualPostIdForAddComment': '',
@@ -51,8 +47,6 @@ Exyht.ManageEditorComponent = Ember.Component.extend({
       	if(typeof addedComment == 'undefined' || addedComment.length === 0)
       	{
         	this.setProperties({
-            	'name': '',
-            	'email': '',
             	'isHideAddComment': false,
             	'isCommentDivShown': false,
             	'sendingCommentOn': false,

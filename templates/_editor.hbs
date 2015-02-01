@@ -8,8 +8,8 @@
    <h4>
    <span class="pull-right" style="padding-left:1%;padding-right:1%;">
     {{manage-editor isHiding=true
-                      name=name
-                      email=email
+                      user_name=user_name
+                      user_email=user_email
                       typeComment=typeComment
                       sendingCommentOn=sendingCommentOn
                       isCommentDivShown=isCommentDivShown
@@ -25,8 +25,8 @@
    </span>
    <span class="pull-right">
    {{manage-editor isCanceling=true
-                      name=name
-                      email=email
+                      user_name=user_name
+                      user_email=user_email
                       typeComment=typeComment
                       sendingCommentOn=sendingCommentOn
                       isCommentDivShown=isCommentDivShown
@@ -68,22 +68,17 @@
             <div style="text-align:center;padding:0.5%;">{{newCommentLength}} to go for the post</div>
           {{/if}}
           <div class="row" style="margin-top:2px;" >
-            <div class="col-xs-4">
-              <label class="sr-only" for="name">Name:</label>
-                {{input class="form-control input-sm" type="text" id="name" value=name placeholder="Name"}}
-            </div>
-            <div class="col-xs-4">
-              <label class="sr-only" for="email">Email:</label>
-                {{input class="form-control input-sm" type="email" id="email" value=email placeholder="Email"}}
-            </div>
-            <div class="col-xs-2">
+            
+            <div class="col-xs-10">
+                
                 {{input type="hidden" value=actualPostId}}
                 
                   {{input type="text" name="spam_bot" class="hidden" value=valueForSpam}}
 
                   {{add-comment isSending=true
-                      name=name
-                      email=email
+                      is_loggedin=is_loggedin
+                      user_name=user_name
+                      user_email=user_email
                       typeComment=typeComment
                       sendingCommentOn=sendingCommentOn
                       comments=comments

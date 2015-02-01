@@ -1,14 +1,48 @@
 {{#if notReply}}
-<button class="btn btn-info" {{action 'addCmtAction'}}>
-	<i class="fa fa-plus-circle"></i> Add comment
-</button>
+	{{#unless is_loggedin}}
+		<button class="btn btn-info pull-right" data-toggle="modal" data-target="#fbLoginModal">
+			<i class="fa fa-plus-circle"></i> Add comment
+		</button>
+	{{else}}
+		<button class="btn btn-info pull-right" {{action 'addCmtAction'}}>
+			<i class="fa fa-plus-circle"></i> Add comment
+		</button>
+	{{/unless}}
 {{/if}}
 
 {{#if isReply}}
-<button class="btn btn-info" {{action 'addCmtAction'}}>
-	<i class="fa fa-reply"></i> Reply
-</button>
+	{{#unless is_loggedin}}
+		<button class="btn btn-info" data-toggle="modal" data-target="#fbLoginModal">
+			<i class="fa fa-reply"></i> Reply
+		</button>
+	{{else}}
+		<button class="btn btn-info" {{action 'addCmtAction'}}>
+			<i class="fa fa-reply"></i> Reply
+		</button>
+	{{/unless}}
 {{/if}}
+
+<!-- Modal -->
+<div class="modal fade" id="fbLoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-facebook-official text-primary"></i> Facebook Login</h4>
+      </div>
+      <div class="modal-body">
+        {{#unless is_loggedin}}
+          <span class="bg-primary" id="fb-login" {{action 'fbLoginAttempt'}} style="cursor: pointer;padding: 1%;">
+          	<i class="fa fa-facebook-official"></i> Login
+          </span>
+        {{/unless}}
+        {{#if is_loggedin}}
+    		<div id="status">Thanks {{user_name}}, for login.</div>
+    	{{/if}}
+      </div>
+    </div>
+  </div>
+</div>
 
 {{#if isSending}}
 	{{#if sendingCommentOn}}

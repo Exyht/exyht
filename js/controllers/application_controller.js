@@ -5,6 +5,11 @@
 */
 Exyht.ApplicationController = Ember.ArrayController.extend({
   needs: "post",
+  //>>> For Login
+  is_loggedin: false,
+  user_name: '',
+  user_email: '',
+  //<<< For Login
   isReplying: false,
   isHideAddComment: false,
   isCommentDivShown: false,

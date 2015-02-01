@@ -24,6 +24,15 @@
     */
     </script>
 		@include('layout.libraries')
+    <script type="text/javascript">
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : 'your-app-id', // Place your Facebook Login app id
+          xfbml      : true,
+          version    : 'v2.2'
+        });
+      };
+    </script>
 	<style type="text/css">
   .form-control{
       -webkit-border-radius: 0;

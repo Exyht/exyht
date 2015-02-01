@@ -6,6 +6,44 @@
 Exyht.AddCommentComponent = Ember.Component.extend({
   tagName: 'span',
 
+  // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    getAPI: function() {
+      console.log('Welcome!  Fetching your information.... ');
+      var self = this;
+      this.set('is_loggedin', true);
+      FB.api('/me', function(response) {
+          if (response && !response.error) {
+            console.log('Successful login for: ' + response.name);
+            self.setProperties({
+              'user_name': response.name,
+              'user_email': response.email
+            });
+          }
+      });
+      
+    },
+
+  fbLogin: function(){
+    var self= this;
+      FB.login(function(response) {
+          // handle the response
+          if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            self.getAPI();
+          } else if (response.status === 'not_authorized') {
+            // The person is logged into Facebook, but not your app.
+            document.getElementById('status').innerHTML = 'Please log ' +
+              'into this app.';
+          } else {
+            // The person is not logged into Facebook, so we're not sure if
+            // they are logged into this app or not.
+            document.getElementById('status').innerHTML = 'Please log ' +
+              'into Facebook.';
+          }
+      }, {scope: 'public_profile,email'});
+    },
+
   setPropForAddCmt: function(){
     var postIdForAddCmt = this.get('postId');// post id(required)
     var getCmtsArray = this.get('comments');// comments array(required)
@@ -48,10 +86,10 @@ Exyht.AddCommentComponent = Ember.Component.extend({
     }
   },
   addCmt: function(){
-    var name = this.get('name').trim(),
+    var name = this.get('user_name').trim(),
       addedComment = this.get('typeComment'),
       postId = this.get('actualPostId'),
-      email = this.get('email').trim(),
+      email = this.get('user_email').trim(),
       replyingCommentId = this.get('commentIdToReply'),
       valueForSpamBot = this.get('valueForSpam');
       
@@ -92,8 +130,8 @@ Exyht.AddCommentComponent = Ember.Component.extend({
           {
             //alert("Data: " + data + "\nStatus: " + status);
             self.set('isCommentDivShown', false);
-          
-            var gravatarEmail = CryptoJS.MD5(self.get('email').trim().toLowerCase());
+            
+            var gravatarEmail = CryptoJS.MD5(self.get('user_email').trim().toLowerCase());
             
             var repliedToCommenterName = self.get('commenterNameToReply');
             var repliedToCommenterGravater = self.get('commenterGravaterToReply');
@@ -120,8 +158,6 @@ Exyht.AddCommentComponent = Ember.Component.extend({
               });
             }
             self.setProperties({
-              'name': '',
-              'email': '',
               'typeComment': '',
               'actualPostId': '',
               'actualTitle': '',
@@ -151,8 +187,16 @@ Exyht.AddCommentComponent = Ember.Component.extend({
     },
     // Now send comment to server
     sendCmt: function(){
+      console.log('yes!');
       // Debounce for 1 second
       Ember.run.debounce(this, this.addCmt, 1000);
+    },
+    fbLoginAttempt: function(){
+      // This function is called when someone finishes with the Login
+        // Button.  See the onlogin handler attached to it in the sample
+        // code below.
+        // Debounce for 0.5 second
+          Ember.run.debounce(this, this.fbLogin, 500);
     }
 	}
 });

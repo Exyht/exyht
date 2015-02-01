@@ -33,6 +33,9 @@
 	    		<button class="btn btn-info pull-right" type="button" disabled="disabled"><i class="fa fa-plus-circle"></i> Add comment</button>
 	  		{{else}}
 	  			{{add-comment notReply=true isReply=false
+	  				is_loggedin=is_loggedin
+              		user_name=user_name
+              		user_email=user_email
 	  				postId=id
 	  				title=title
 	  				comments=comments
