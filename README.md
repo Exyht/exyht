@@ -46,7 +46,7 @@ Installation of Exyht is very easy. Please **carefully** follow the below steps:
 + Save your **username** & **password** for `mysql` in `app/config/database.php`.
 + In `app/views/layout/main.blade.php` place your **Facebook Login App ID**.
     
-    appId      : 'your-app-id',
+         appId      : 'your-app-id',
 
 + Now run Exyht installer by browsing `http://yourdomain/blog/installer` & follow the instructions. It will take not more than 30 seconds.
 + Congrates, installation is complete. Now go to **Admin panel** by browsing `http://yourdomain/blog/admin-page`.
