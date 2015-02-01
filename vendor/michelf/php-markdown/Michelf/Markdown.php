@@ -2440,13 +2440,22 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 
 		$alt_text = $this->encodeAttribute($alt_text);
 		$url = $this->encodeAttribute($url);
-		$result = "<img src=\"$url\" alt=\"$alt_text\"";
-		if (isset($title)) {
-			$title = $this->encodeAttribute($title);
-			$result .=  " title=\"$title\""; # $title already quoted
+
+		$sourceUrl = parse_url($url);
+
+		if($alt_text == 'isyoutube' && $sourceUrl['host'] == 'www.youtube.com'){
+			
+    		parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
+    		$result = '<iframe src="https://www.youtube.com/embed/'.$my_array_of_vars['v'].'"></iframe>';
+    		
+		}else{
+			$result = "<img src=\"$url\" alt=\"$alt_text\"";
+			if (isset($title)) {
+				$title = $this->encodeAttribute($title);
+				$result .=  " title=\"$title\""; # $title already quoted
+			}
+			$result .= $this->empty_element_suffix;
 		}
-		$result .= $attr;
-		$result .= $this->empty_element_suffix;
 
 		return $this->hashPart($result);
 	}
