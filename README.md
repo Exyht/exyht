@@ -33,7 +33,7 @@ Exyht uses backend Laravel Api with Ember at front end.
 ![Exyht-1](https://cloud.githubusercontent.com/assets/9896315/5836185/4fc9ef82-a19c-11e4-9191-9ec4cada5eee.jpg)
 ## Text Editor won't interrupt while reading or changing topic.
 
-![Exyht-2](https://cloud.githubusercontent.com/assets/9896315/5836201/6c796194-a19c-11e4-9338-dd6444f405e5.jpg)
+![Exyht-2](https://cloud.githubusercontent.com/assets/9896315/5992719/794a97b4-aa5f-11e4-930a-d71986ea787e.jpg)
 ## Customize Colors & Fonts.
 
 ![Exyht-3](https://cloud.githubusercontent.com/assets/9896315/5836204/739bc4a8-a19c-11e4-9b7b-202ce6ea453a.jpg)
