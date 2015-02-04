@@ -117,6 +117,11 @@ model: function()
   return Ember.$.getJSON(Exyht.currentBaseUri+'/getProfileInfo').then(function(data) {
     return data;
   });
+},
+actions: {
+  editProfileTrue: function(){
+    this.transitionTo('typeblogpost');
+  }
 }
 });
 
@@ -869,7 +874,7 @@ Exyht.ProfSettingComponent = Ember.Component.extend({
 				'isProfEditOnForTypeBlogPost': true,
 				'aboutAdminForTypeBlogPost': this.get('about')
 			});
-        	this.transitionToRoute('typeblogpost');
+			this.sendAction('editProfileTrue');
 		},
 		removeProfPicture: function(){
 			this.set('isRemovingPicture', true);

@@ -53,7 +53,7 @@ Exyht.ProfSettingComponent = Ember.Component.extend({
 				'isProfEditOnForTypeBlogPost': true,
 				'aboutAdminForTypeBlogPost': this.get('about')
 			});
-        	this.transitionToRoute('typeblogpost');
+			this.sendAction('editProfileTrue');
 		},
 		removeProfPicture: function(){
 			this.set('isRemovingPicture', true);

@@ -52,6 +52,11 @@ model: function()
   return Ember.$.getJSON(Exyht.currentBaseUri+'/getProfileInfo').then(function(data) {
     return data;
   });
+},
+actions: {
+  editProfileTrue: function(){
+    this.transitionTo('typeblogpost');
+  }
 }
 });
 

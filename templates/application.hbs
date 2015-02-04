@@ -1,33 +1,31 @@
   <div class="container-full" {{bind-attr style="bodyBgColor"}}>
   {{partial 'navbar'}}
-    <div class="container">
-      <div class="blog-header">
+    <div class="container blog-header">
         {{#if readOnlyMode}}
          <div class="alert alert-warning" role="alert">
           The Entire Blog is now in <strong>Read Only Mode</strong>
          </div>
         {{/if}}
 
-        <div class="media blog-title">
+      <div class="media blog-title" id="toprow-for-title">
 
-      <div class="pull-left">
-        {{#if hasLogo}}
-          <img {{bind-attr src=blogLogo}} height="70px" max-width="300px"/>
-        {{/if}}
-      </div>
+        <div class="pull-left">
+          {{#if hasLogo}}
+            <img {{bind-attr src=blogLogo}} height="70px" max-width="300px"/>
+          {{/if}}
+        </div>
       
-      <div class="media-body">
+        <div class="media-body">
       
-        <h1 class="media-heading">
-          {{#link-to 'index'}}
-            {{{blogTitle}}}
-          {{/link-to}}
-        </h1>
-        <p class="lead blog-description">
-          {{{blogSubTitle}}}
-        </p>
-        {{format-markdown comment}}
-      </div>
+          <h1 class="media-heading">
+            {{#link-to 'index'}}
+              {{{blogTitle}}}
+            {{/link-to}}
+          </h1>
+          <p class="lead blog-description">
+            {{{blogSubTitle}}}
+          </p>
+        </div>
       </div>
       <div class="row">
         
