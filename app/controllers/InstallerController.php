@@ -15,7 +15,7 @@ class InstallerController extends BaseController {
     }
     elseif ($k == 'str') {
       $colLen = explode(':', $col, 2);
-      $table->string($colLen[0], $colLen[1]);
+      $table->string($colLen[0], $colLen[1])->nullable();
     }
     elseif ($k == 'txt') {
       $table->text($col);
