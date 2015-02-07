@@ -7,7 +7,7 @@
   <title>Installer</title>
   {{ HTML::style('/libraries/css/bootstrap.min.css') }}
   {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
-  {{ HTML::script('/libraries/js/jquery-1.10.2.min.js') }}
+  {{ HTML::script('/libraries/js/jquery-2.0.0.min.js') }}
   {{ HTML::script('/libraries/js/bootstrap.min.js') }}
     <?php
     // Change csrf_token in SESSION with each page load
