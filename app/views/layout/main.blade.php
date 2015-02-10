@@ -48,10 +48,11 @@
        position: fixed;
        top: 0;
        width: 100%;
-	   background-color: #f5f5f5;
-	   box-shadow: 0px 1px 3px #888;
-	   padding-bottom:0.5%;
-	   opacity:0.9;
+       z-index: 5;
+     background-color: #f5f5f5;
+     box-shadow: 0px 1px 3px #888;
+     padding-bottom:0.5%;
+     opacity:0.9;
     }
     .loadingError{
       position: fixed;
