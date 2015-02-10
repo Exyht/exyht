@@ -1,6 +1,9 @@
 /*
  * Globals
  */
+html, body {
+    height: 100%;
+}
 
 body {
   font-family: "Segoe UI", Times, serif;
@@ -97,6 +100,9 @@ p > img {
 /*
  * Blog name and description
  */
+#toprow-for-title{
+  width: 100%;
+}
 
 .blog-header {
   padding-top: 20px;
@@ -124,6 +130,18 @@ p > img {
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
+}
+
+#sidebar {
+    margin-top: 10px;
+  }
+
+@media (max-width: 768px) {
+  #sidebar {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
 }
 
 .blog-sidebar{
