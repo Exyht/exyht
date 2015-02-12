@@ -69,7 +69,7 @@ module.exports = function(grunt) {
                     separator: ';',
                 },*/
                 src: [
-                    'libraries/js/jquery-1.10.2.min.js',
+                    'libraries/js/jquery-2.0.0.min.js',
                     'libraries/js/js-emoji/emoji.min.js',
                     'libraries/js/moment-v2.8.3.min.js',
                     'libraries/js/moment-timezone.min.js',
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
             },
             adminappjslib: {
                 src: [
-                    'libraries/js/jquery-1.10.2.min.js',
+                    'libraries/js/jquery-2.0.0.min.js',
                     'libraries/js/js-emoji/emoji.min.js',
                     'libraries/js/sb-admin-2.min.js',
                     'libraries/js/metisMenu.min.js',
