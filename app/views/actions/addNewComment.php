@@ -10,7 +10,7 @@
 
   if($isBannedIp === false)
   { 
-    if(isset($_POST['spam_bot']) && !empty($_POST['spam_bot']))
+    if(Input::has('spam_bot'))
     {
       // It's a bot spamming
       $error_msg = array('token' => csrf_token(), 'error_msg' => "Thanks!");
@@ -18,15 +18,15 @@
     }
     else
     {
-      $postId     = (isset($_POST['postId']))?$_POST['postId']:'';
-      $name       = (isset($_POST['name']))?$_POST['name']:'';
-      $email      = (isset($_POST['email']))?$_POST['email']:'';
-      $comment    = (isset($_POST['comment']))?$_POST['comment']:'';
+      $postId     = Input::get('postId', '');
+      $name       = Input::get('name', '');
+      $email      = Input::get('email', '');
+      $comment    = Input::get('comment', '');
 
-      if(empty($_POST['replyToCommentId'])){
+      if(!Input::has('replyToCommentId')){
         $replyToCommentId = 0;
       }else{
-        $replyToCommentId = (isset($_POST['replyToCommentId']))?$_POST['replyToCommentId']:'';
+        $replyToCommentId = Input::get('replyToCommentId', '');
       }
 
       $dateTime   = date('Y-m-d H:i:s');
@@ -76,22 +76,34 @@
 
         if ($messages->has('postId'))
         {
-          $error_msg = array('token' => csrf_token(), 'error_msg' => $messages->first('postId', formatErrorMessage(":message")));
+          $error_msg = array(
+            'token' => csrf_token(),
+            'error_msg' => $messages->first('postId', formatErrorMessage(":message"))
+          );
           echo json_encode($error_msg);
         }
         elseif ($messages->has('name'))
         {
-          $error_msg = array('token' => csrf_token(), 'error_msg' => $messages->first('name', formatErrorMessage(":message")));
+          $error_msg = array(
+            'token' => csrf_token(),
+            'error_msg' => $messages->first('name', formatErrorMessage(":message"))
+          );
           echo json_encode($error_msg);
         }
         elseif ($messages->has('email'))
         {
-          $error_msg = array('token' => csrf_token(), 'error_msg' => $messages->first('email', formatErrorMessage(":message")));
+          $error_msg = array(
+            'token' => csrf_token(),
+            'error_msg' => $messages->first('email', formatErrorMessage(":message"))
+          );
           echo json_encode($error_msg);
         }
         elseif ($messages->has('comment'))
         {
-          $error_msg = array('token' => csrf_token(), 'error_msg' => $messages->first('comment', formatErrorMessage(":message")));
+          $error_msg = array(
+            'token' => csrf_token(),
+            'error_msg' => $messages->first('comment', formatErrorMessage(":message"))
+          );
           echo json_encode($error_msg);
         }
       }
