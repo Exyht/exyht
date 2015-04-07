@@ -1,9 +1,9 @@
 <?php
 
-  $postId   = Input::get('postId');
-  $title    = Input::get('title');
-  $body     = Input::get('body');
-  $status   = Input::get('status');
+  $postId   = Input::get('postId', '');
+  $title    = Input::get('title', '');
+  $body     = Input::get('body', '');
+  $status   = Input::get('status', '');
   $dateTime = date('Y-m-d H:i:s');
 
 	/*
