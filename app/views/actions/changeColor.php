@@ -1,8 +1,8 @@
 <?php
 
-    $favcolor = (isset($_POST['favcolor']))?$_POST['favcolor']:'';
-	$favcolor = substr($favcolor, 0, 7);
-    $category = (isset($_POST['category']))?$_POST['category']:'';
+    $favcolor = Input::get('favcolor');
+    $favcolor = substr($favcolor, 0, 7);
+    $category = Input::get('category');
     $category = (int)$category;
     /*
     |--------------------------------------------------------
