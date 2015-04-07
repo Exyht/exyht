@@ -1,8 +1,8 @@
 <?php
 
-    $title    = (isset($_POST['title']))?$_POST['title']:'';
-    $body     = (isset($_POST['body']))?$_POST['body']:'';
-	  $dateTime = date('Y-m-d H:i:s');
+    $title    = Input::get('title', '');
+    $body     = Input::get('body', '');
+    $dateTime = date('Y-m-d H:i:s');
 
 	  /*
      |--------------------------------------------------------------------------
@@ -35,24 +35,20 @@
     if ($validator->fails())
     {
       $messages = $validator->messages();
-      /*
-      function formatErrorMessage($value){
-        return '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true"><i class="fa fa-times" style="color:#000;"></i></span></button>'.$value.'</div>';
-      }
-      */
+      
       if ($messages->has('title'))
       {
-       echo $messages->first('title', /*formatErrorMessage(*/":message"/*)*/);
+       echo $messages->first('title', ":message");
       }
       elseif ($messages->has('body'))
       {
-       echo $messages->first('body', /*formatErrorMessage(*/":message"/*)*/);
+       echo $messages->first('body', ":message");
       }
     }
     else
     {
      $getAdminController = new AdminController();
-	    /*
+      /*
       |--------------------------------------------------------------------------
       | addNewBlogPostAsDraft(parameter1, parameter2, parameter3)
       | Parameters must be in the following sequence 
