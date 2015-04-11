@@ -286,9 +286,9 @@ class InstallerController extends BaseController {
     {
       if (Request::ajax())
       {
-        $email    = $_POST['email'];
-        $username = $_POST['name'];
-        $password = Hash::make($_POST['password']);
+        $email    = Input::get('email');
+        $username = Input::get('name');
+        $password = Input::get('password');
         /*
         |--------------------------------------------------------------------------
         | Validate fields
@@ -340,7 +340,8 @@ class InstallerController extends BaseController {
             $count = DB::table('users')->count();
             if($count === 0)
             {
-            DB::table('users')->insert(
+            	$password = Hash::make($password);
+            	DB::table('users')->insert(
                   array(
                     'email'      => $email,
                     'username'   => $username,
