@@ -80,6 +80,10 @@ A `Grunt` file is already built. If you want to use build tools like `Grunt`, `G
 
 ## Security
 
+You must generate a new encryption key for your laravel to secure the encryption. Your Laravel encryption key lies in `app/config/app.php` file. To change it, do not remove it. Just run the Laravel Artisan command from the folder where  **Exyht** App lies.
+
+    php artisan key:generate
+
 Security issue is taken seriously. For backend, necessary Laravel security steps've been taken. For user input sanitization *HtmlPurifier*, *Google caja html sanitizer*, *markdown sanitizer* are used.
 
 Besides You can *Block IP*, *Manage flagged comment*, etc very easily from your admin page.
