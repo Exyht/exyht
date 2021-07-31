@@ -40,6 +40,19 @@ Exyht uses backend Laravel Api with Ember at front end.
 
 ![Exyht-3](https://cloud.githubusercontent.com/assets/9896315/5836204/739bc4a8-a19c-11e4-9b7b-202ce6ea453a.jpg)
 
+## Admin Panel
+![exyht - admin page](https://cloud.githubusercontent.com/assets/9896315/5938685/a3d9caf8-a727-11e4-9726-d22ae1eabdb1.jpg)
+
+![exyht - admin page ](https://cloud.githubusercontent.com/assets/9896315/5938695/bd8b0796-a727-11e4-9d84-b6fed214dfea.jpg)
+
+![exyht - admin page](https://cloud.githubusercontent.com/assets/9896315/5938701/ca6f177c-a727-11e4-88fc-98298a5b7f47.jpg)
+
+## Installer
+
+![installer - mozilla firefox](https://cloud.githubusercontent.com/assets/9896315/5938710/d8e239b0-a727-11e4-819e-c4c4e97db940.jpg)
+
+![installer - mozilla firefox](https://cloud.githubusercontent.com/assets/9896315/5938726/e9af04e4-a727-11e4-8374-8a9062d1d837.jpg)
+
 
 ## Install Exyht
 
